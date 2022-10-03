@@ -1,15 +1,19 @@
-package org.szkubisznekk;
+package org.szkubisznekk.core;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 public class Window
 {
+	public record Size(int Width, int Height) {}
+
 	private static int s_windowCount = 0;
 
 	public ArrayList<Runnable> OnClose = new ArrayList<>();
+	public ArrayList<Consumer<Size>> OnResize = new ArrayList<>();
 
 	private final long m_handle;
 
@@ -31,6 +35,14 @@ public class Window
 			for (var callback : OnClose)
 			{
 				callback.run();
+			}
+		});
+
+		glfwSetFramebufferSizeCallback(m_handle, (long handle, int width, int height) ->
+		{
+			for (var callback : OnResize)
+			{
+				callback.accept(new Size(width, height));
 			}
 		});
 	}
