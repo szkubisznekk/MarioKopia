@@ -5,19 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="767b575d-02e8-40ab-84df-b4be5eecd259" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/shaders/Standard.frag" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/shaders/Standard.vert" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/core/Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Buffer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Renderer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Shader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/VertexArray.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/core/Time.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/Application.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/core/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/core/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/shaders/Standard.frag" beforeDir="false" afterPath="$PROJECT_DIR$/res/shaders/Standard.frag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/shaders/Standard.vert" beforeDir="false" afterPath="$PROJECT_DIR$/res/shaders/Standard.vert" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/core/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/core/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Buffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Buffer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,18 +38,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.4",
-    "settings.editor.selected.configurable": "editor.preferences.folding"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.4&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.folding&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\kunov\Documents\Projects\MarioKopia\res\shaders" />
@@ -97,7 +90,10 @@
       <workItem from="1664787726047" duration="1305000" />
       <workItem from="1664789045366" duration="132000" />
       <workItem from="1664789191986" duration="2521000" />
-      <workItem from="1664822161527" duration="6437000" />
+      <workItem from="1664822161527" duration="6734000" />
+      <workItem from="1664870649122" duration="636000" />
+      <workItem from="1664893564945" duration="595000" />
+      <workItem from="1664899663613" duration="5336000" />
     </task>
     <servers />
   </component>
@@ -114,5 +110,12 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint enabled="true" type="java-exception" />
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

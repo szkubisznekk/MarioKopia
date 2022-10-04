@@ -4,6 +4,19 @@ import static org.lwjgl.opengl.GL46C.*;
 
 public class Buffer
 {
+	public static class Usage
+	{
+		public static final int StreamDraw = 35040;
+		public static final int StreamRead = 35041;
+		public static final int StreamCopy = 35042;
+		public static final int StaticDraw = 35044;
+		public static final int StaticRead = 35045;
+		public static final int StaticCopy = 35046;
+		public static final int DynamicDraw = 35048;
+		public static final int DynamicRead = 35049;
+		public static final int DynamicCopy = 35050;
+	}
+
 	private final int m_handle;
 
 	public Buffer()
