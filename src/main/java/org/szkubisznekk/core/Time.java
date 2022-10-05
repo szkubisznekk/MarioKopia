@@ -23,11 +23,11 @@ public class Time
 
 	public static float getTime()
 	{
-		return (float)(s_current - s_start);
+		return (float) (s_current - s_start);
 	}
 
 	public static float getDeltaTime()
 	{
-		return (float)(s_current - s_last);
+		return (float) (s_current - s_last);
 	}
 }
