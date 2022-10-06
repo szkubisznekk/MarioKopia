@@ -16,9 +16,12 @@ public class Window
 	public ArrayList<Consumer<Size>> OnResize = new ArrayList<>();
 
 	private final long m_handle;
+	private Size m_size;
 
 	public Window()
 	{
+		m_size = new Size(800, 600);
+
 		if (s_windowCount++ == 0)
 		{
 			glfwInit();
@@ -40,6 +43,7 @@ public class Window
 
 		glfwSetFramebufferSizeCallback(m_handle, (long handle, int width, int height) ->
 		{
+			m_size = new Size(width, height);
 			for (var callback : OnResize)
 			{
 				callback.accept(new Size(width, height));
@@ -60,5 +64,10 @@ public class Window
 	public long getHandle()
 	{
 		return m_handle;
+	}
+
+	public Size getSize()
+	{
+		return m_size;
 	}
 }

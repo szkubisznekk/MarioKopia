@@ -38,7 +38,8 @@ public class Renderer
 	private final Buffer m_instanceBuffer;
 
 	private float m_aspectRatio = 1.0f;
-	private final Buffer m_projectionData;
+	private final float[] m_matrixData = new float[32];
+	private final Buffer m_projectionBuffer;
 
 	public Renderer(Window window) throws IOException
 	{
@@ -48,6 +49,9 @@ public class Renderer
 			m_aspectRatio = (float)size.Width() / size.Height();
 			glViewport(0, 0, size.Width(), size.Height());
 		});
+		Window.Size windowSize = m_window.getSize();
+		m_aspectRatio = (float)windowSize.Width() / windowSize.Height();
+
 		glfwMakeContextCurrent(m_window.getHandle());
 		createCapabilities();
 
@@ -62,10 +66,10 @@ public class Renderer
 			s_spriteIndices.length);
 
 		m_instanceBuffer = new Buffer(0, Buffer.Usage.DynamicDraw);
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_instanceBuffer.getHandle());
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, m_instanceBuffer.getHandle());
 
-		m_projectionData = new Buffer(32 * 4, Buffer.Usage.DynamicDraw);
-		glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_projectionData.getHandle());
+		m_projectionBuffer = new Buffer(32 * 4, Buffer.Usage.DynamicDraw);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_projectionBuffer.getHandle());
 	}
 
 	public void destruct()
@@ -73,6 +77,7 @@ public class Renderer
 		m_spriteMesh.destruct();
 		SpriteShader.destruct();
 		m_instanceBuffer.destruct();
+		m_projectionBuffer.destruct();
 	}
 
 	public void beginFrame(Camera camera)
@@ -80,22 +85,17 @@ public class Renderer
 		glClear(GL_COLOR_BUFFER_BIT);
 		m_instanceTransforms.clear();
 
+		Matrix4f viewMatrix = new Matrix4f();
+		viewMatrix.translate(-camera.Position().x(), -camera.Position().y, -1.0f);
+
 		Matrix4f projectionMatrix = new Matrix4f();
 		float halfHeight = camera.Size() * 0.5f;
 		float halfWidth = halfHeight * m_aspectRatio;
 		projectionMatrix.ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, 0.1f, 10.0f);
 
-		Matrix4f viewMatrix = new Matrix4f();
-		viewMatrix.translate(-camera.Position().x(), -camera.Position().y, -1.0f);
-
-		float[] matrixData = new float[32];
-		viewMatrix.get(matrixData, 0);
-		projectionMatrix.get(matrixData, 16);
-
-		m_projectionData.setSubData(0, matrixData);
-
-		SpriteShader.setUniform("ViewMatrix", viewMatrix);
-		SpriteShader.setUniform("ProjectionMatrix", projectionMatrix);
+		viewMatrix.get(m_matrixData);
+		projectionMatrix.get(m_matrixData, 16);
+		m_projectionBuffer.setSubData(0, m_matrixData);
 	}
 
 	public void endFrame()

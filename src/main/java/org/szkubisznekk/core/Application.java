@@ -62,7 +62,7 @@ public class Application
 	{
 		Time.initialize();
 
-		Camera camera = new Camera(new Vector2f(0.0f, -1.0f), 5.0f);
+		Camera camera = new Camera(new Vector2f(0.0f, 0.0f), 15.0f);
 
 		Texture texture = new Texture(Path.of("res/textures/test.png"));
 		texture.bind(0);
@@ -87,5 +87,7 @@ public class Application
 
 			m_renderer.endFrame();
 		}
+
+		texture.destruct();
 	}
 }
