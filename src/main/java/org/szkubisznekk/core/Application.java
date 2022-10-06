@@ -62,6 +62,8 @@ public class Application
 	{
 		Time.initialize();
 
+		Camera camera = new Camera(new Vector2f(0.0f, -1.0f), 5.0f);
+
 		Texture texture = new Texture(Path.of("res/textures/test.png"));
 		texture.bind(0);
 
@@ -79,7 +81,7 @@ public class Application
 				dy = 0.0f;
 			}
 
-			m_renderer.beginFrame();
+			m_renderer.beginFrame(camera);
 
 			m_renderer.submit(new Vector2f(px, py));
 
