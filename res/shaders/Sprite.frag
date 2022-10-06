@@ -8,7 +8,9 @@ in Varyings
 
 layout (location = 0) out vec4 Color;
 
+layout (binding = 0) uniform sampler2D u_texture0;
+
 void main()
 {
-    Color = vec4(IN.UV, 0.0, 1.0);
+    Color = texture(u_texture0, IN.UV);
 }
