@@ -9,7 +9,7 @@ layout (std140, binding = 0) uniform ProjectionParamsUBO
     mat4 ProjectionMatrix;
 } ProjectionParams;
 
-layout (std430, binding = 1) buffer InstanceTransformsSSBO
+layout (std430, binding = 0) buffer InstanceTransformsSSBO
 {
     vec2 Position[];
 } InstanceTransforms;

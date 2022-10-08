@@ -27,8 +27,7 @@ public class Renderer
 		1, 3, 2
 	};
 
-	private static final Vector3f s_up = new Vector3f(0.0f, 1.0f, 0.0f);
-
+	public Camera Camera;
 	public Shader SpriteShader;
 
 	private final Window m_window;
@@ -66,7 +65,7 @@ public class Renderer
 			s_spriteIndices.length);
 
 		m_instanceBuffer = new Buffer(0, Buffer.Usage.DynamicDraw);
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, m_instanceBuffer.getHandle());
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, m_instanceBuffer.getHandle());
 
 		m_projectionBuffer = new Buffer(32 * 4, Buffer.Usage.DynamicDraw);
 		glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_projectionBuffer.getHandle());
@@ -80,16 +79,16 @@ public class Renderer
 		m_projectionBuffer.destruct();
 	}
 
-	public void beginFrame(Camera camera)
+	public void beginFrame()
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
 		m_instanceTransforms.clear();
 
 		Matrix4f viewMatrix = new Matrix4f();
-		viewMatrix.translate(-camera.Position().x(), -camera.Position().y, -1.0f);
+		viewMatrix.translate(-Camera.Position().x(), -Camera.Position().y, -1.0f);
 
 		Matrix4f projectionMatrix = new Matrix4f();
-		float halfHeight = camera.Size() * 0.5f;
+		float halfHeight = Camera.Size() * 0.5f;
 		float halfWidth = halfHeight * m_aspectRatio;
 		projectionMatrix.ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, 0.1f, 10.0f);
 

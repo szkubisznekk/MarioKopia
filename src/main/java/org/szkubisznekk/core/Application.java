@@ -36,17 +36,17 @@ public class Application
 			{
 				switch (key)
 				{
-					case GLFW_KEY_A -> dx -= 1.0f;
-					case GLFW_KEY_D -> dx += 1.0f;
-					case GLFW_KEY_W -> dy = (py <= 0.0001f) ? 4.0f : dy;
+					case GLFW_KEY_A -> dx -= 5.0f;
+					case GLFW_KEY_D -> dx += 5.0f;
+					case GLFW_KEY_W -> dy = (py <= 0.0001f) ? 7.0f : dy;
 				}
 			}
 			else if (action == GLFW_RELEASE)
 			{
 				switch (key)
 				{
-					case GLFW_KEY_A -> dx += 1.0f;
-					case GLFW_KEY_D -> dx -= 1.0f;
+					case GLFW_KEY_A -> dx += 5.0f;
+					case GLFW_KEY_D -> dx -= 5.0f;
 				}
 			}
 		});
@@ -62,7 +62,7 @@ public class Application
 	{
 		Time.initialize();
 
-		Camera camera = new Camera(new Vector2f(0.0f, 0.0f), 15.0f);
+		m_renderer.Camera = new Camera(new Vector2f(0.0f, 0.0f), 15.0f);
 
 		Texture texture = new Texture(Path.of("res/textures/test.png"));
 		texture.bind(0);
@@ -73,7 +73,7 @@ public class Application
 			Time.update();
 
 			px += dx * Time.getDeltaTime();
-			dy -= 9.81f * Time.getDeltaTime();
+			dy -= 19.81f * Time.getDeltaTime();
 			py += dy * Time.getDeltaTime();
 			if (py < 0.0f)
 			{
@@ -81,7 +81,7 @@ public class Application
 				dy = 0.0f;
 			}
 
-			m_renderer.beginFrame(camera);
+			m_renderer.beginFrame();
 
 			m_renderer.submit(new Vector2f(px, py));
 
