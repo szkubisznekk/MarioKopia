@@ -134,14 +134,52 @@ public class Input
 
 	public static class MouseButtons
 	{
-		public static final int MouseButton1 = 0;
-		public static final int MouseButton2 = 1;
-		public static final int MouseButton3 = 2;
-		public static final int MouseButton4 = 3;
-		public static final int MouseButton5 = 4;
-		public static final int MouseButton6 = 5;
-		public static final int MouseButton7 = 6;
-		public static final int MouseButton8 = 7;
+		public static final int Button1 = 0;
+		public static final int Button2 = 1;
+		public static final int Button3 = 2;
+		public static final int Button4 = 3;
+		public static final int Button5 = 4;
+		public static final int Button6 = 5;
+		public static final int Button7 = 6;
+		public static final int Button8 = 7;
+	}
+
+	public static class GamepadButtons
+	{
+		public static final int South = 0;
+		public static final int East = 1;
+		public static final int West = 2;
+		public static final int North = 3;
+		public static final int LeftBumper = 4;
+		public static final int RightBumper = 5;
+		public static final int Back = 6;
+		public static final int Start = 7;
+		public static final int Guide = 8;
+		public static final int LeftThumb = 9;
+		public static final int RightThumb = 10;
+		public static final int DPadUp = 11;
+		public static final int DPadRight = 12;
+		public static final int DPadDown = 13;
+		public static final int DPadLeft = 14;
+
+		public static final int A = South;
+		public static final int B = East;
+		public static final int X = West;
+		public static final int Y = North;
+		public static final int Cross = South;
+		public static final int Circle = East;
+		public static final int Square = West;
+		public static final int Triangle = North;
+	}
+
+	public static class GamepadAxes
+	{
+		public static final int LeftStickX = 0;
+		public static final int LeftStickY = 1;
+		public static final int RightStickX = 2;
+		public static final int RightStickY = 3;
+		public static final int LeftTrigger = 4;
+		public static final int RightTrigger = 5;
 	}
 
 	public static class Actions

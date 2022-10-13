@@ -4,6 +4,7 @@ import org.szkubisznekk.input.*;
 import org.szkubisznekk.renderer.*;
 
 import java.io.IOException;
+import java.nio.FloatBuffer;
 import java.nio.file.Path;
 
 import org.joml.Vector2f;
@@ -32,6 +33,7 @@ public class Application
 		Input.init(m_window);
 		Input.AddInputDevice(Keyboard.class);
 		Input.AddInputDevice(Mouse.class);
+		Input.AddInputDevice(Gamepad.class);
 
 		m_renderer = new Renderer(m_window);
 
@@ -52,6 +54,14 @@ public class Application
 			{
 				case Input.Keys.A, Input.Keys.Left -> dx += 5.0f;
 				case Input.Keys.D, Input.Keys.Right -> dx -= 5.0f;
+			}
+		});
+
+		Gamepad.get().OnAxis.add((Integer axis, Float value) ->
+		{
+			switch (axis)
+			{
+				case Input.GamepadAxes.LeftStickX -> dx = value * 5.0f;
 			}
 		});
 	}
