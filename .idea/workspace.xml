@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="767b575d-02e8-40ab-84df-b4be5eecd259" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/Input.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/InputDevice.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/Keyboard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/Mouse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/core/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/core/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Renderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Texture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Texture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/Mouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/Mouse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +108,7 @@
       <workItem from="1665504677959" duration="595000" />
       <workItem from="1665517004302" duration="1682000" />
       <workItem from="1665555674726" duration="2380000" />
-      <workItem from="1665674179154" duration="4836000" />
+      <workItem from="1665674179154" duration="5990000" />
     </task>
     <servers />
   </component>

@@ -50,4 +50,9 @@ public class Keyboard extends InputDevice
 	{
 		super.update();
 	}
+
+	public boolean isKey(int key, int action)
+	{
+		return glfwGetKey(m_window.getHandle(), key) == action;
+	}
 }

@@ -52,4 +52,9 @@ public class Mouse extends InputDevice
 	{
 		super.update();
 	}
+
+	public boolean isButton(int button, int action)
+	{
+		return glfwGetMouseButton(m_window.getHandle(), button) == action;
+	}
 }
