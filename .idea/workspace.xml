@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="767b575d-02e8-40ab-84df-b4be5eecd259" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/Input.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/InputDevice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/Keyboard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/Mouse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/shaders/Sprite.vert" beforeDir="false" afterPath="$PROJECT_DIR$/res/shaders/Sprite.vert" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/core/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/core/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Renderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Texture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Texture.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +52,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.4&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -102,6 +106,15 @@
       <workItem from="1665146026335" duration="587000" />
       <workItem from="1665171493745" duration="524000" />
       <workItem from="1665230484450" duration="918000" />
+      <workItem from="1665231504851" duration="326000" />
+      <workItem from="1665231843099" duration="227000" />
+      <workItem from="1665232082485" duration="61000" />
+      <workItem from="1665232155420" duration="156000" />
+      <workItem from="1665232323958" duration="54000" />
+      <workItem from="1665504677959" duration="595000" />
+      <workItem from="1665517004302" duration="1682000" />
+      <workItem from="1665555674726" duration="2380000" />
+      <workItem from="1665674179154" duration="4836000" />
     </task>
     <servers />
   </component>

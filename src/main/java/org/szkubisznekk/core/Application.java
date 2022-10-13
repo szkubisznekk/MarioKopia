@@ -1,5 +1,6 @@
 package org.szkubisznekk.core;
 
+import org.szkubisznekk.input.*;
 import org.szkubisznekk.renderer.*;
 
 import java.io.IOException;
@@ -28,26 +29,29 @@ public class Application
 			m_running = false;
 		});
 
+		Input.init(m_window);
+		Input.AddInputDevice(Keyboard.class);
+		Input.AddInputDevice(Mouse.class);
+
 		m_renderer = new Renderer(m_window);
 
-		glfwSetKeyCallback(m_window.getHandle(), (long handle, int key, int scancode, int action, int mods) ->
+		Keyboard.get().OnKeyPress.add((Integer key) ->
 		{
-			if (action == GLFW_PRESS)
+			switch (key)
 			{
-				switch (key)
-				{
-					case GLFW_KEY_A -> dx -= 5.0f;
-					case GLFW_KEY_D -> dx += 5.0f;
-					case GLFW_KEY_W -> dy = (py <= 0.0001f) ? 7.0f : dy;
-				}
+				case Input.Keys.Escape -> m_running = false;
+				case Input.Keys.A, Input.Keys.Left -> dx -= 5.0f;
+				case Input.Keys.D, Input.Keys.Right -> dx += 5.0f;
+				case Input.Keys.W, Input.Keys.Up -> dy = (py <= 0.0001f) ? 7.0f : dy;
 			}
-			else if (action == GLFW_RELEASE)
+		});
+
+		Keyboard.get().OnKeyRelease.add((Integer key) ->
+		{
+			switch (key)
 			{
-				switch (key)
-				{
-					case GLFW_KEY_A -> dx += 5.0f;
-					case GLFW_KEY_D -> dx -= 5.0f;
-				}
+				case Input.Keys.A, Input.Keys.Left -> dx += 5.0f;
+				case Input.Keys.D, Input.Keys.Right -> dx -= 5.0f;
 			}
 		});
 	}
@@ -69,7 +73,7 @@ public class Application
 
 		while (m_running)
 		{
-			glfwPollEvents();
+			Input.update();
 			Time.update();
 
 			px += dx * Time.getDeltaTime();

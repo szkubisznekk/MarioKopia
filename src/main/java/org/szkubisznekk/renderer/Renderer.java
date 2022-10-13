@@ -36,7 +36,7 @@ public class Renderer
 	private final ArrayList<Vector2f> m_instanceTransforms = new ArrayList<>();
 	private final Buffer m_instanceBuffer;
 
-	private float m_aspectRatio = 1.0f;
+	private float m_aspectRatio;
 	private final float[] m_matrixData = new float[32];
 	private final Buffer m_projectionBuffer;
 
@@ -73,8 +73,8 @@ public class Renderer
 
 	public void destruct()
 	{
-		m_spriteMesh.destruct();
 		SpriteShader.destruct();
+		m_spriteMesh.destruct();
 		m_instanceBuffer.destruct();
 		m_projectionBuffer.destruct();
 	}
