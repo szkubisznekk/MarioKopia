@@ -8,7 +8,7 @@ public class Time
 	private static double s_last;
 	private static double s_current;
 
-	public static void initialize()
+	public static void init()
 	{
 		s_start = glfwGetTime();
 		s_last = s_start;

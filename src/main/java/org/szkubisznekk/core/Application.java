@@ -4,12 +4,9 @@ import org.szkubisznekk.input.*;
 import org.szkubisznekk.renderer.*;
 
 import java.io.IOException;
-import java.nio.FloatBuffer;
 import java.nio.file.Path;
 
 import org.joml.Vector2f;
-
-import static org.lwjgl.glfw.GLFW.*;
 
 public class Application
 {
@@ -57,6 +54,14 @@ public class Application
 			}
 		});
 
+		Gamepad.get().OnButtonPress.add((Integer button) ->
+		{
+			switch (button)
+			{
+				case Input.GamepadButtons.A -> dy = (py <= 0.0001f) ? 7.0f : dy;
+			}
+		});
+
 		Gamepad.get().OnAxis.add((Integer axis, Float value) ->
 		{
 			switch (axis)
@@ -74,7 +79,7 @@ public class Application
 
 	public void run()
 	{
-		Time.initialize();
+		Time.init();
 
 		m_renderer.Camera = new Camera(new Vector2f(0.0f, 0.0f), 15.0f);
 
