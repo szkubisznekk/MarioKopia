@@ -32,43 +32,23 @@ public class Application
 		Input.AddInputDevice(Mouse.class);
 		Input.AddInputDevice(Gamepad.class);
 
+		Controls.init();
+		Controls.OnMove.add((Float value) ->
+		{
+			dx = value * 5.0f;
+		});
+
+		Controls.OnJump.add(() ->
+		{
+			dy = (py <= 0.0001f) ? 7.0f : dy;
+		});
+
+		Controls.OnMenu.add(() ->
+		{
+			m_running = false;
+		});
+
 		m_renderer = new Renderer(m_window);
-
-		Keyboard.get().OnKeyPress.add((Integer key) ->
-		{
-			switch (key)
-			{
-				case Input.Keys.Escape -> m_running = false;
-				case Input.Keys.A, Input.Keys.Left -> dx -= 5.0f;
-				case Input.Keys.D, Input.Keys.Right -> dx += 5.0f;
-				case Input.Keys.W, Input.Keys.Up -> dy = (py <= 0.0001f) ? 7.0f : dy;
-			}
-		});
-
-		Keyboard.get().OnKeyRelease.add((Integer key) ->
-		{
-			switch (key)
-			{
-				case Input.Keys.A, Input.Keys.Left -> dx += 5.0f;
-				case Input.Keys.D, Input.Keys.Right -> dx -= 5.0f;
-			}
-		});
-
-		Gamepad.get().OnButtonPress.add((Integer button) ->
-		{
-			switch (button)
-			{
-				case Input.GamepadButtons.A -> dy = (py <= 0.0001f) ? 7.0f : dy;
-			}
-		});
-
-		Gamepad.get().OnAxis.add((Integer axis, Float value) ->
-		{
-			switch (axis)
-			{
-				case Input.GamepadAxes.LeftStickX -> dx = value * 5.0f;
-			}
-		});
 	}
 
 	public void destruct()

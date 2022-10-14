@@ -27,22 +27,24 @@ public class Mouse extends InputDevice
 
 		glfwSetInputMode(m_window.getHandle(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-		glfwSetMouseButtonCallback(m_window.getHandle(), (long handle, int key, int action, int mods) ->
+		glfwSetMouseButtonCallback(m_window.getHandle(), (long handle, int button, int action, int mods) ->
 		{
 			switch (action)
 			{
-				case Input.Actions.Press:
+				case Input.Actions.Press ->
+				{
 					for (var callback : OnButtonPress)
 					{
-						callback.accept(key);
+						callback.accept(button);
 					}
-					break;
-				case Input.Actions.Release:
+				}
+				case Input.Actions.Release ->
+				{
 					for (var callback : OnButtonRelease)
 					{
-						callback.accept(key);
+						callback.accept(button);
 					}
-					break;
+				}
 			}
 		});
 	}

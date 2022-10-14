@@ -70,18 +70,20 @@ public class Gamepad extends InputDevice
 			{
 				switch (state)
 				{
-					case Input.Actions.Press:
+					case Input.Actions.Press ->
+					{
 						for (var callback : OnButtonPress)
 						{
 							callback.accept(button);
 						}
-						break;
-					case Input.Actions.Release:
+					}
+					case Input.Actions.Release ->
+					{
 						for (var callback : OnButtonRelease)
 						{
 							callback.accept(button);
 						}
-						break;
+					}
 				}
 			}
 		}
@@ -114,7 +116,7 @@ public class Gamepad extends InputDevice
 
 	private float processStick(float value)
 	{
-		float maxValue = 1.0f /  (1.0f - Deadzone);
+		float maxValue = 1.0f / (1.0f - Deadzone);
 		float abs = Math.abs(value);
 		float sign = Math.signum(value);
 
@@ -133,7 +135,7 @@ public class Gamepad extends InputDevice
 	{
 		value = (value + 1.0f) * 0.5f;
 
-		float maxValue = 1.0f /  (1.0f - Deadzone);
+		float maxValue = 1.0f / (1.0f - Deadzone);
 		float abs = Math.abs(value);
 
 		if (abs < Deadzone)
