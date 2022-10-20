@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="767b575d-02e8-40ab-84df-b4be5eecd259" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/Controls.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/core/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/core/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/Gamepad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/Gamepad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/Keyboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/Keyboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/Mouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/input/Mouse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +108,14 @@
       <workItem from="1665517004302" duration="1682000" />
       <workItem from="1665555674726" duration="2380000" />
       <workItem from="1665674179154" duration="10533000" />
-      <workItem from="1665728740997" duration="3010000" />
+      <workItem from="1665728740997" duration="3639000" />
+      <workItem from="1665738964729" duration="439000" />
+      <workItem from="1665837703030" duration="1272000" />
+      <workItem from="1665840274879" duration="772000" />
+      <workItem from="1665845846842" duration="2546000" />
+      <workItem from="1665858686253" duration="170000" />
+      <workItem from="1666289315188" duration="48000" />
+      <workItem from="1666289374261" duration="595000" />
     </task>
     <servers />
   </component>
