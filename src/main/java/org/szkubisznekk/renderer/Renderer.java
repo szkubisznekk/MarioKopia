@@ -33,6 +33,7 @@ public class Renderer
 	private final VertexArray m_spriteMesh;
 
 	private final ArrayList<Vector2f> m_instanceTransforms = new ArrayList<>();
+	private final ArrayList<Integer> m_instanceTextureIDs = new ArrayList<>();
 	private final Buffer m_instanceBuffer;
 
 	private float m_aspectRatio;
@@ -82,6 +83,7 @@ public class Renderer
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
 		m_instanceTransforms.clear();
+		m_instanceTextureIDs.clear();
 
 		Matrix4f viewMatrix = new Matrix4f();
 		viewMatrix.translate(-Camera.Position().x(), -Camera.Position().y, -1.0f);
@@ -98,12 +100,13 @@ public class Renderer
 
 	public void endFrame()
 	{
-		float[] transformData = new float[m_instanceTransforms.size() * 2];
+		float[] transformData = new float[m_instanceTransforms.size() * 4];
 		for (int i = 0; i < m_instanceTransforms.size(); i++)
 		{
-			int offset = i * 2;
+			int offset = i * 4;
 			transformData[offset] = m_instanceTransforms.get(i).x;
 			transformData[offset + 1] = m_instanceTransforms.get(i).y;
+			transformData[offset + 2] = m_instanceTextureIDs.get(i);
 		}
 
 		m_instanceBuffer.setData(transformData, Buffer.Usage.StaticDraw);
@@ -114,8 +117,9 @@ public class Renderer
 		glfwSwapBuffers(m_window.getHandle());
 	}
 
-	public void submit(Vector2f position)
+	public void submit(Vector2f position, int textureID)
 	{
 		m_instanceTransforms.add(position);
+		m_instanceTextureIDs.add(textureID);
 	}
 }

@@ -1,14 +1,18 @@
 package org.szkubisznekk.renderer;
 
 import org.lwjgl.*;
+
 import static org.lwjgl.stb.STBImage.*;
 import static org.lwjgl.opengl.GL46C.*;
 
 import java.nio.*;
 import java.nio.file.*;
+import java.util.HashMap;
 
 public class Texture
 {
+	private static HashMap<Path, Texture> m_textures = new HashMap<>();
+
 	private final int m_handle;
 
 	static
@@ -16,7 +20,19 @@ public class Texture
 		stbi_set_flip_vertically_on_load(true);
 	}
 
-	public Texture(Path path)
+	public static Texture load(Path path)
+	{
+		if (m_textures.containsKey(path))
+		{
+			return m_textures.get(path);
+		}
+
+		Texture texture = new Texture(path);
+		m_textures.put(path, texture);
+		return texture;
+	}
+
+	private Texture(Path path)
 	{
 		m_handle = glGenTextures();
 

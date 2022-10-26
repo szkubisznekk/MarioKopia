@@ -2,6 +2,7 @@ package org.szkubisznekk.core;
 
 import org.szkubisznekk.input.*;
 import org.szkubisznekk.renderer.*;
+import org.szkubisznekk.world.*;
 
 import org.joml.Vector2f;
 
@@ -59,11 +60,12 @@ public class Application
 
 	public void run()
 	{
+		World world = new World();
 		Time.init();
 
-		m_renderer.Camera = new Camera(new Vector2f(0.0f, 0.0f), 15.0f);
+		m_renderer.Camera = new Camera(new Vector2f(0.0f, 7.5f), 16.0f);
 
-		Texture texture = new Texture(Path.of("res/textures/test.png"));
+		Texture texture = Texture.load(Path.of("res/textures/texture_atlas.png"));
 		texture.bind(0);
 
 		while (m_running)
@@ -79,10 +81,12 @@ public class Application
 				py = 0.0f;
 				dy = 0.0f;
 			}
+			m_renderer.Camera.Position().x = px;
 
 			m_renderer.beginFrame();
 
-			m_renderer.submit(new Vector2f(px, py));
+			world.submit(m_renderer);
+			m_renderer.submit(new Vector2f(px, py), 1);
 
 			m_renderer.endFrame();
 		}

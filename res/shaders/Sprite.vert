@@ -11,21 +11,31 @@ layout (std140, binding = 0) uniform ProjectionParamsUBO
 
 layout (std430, binding = 0) buffer InstanceTransformsSSBO
 {
-    vec2 Position[];
+    vec4 Position[];
 } InstanceTransforms;
 
 out Varyings
 {
     vec2 Position;
     vec2 UV;
+    int TextureID;
 } OUT;
 
 uniform mat4 ViewMatrix;
 uniform mat4 ProjectionMatrix;
 
+vec2 getUV(int textureID)
+{
+    float size = 1.0 / 8.0;
+    int x = OUT.TextureID % 8;
+    int y = OUT.TextureID / 8;
+    return (vec2(x, y) + a_uv) * size;
+}
+
 void main()
 {
-    OUT.Position = a_position + InstanceTransforms.Position[gl_InstanceID];
-    OUT.UV = a_uv;
+    OUT.Position = a_position + InstanceTransforms.Position[gl_InstanceID].xy;
+    OUT.TextureID = int(InstanceTransforms.Position[gl_InstanceID].z);
+    OUT.UV = getUV(OUT.TextureID);
     gl_Position = ProjectionParams.ProjectionMatrix * ProjectionParams.ViewMatrix * vec4(OUT.Position, 0, 1.0);
 }
