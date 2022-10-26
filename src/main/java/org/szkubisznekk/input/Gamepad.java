@@ -3,12 +3,11 @@ package org.szkubisznekk.input;
 import org.szkubisznekk.core.*;
 
 import org.lwjgl.glfw.*;
+import static org.lwjgl.glfw.GLFW.*;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.BiConsumer;
-
-import static org.lwjgl.glfw.GLFW.*;
 
 public class Gamepad extends InputDevice
 {

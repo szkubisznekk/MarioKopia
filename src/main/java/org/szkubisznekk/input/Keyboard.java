@@ -2,10 +2,10 @@ package org.szkubisznekk.input;
 
 import org.szkubisznekk.core.*;
 
+import static org.lwjgl.glfw.GLFW.*;
+
 import java.util.ArrayList;
 import java.util.function.Consumer;
-
-import static org.lwjgl.glfw.GLFW.*;
 
 public class Keyboard extends InputDevice
 {

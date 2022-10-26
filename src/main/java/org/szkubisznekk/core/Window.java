@@ -1,10 +1,10 @@
 package org.szkubisznekk.core;
 
-import java.util.ArrayList;
-import java.util.function.Consumer;
-
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.system.MemoryUtil.*;
+
+import java.util.ArrayList;
+import java.util.function.Consumer;
 
 public class Window
 {

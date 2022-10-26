@@ -1,13 +1,12 @@
 package org.szkubisznekk.renderer;
 
+import org.joml.*;
+import org.lwjgl.*;
+import static org.lwjgl.opengl.GL46C.*;
+
 import java.io.IOException;
 import java.nio.*;
 import java.nio.file.*;
-
-import org.joml.*;
-import org.lwjgl.*;
-
-import static org.lwjgl.opengl.GL46C.*;
 
 public class Shader
 {

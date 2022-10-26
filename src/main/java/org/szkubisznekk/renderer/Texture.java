@@ -1,12 +1,11 @@
 package org.szkubisznekk.renderer;
 
-import java.nio.*;
-import java.nio.file.*;
-
 import org.lwjgl.*;
-
 import static org.lwjgl.stb.STBImage.*;
 import static org.lwjgl.opengl.GL46C.*;
+
+import java.nio.*;
+import java.nio.file.*;
 
 public class Texture
 {

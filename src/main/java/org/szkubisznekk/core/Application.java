@@ -3,10 +3,10 @@ package org.szkubisznekk.core;
 import org.szkubisznekk.input.*;
 import org.szkubisznekk.renderer.*;
 
+import org.joml.Vector2f;
+
 import java.io.IOException;
 import java.nio.file.Path;
-
-import org.joml.Vector2f;
 
 public class Application
 {

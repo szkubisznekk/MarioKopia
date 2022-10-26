@@ -2,9 +2,9 @@ package org.szkubisznekk.input;
 
 import org.szkubisznekk.core.*;
 
-import java.util.ArrayList;
-
 import static org.lwjgl.glfw.GLFW.*;
+
+import java.util.ArrayList;
 
 public class Input
 {

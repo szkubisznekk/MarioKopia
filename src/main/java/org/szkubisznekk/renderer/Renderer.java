@@ -2,16 +2,15 @@ package org.szkubisznekk.renderer;
 
 import org.szkubisznekk.core.*;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.ArrayList;
-
 import org.joml.*;
-
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL.*;
 import static org.lwjgl.opengl.GL46C.*;
 import static org.lwjgl.system.MemoryUtil.*;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
 
 public class Renderer
 {
