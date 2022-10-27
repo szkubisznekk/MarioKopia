@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="767b575d-02e8-40ab-84df-b4be5eecd259" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/world/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/world/Block.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/world/Blocks.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/world/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/core/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/core/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Renderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Texture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Texture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/world/Block.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/world/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/world/World.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -121,7 +127,7 @@
       <workItem from="1666789461044" duration="421000" />
       <workItem from="1666789897538" duration="594000" />
       <workItem from="1666810759250" duration="7835000" />
-      <workItem from="1666895897289" duration="402000" />
+      <workItem from="1666895897289" duration="1577000" />
     </task>
     <servers />
   </component>

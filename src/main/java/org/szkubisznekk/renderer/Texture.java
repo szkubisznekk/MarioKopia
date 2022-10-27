@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class Texture
 {
-	private static HashMap<Path, Texture> m_textures = new HashMap<>();
+	private static final HashMap<Path, Texture> m_textures = new HashMap<>();
 
 	private final int m_handle;
 

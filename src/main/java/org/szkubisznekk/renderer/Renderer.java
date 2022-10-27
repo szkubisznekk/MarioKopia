@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 public class Renderer
 {
+	private static Renderer s_instance;
+
 	private static final float[] s_spriteVertices = {
 		-0.5f, -0.5f, 0.0f, 0.0f,
 		0.5f, -0.5f, 1.0f, 0.0f,
@@ -42,6 +44,8 @@ public class Renderer
 
 	public Renderer(Window window) throws IOException
 	{
+		s_instance = this;
+
 		m_window = window;
 		m_window.OnResize.add((Window.Size size) ->
 		{
@@ -77,6 +81,11 @@ public class Renderer
 		m_spriteMesh.destruct();
 		m_instanceBuffer.destruct();
 		m_projectionBuffer.destruct();
+	}
+
+	public static Renderer get()
+	{
+		return s_instance;
 	}
 
 	public void beginFrame()

@@ -4,18 +4,13 @@ import org.szkubisznekk.input.*;
 import org.szkubisznekk.renderer.*;
 import org.szkubisznekk.world.*;
 
-import org.joml.Vector2f;
+import org.joml.*;
 
 import java.io.IOException;
 import java.nio.file.Path;
 
 public class Application
 {
-	float px = 0.0f;
-	float py = 0.0f;
-	float dx = 0.0f;
-	float dy = 0.0f;
-
 	private boolean m_running = true;
 	private final Window m_window;
 	private final Renderer m_renderer;
@@ -34,16 +29,6 @@ public class Application
 		Input.AddInputDevice(Gamepad.class);
 
 		Controls.init();
-		Controls.OnMove.add((Float value) ->
-		{
-			dx = value * 5.0f;
-		});
-
-		Controls.OnJump.add(() ->
-		{
-			dy = (py <= 0.0001f) ? 7.0f : dy;
-		});
-
 		Controls.OnMenu.add(() ->
 		{
 			m_running = false;
@@ -61,8 +46,9 @@ public class Application
 	public void run()
 	{
 		World world = new World();
-		Time.init();
+		Player player = new Player();
 
+		Time.init();
 		m_renderer.Camera = new Camera(new Vector2f(0.0f, 7.5f), 16.0f);
 
 		Texture texture = Texture.load(Path.of("res/textures/texture_atlas.png"));
@@ -73,20 +59,10 @@ public class Application
 			Input.update();
 			Time.update();
 
-			px += dx * Time.getDeltaTime();
-			dy -= 19.81f * Time.getDeltaTime();
-			py += dy * Time.getDeltaTime();
-			if (py < 0.0f)
-			{
-				py = 0.0f;
-				dy = 0.0f;
-			}
-			m_renderer.Camera.Position().x = px;
-
 			m_renderer.beginFrame();
 
-			world.submit(m_renderer);
-			m_renderer.submit(new Vector2f(px, py), 1);
+			player.update();
+			world.update();
 
 			m_renderer.endFrame();
 		}
