@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="767b575d-02e8-40ab-84df-b4be5eecd259" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/res/textures/texture_atlas.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/world/Block.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/world/World.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/shaders/Sprite.frag" beforeDir="false" afterPath="$PROJECT_DIR$/res/shaders/Sprite.frag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/shaders/Sprite.vert" beforeDir="false" afterPath="$PROJECT_DIR$/res/shaders/Sprite.vert" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/textures/test.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/textures/test_alpha.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/core/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/core/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Renderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Texture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/renderer/Texture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/world/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/world/Block.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/world/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/szkubisznekk/world/World.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,19 +37,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.4",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.4&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\kunov\Documents\Projects\MarioKopia\res\shaders" />
@@ -130,6 +121,7 @@
       <workItem from="1666789461044" duration="421000" />
       <workItem from="1666789897538" duration="594000" />
       <workItem from="1666810759250" duration="7835000" />
+      <workItem from="1666895897289" duration="402000" />
     </task>
     <servers />
   </component>
