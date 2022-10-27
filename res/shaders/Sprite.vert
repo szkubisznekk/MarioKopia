@@ -35,7 +35,7 @@ vec2 getUV(int textureID)
 void main()
 {
     OUT.Position = a_position + InstanceTransforms.Position[gl_InstanceID].xy;
-    OUT.TextureID = int(InstanceTransforms.Position[gl_InstanceID].z);
+    OUT.TextureID = int(InstanceTransforms.Position[gl_InstanceID].w);
     OUT.UV = getUV(OUT.TextureID);
-    gl_Position = ProjectionParams.ProjectionMatrix * ProjectionParams.ViewMatrix * vec4(OUT.Position, 0, 1.0);
+    gl_Position = ProjectionParams.ProjectionMatrix * ProjectionParams.ViewMatrix * vec4(OUT.Position, InstanceTransforms.Position[gl_InstanceID].z, 1.0);
 }

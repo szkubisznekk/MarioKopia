@@ -44,6 +44,6 @@ public class Player
 
 	private void submit()
 	{
-		Renderer.get().submit(new Vector2f(px, py), 1);
+		Renderer.get().submit(new Vector2f(px, py), 0.0f, 1);
 	}
 }

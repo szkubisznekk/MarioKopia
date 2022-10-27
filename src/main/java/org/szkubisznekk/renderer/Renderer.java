@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 public class Renderer
 {
+	private record DrawCommand(Vector2f Position, float Depth, int TextureID) {}
+
 	private static Renderer s_instance;
 
 	private static final float[] s_spriteVertices = {
@@ -34,11 +36,12 @@ public class Renderer
 	private final Window m_window;
 	private final VertexArray m_spriteMesh;
 
-	private final ArrayList<Vector2f> m_instanceTransforms = new ArrayList<>();
-	private final ArrayList<Integer> m_instanceTextureIDs = new ArrayList<>();
+	private final ArrayList<DrawCommand> m_drawCommands = new ArrayList<>();
 	private final Buffer m_instanceBuffer;
 
 	private float m_aspectRatio;
+	private final Matrix4f m_viewMatrix = new Matrix4f();
+	private final Matrix4f m_projectionMatrix = new Matrix4f();
 	private final float[] m_matrixData = new float[32];
 	private final Buffer m_projectionBuffer;
 
@@ -61,6 +64,7 @@ public class Renderer
 		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
 
 		SpriteShader = new Shader(Path.of("res/shaders/Sprite"));
 		m_spriteMesh = new VertexArray(
@@ -90,45 +94,45 @@ public class Renderer
 
 	public void beginFrame()
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
-		m_instanceTransforms.clear();
-		m_instanceTextureIDs.clear();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		m_drawCommands.clear();
 
-		Matrix4f viewMatrix = new Matrix4f();
-		viewMatrix.translate(-Camera.Position().x(), -Camera.Position().y, -1.0f);
+		m_viewMatrix.identity();
+		m_viewMatrix.translate(-Camera.Position().x(), -Camera.Position().y, -1.0f);
 
-		Matrix4f projectionMatrix = new Matrix4f();
+		m_projectionMatrix.identity();
 		float halfHeight = Camera.Size() * 0.5f;
 		float halfWidth = halfHeight * m_aspectRatio;
-		projectionMatrix.ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, 0.1f, 10.0f);
+		m_projectionMatrix.ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, 0.1f, 10.0f);
 
-		viewMatrix.get(m_matrixData);
-		projectionMatrix.get(m_matrixData, 16);
+		m_viewMatrix.get(m_matrixData);
+		m_projectionMatrix.get(m_matrixData, 16);
 		m_projectionBuffer.setSubData(0, m_matrixData);
 	}
 
 	public void endFrame()
 	{
-		float[] transformData = new float[m_instanceTransforms.size() * 4];
-		for (int i = 0; i < m_instanceTransforms.size(); i++)
+		float[] drawCommandData = new float[m_drawCommands.size() * 4];
+		for (int i = 0; i < m_drawCommands.size(); i++)
 		{
 			int offset = i * 4;
-			transformData[offset] = m_instanceTransforms.get(i).x;
-			transformData[offset + 1] = m_instanceTransforms.get(i).y;
-			transformData[offset + 2] = m_instanceTextureIDs.get(i);
+			DrawCommand drawCommand = m_drawCommands.get(i);
+			drawCommandData[offset] = drawCommand.Position.x;
+			drawCommandData[offset + 1] = drawCommand.Position.y;
+			drawCommandData[offset + 2] = drawCommand.Depth;
+			drawCommandData[offset + 3] = (float)drawCommand.TextureID;
 		}
 
-		m_instanceBuffer.setData(transformData, Buffer.Usage.StaticDraw);
+		m_instanceBuffer.setData(drawCommandData, Buffer.Usage.StaticDraw);
 		SpriteShader.bind();
 		m_spriteMesh.bind();
-		glDrawElementsInstanced(GL_TRIANGLES, m_spriteMesh.getIndexCount(), GL_UNSIGNED_INT, NULL, m_instanceTransforms.size());
+		glDrawElementsInstanced(GL_TRIANGLES, m_spriteMesh.getIndexCount(), GL_UNSIGNED_INT, NULL, m_drawCommands.size());
 
 		glfwSwapBuffers(m_window.getHandle());
 	}
 
-	public void submit(Vector2f position, int textureID)
+	public void submit(Vector2f position, float depth, int textureID)
 	{
-		m_instanceTransforms.add(position);
-		m_instanceTextureIDs.add(textureID);
+		m_drawCommands.add(new DrawCommand(position, depth, textureID));
 	}
 }

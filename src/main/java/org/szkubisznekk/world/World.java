@@ -33,7 +33,7 @@ public class World
 		{
 			for (int x = 0; x < WIDTH; x++)
 			{
-				Renderer.get().submit(new Vector2f((float)x, (float)y), m_blocks[getIndex(x, y)]);
+				Renderer.get().submit(new Vector2f((float)x, (float)y), -1.0f, m_blocks[getIndex(x, y)]);
 			}
 		}
 	}
