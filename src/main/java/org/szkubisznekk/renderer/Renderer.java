@@ -32,6 +32,7 @@ public class Renderer
 
 	public Camera Camera;
 	public Shader SpriteShader;
+	public Texture TextureAtlas;
 
 	private final Window m_window;
 	private final VertexArray m_spriteMesh;
@@ -77,10 +78,14 @@ public class Renderer
 
 		m_projectionBuffer = new Buffer(32 * 4, Buffer.Usage.DynamicDraw);
 		glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_projectionBuffer.getHandle());
+
+		TextureAtlas = Texture.load(Path.of("res/textures/texture_atlas.png"));
+		TextureAtlas.bind(0);
 	}
 
 	public void destruct()
 	{
+		TextureAtlas.destruct();
 		SpriteShader.destruct();
 		m_spriteMesh.destruct();
 		m_instanceBuffer.destruct();
