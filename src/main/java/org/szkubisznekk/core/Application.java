@@ -45,12 +45,14 @@ public class Application
 
 	public void run()
 	{
+		System.setProperty("dominion.show-banner", "false");
 		World world = new World();
-		// Player player = new Player();
 
-		Time.init();
 		m_renderer.Camera = new Camera(new Vector2f(0.0f, 7.5f), 16.0f);
 
+		world.start();
+
+		Time.init();
 		while (m_running)
 		{
 			Input.update();
@@ -58,10 +60,11 @@ public class Application
 
 			m_renderer.beginFrame();
 
-			// player.update();
 			world.update();
 
 			m_renderer.endFrame();
 		}
+
+		world.stop();
 	}
 }

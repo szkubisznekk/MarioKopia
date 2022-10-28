@@ -81,13 +81,10 @@ public class Controls
 
 		Gamepad.get().OnAxis.add((Integer axis, Float value) ->
 		{
-			switch (axis)
+			if (axis == Input.GamepadAxes.LeftStickX)
 			{
-				case Input.GamepadAxes.LeftStickX ->
-				{
-					m_moveGamepad = value;
-					onMove();
-				}
+				m_moveGamepad = value;
+				onMove();
 			}
 		});
 	}
