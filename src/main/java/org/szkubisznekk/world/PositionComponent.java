@@ -2,13 +2,13 @@ package org.szkubisznekk.world;
 
 import org.joml.*;
 
-public class EntityPositionData
+public class PositionComponent
 {
 	public Vector2f Position = new Vector2f(0.0f);
 
-	public EntityPositionData() {}
+	public PositionComponent() {}
 
-	public EntityPositionData(Vector2f position)
+	public PositionComponent(Vector2f position)
 	{
 		Position = position;
 	}

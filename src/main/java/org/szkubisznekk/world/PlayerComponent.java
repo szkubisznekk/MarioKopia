@@ -1,6 +1,6 @@
 package org.szkubisznekk.world;
 
-public class PlayerInputData
+public class PlayerComponent
 {
 	public float Move = 0.0f;
 	public boolean Jump = false;
@@ -9,9 +9,9 @@ public class PlayerInputData
 
 	public boolean IsGrounded = false;
 
-	public PlayerInputData() {}
+	public PlayerComponent() {}
 
-	public PlayerInputData(float speed)
+	public PlayerComponent(float speed)
 	{
 		Speed = speed;
 	}

@@ -12,15 +12,20 @@ import java.util.ArrayList;
 
 public class World
 {
+	private static World s_current;
+
 	public static final int HEIGHT = 16;
 	public static final int WIDTH = 256;
 
 	private final byte[] m_blocks = new byte[WIDTH * HEIGHT];
 	private final Dominion m_ecs = Dominion.create();
 	private final ArrayList<Runnable> m_systems = new ArrayList<>();
+	PositionComponent m_playerPositionData;
 
 	public World()
 	{
+		s_current = this;
+
 		for (int y = 0; y < HEIGHT; y++)
 		{
 			for (int x = 0; x < WIDTH; x++)
@@ -29,46 +34,47 @@ public class World
 			}
 		}
 
-		m_ecs.createEntity(new PlayerInputData(), new EntityPositionData(new Vector2f(0.0f, 5.0f)), new EntityVelocityData(new Vector2f(0.0f, 0.0f)));
+		m_playerPositionData = new PositionComponent(new Vector2f(0.0f, 5.0f));
+		m_ecs.createEntity(new PlayerComponent(), m_playerPositionData, new VelocityComponent(new Vector2f(0.0f, 0.0f)));
 
-		m_ecs.findEntitiesWith(PlayerInputData.class).stream().forEach(result ->
+		m_ecs.findEntitiesWith(PlayerComponent.class).stream().forEach(result ->
 		{
-			PlayerInputData playerInputData = result.comp();
+			PlayerComponent playerComponent = result.comp();
 
 			Controls.OnMove.add((Float value) ->
 			{
-				playerInputData.Move = value;
+				playerComponent.Move = value;
 			});
 
 			Controls.OnJump.add(() ->
 			{
-				if (playerInputData.IsGrounded)
+				if (playerComponent.IsGrounded)
 				{
-					playerInputData.Jump = true;
+					playerComponent.Jump = true;
 				}
 			});
 		});
 
 		m_systems.add(() ->
 		{
-			m_ecs.findEntitiesWith(PlayerInputData.class, EntityVelocityData.class, EntityPositionData.class).stream().forEach(result ->
+			m_ecs.findEntitiesWith(PlayerComponent.class, VelocityComponent.class, PositionComponent.class).stream().forEach(result ->
 			{
-				PlayerInputData playerInputData = result.comp1();
-				EntityVelocityData entityVelocityData = result.comp2();
-				EntityPositionData entityPositionData = result.comp3();
+				PlayerComponent playerComponent = result.comp1();
+				VelocityComponent entityVelocityData = result.comp2();
+				PositionComponent positionComponent = result.comp3();
 
-				entityVelocityData.Velocity.x = playerInputData.Move * playerInputData.Speed;
+				entityVelocityData.Velocity.x = playerComponent.Move * playerComponent.Speed;
 
-				playerInputData.IsGrounded = entityPositionData.Position.y <= 1.0f;
-				if (playerInputData.IsGrounded)
+				playerComponent.IsGrounded = positionComponent.Position.y <= 1.0f;
+				if (playerComponent.IsGrounded)
 				{
-					entityPositionData.Position.y = (float)Math.ceil(entityPositionData.Position.y);
+					positionComponent.Position.y = (float)Math.ceil(positionComponent.Position.y);
 					entityVelocityData.Velocity.y = 0.0f;
 
-					if (playerInputData.Jump)
+					if (playerComponent.Jump)
 					{
 						entityVelocityData.Velocity.y = 10.0f;
-						playerInputData.Jump = false;
+						playerComponent.Jump = false;
 					}
 				}
 				else
@@ -80,26 +86,31 @@ public class World
 
 		m_systems.add(() ->
 		{
-			m_ecs.findEntitiesWith(EntityVelocityData.class, EntityPositionData.class).stream().forEach(result ->
+			m_ecs.findEntitiesWith(VelocityComponent.class, PositionComponent.class).stream().forEach(result ->
 			{
-				EntityVelocityData entityVelocityData = result.comp1();
-				EntityPositionData entityPositionData = result.comp2();
+				VelocityComponent entityVelocityData = result.comp1();
+				PositionComponent positionComponent = result.comp2();
 
-				entityPositionData.Position.x += entityVelocityData.Velocity.x * Time.getDeltaTime();
-				entityPositionData.Position.y += entityVelocityData.Velocity.y * Time.getDeltaTime();
+				positionComponent.Position.x += entityVelocityData.Velocity.x * Time.getDeltaTime();
+				positionComponent.Position.y += entityVelocityData.Velocity.y * Time.getDeltaTime();
 
-				Renderer.get().submit(entityPositionData.Position, 0.0f, 1);
+				Renderer.get().submit(positionComponent.Position, 0.0f, 1);
 			});
 		});
 
 		m_systems.add(() ->
 		{
-			m_ecs.findEntitiesWith(EntityPositionData.class).stream().forEach(result ->
+			m_ecs.findEntitiesWith(PositionComponent.class).stream().forEach(result ->
 			{
-				EntityPositionData entityPositionData = result.comp();
-				Renderer.get().submit(entityPositionData.Position, 0.0f, 1);
+				PositionComponent positionComponent = result.comp();
+				Renderer.get().submit(positionComponent.Position, 0.0f, 1);
 			});
 		});
+	}
+
+	public static World get()
+	{
+		return s_current;
 	}
 
 	public void update()
@@ -108,6 +119,7 @@ public class World
 		{
 			system.run();
 		}
+		Renderer.get().Camera.Position().x = m_playerPositionData.Position.x;
 
 		submit();
 	}

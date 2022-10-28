@@ -3,6 +3,7 @@ package org.szkubisznekk.renderer;
 import org.szkubisznekk.core.*;
 
 import org.joml.*;
+
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL.*;
 import static org.lwjgl.opengl.GL46C.*;
@@ -138,6 +139,22 @@ public class Renderer
 
 	public void submit(Vector2f position, float depth, int textureID)
 	{
+		float halfHeight = Camera.Size() * 0.5f;
+		float halfWidth = halfHeight * m_aspectRatio + 1.0f;
+		halfHeight += 1.0f;
+		Vector2f bottomLeft = new Vector2f(Camera.Position()).sub(halfWidth, halfHeight);
+		Vector2f topRight = new Vector2f(Camera.Position()).add(halfWidth, halfHeight);
+
+		if (position.x < bottomLeft.x ||position.x > topRight.x || position.y < bottomLeft.y ||position.y > topRight.y)
+		{
+			return;
+		}
+
+		if (textureID == 0)
+		{
+			return;
+		}
+
 		m_drawCommands.add(new DrawCommand(position, depth, textureID));
 	}
 }
