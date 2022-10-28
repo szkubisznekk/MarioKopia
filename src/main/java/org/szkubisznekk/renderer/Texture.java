@@ -1,7 +1,6 @@
 package org.szkubisznekk.renderer;
 
 import org.lwjgl.*;
-
 import static org.lwjgl.stb.STBImage.*;
 import static org.lwjgl.opengl.GL46C.*;
 

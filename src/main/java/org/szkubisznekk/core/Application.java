@@ -4,10 +4,7 @@ import org.szkubisznekk.input.*;
 import org.szkubisznekk.renderer.*;
 import org.szkubisznekk.world.*;
 
-import org.joml.*;
-
 import java.io.IOException;
-import java.nio.file.Path;
 
 public class Application
 {
@@ -45,14 +42,10 @@ public class Application
 
 	public void run()
 	{
-		System.setProperty("dominion.show-banner", "false");
-		World world = new World();
-
-		m_renderer.Camera = new Camera(new Vector2f(0.0f, 7.5f), 16.0f);
-
-		world.start();
-
 		Time.init();
+
+		World world = new World();
+		world.start();
 		while (m_running)
 		{
 			Input.update();

@@ -137,7 +137,7 @@ public class Renderer
 		glfwSwapBuffers(m_window.getHandle());
 	}
 
-	public void submit(Vector2f position, float depth, int textureID)
+	public void submit(Vector2f position, float depth, byte textureID)
 	{
 		float halfHeight = Camera.Size() * 0.5f;
 		float halfWidth = halfHeight * m_aspectRatio + 1.0f;

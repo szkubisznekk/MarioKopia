@@ -16,13 +16,18 @@ public class World
 	private final Dominion m_registry = Dominion.create();
 	private final ArrayList<SystemBase> m_systems = new ArrayList<>();
 
+	static
+	{
+		System.setProperty("dominion.show-banner", "false");
+	}
+
 	public World()
 	{
 		for (int y = 0; y < HEIGHT; y++)
 		{
 			for (int x = 0; x < WIDTH; x++)
 			{
-				m_blocks[getIndex(x, y)] = (y == 0) ? Blocks.Brick : Blocks.Air;
+				m_blocks[getIndex(x, y)] = (y == 0) ? TextureIDs.Brick : TextureIDs.Air;
 			}
 		}
 

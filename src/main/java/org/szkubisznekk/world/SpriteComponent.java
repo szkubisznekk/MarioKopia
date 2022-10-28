@@ -2,14 +2,14 @@ package org.szkubisznekk.world;
 
 public class SpriteComponent
 {
-	public int TextureID = 0;
 	public float Depth = 0.0f;
+	public byte TextureID = 0;
 
 	public SpriteComponent() {}
 
-	public SpriteComponent(int textureID, float depth)
+	public SpriteComponent(float depth, byte textureID)
 	{
-		TextureID = textureID;
 		Depth = depth;
+		TextureID = textureID;
 	}
 }
