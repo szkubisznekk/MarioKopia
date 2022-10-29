@@ -22,7 +22,7 @@ public class Window
 	{
 		m_size = new Size(800, 600);
 
-		if (s_windowCount++ == 0)
+		if(s_windowCount++ == 0)
 		{
 			glfwInit();
 		}
@@ -35,7 +35,7 @@ public class Window
 
 		glfwSetWindowCloseCallback(m_handle, (long handle) ->
 		{
-			for (var callback : OnClose)
+			for(var callback : OnClose)
 			{
 				callback.run();
 			}
@@ -44,7 +44,7 @@ public class Window
 		glfwSetFramebufferSizeCallback(m_handle, (long handle, int width, int height) ->
 		{
 			m_size = new Size(width, height);
-			for (var callback : OnResize)
+			for(var callback : OnResize)
 			{
 				callback.accept(new Size(width, height));
 			}
@@ -55,7 +55,7 @@ public class Window
 	{
 		glfwDestroyWindow(m_handle);
 
-		if (--s_windowCount == 0)
+		if(--s_windowCount == 0)
 		{
 			glfwTerminate();
 		}

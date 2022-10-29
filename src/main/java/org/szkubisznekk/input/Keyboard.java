@@ -27,18 +27,18 @@ public class Keyboard extends InputDevice
 
 		glfwSetKeyCallback(m_window.getHandle(), (long handle, int key, int scancode, int action, int mods) ->
 		{
-			switch (action)
+			switch(action)
 			{
 				case Input.Actions.Press ->
 				{
-					for (var callback : OnKeyPress)
+					for(var callback : OnKeyPress)
 					{
 						callback.accept(key);
 					}
 				}
 				case Input.Actions.Release ->
 				{
-					for (var callback : OnKeyRelease)
+					for(var callback : OnKeyRelease)
 					{
 						callback.accept(key);
 					}

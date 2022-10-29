@@ -23,9 +23,9 @@ public class World
 
 	public World()
 	{
-		for (int y = 0; y < HEIGHT; y++)
+		for(int y = 0; y < HEIGHT; y++)
 		{
-			for (int x = 0; x < WIDTH; x++)
+			for(int x = 0; x < WIDTH; x++)
 			{
 				m_blocks[getIndex(x, y)] = (y == 0) ? TextureIDs.Brick : TextureIDs.Air;
 			}
@@ -39,7 +39,7 @@ public class World
 
 	public void start()
 	{
-		for (var system : m_systems)
+		for(var system : m_systems)
 		{
 			system.start();
 		}
@@ -47,7 +47,7 @@ public class World
 
 	public void update()
 	{
-		for (var system : m_systems)
+		for(var system : m_systems)
 		{
 			system.update();
 		}
@@ -57,7 +57,7 @@ public class World
 
 	public void stop()
 	{
-		for (var system : m_systems)
+		for(var system : m_systems)
 		{
 			system.stop();
 		}
@@ -65,9 +65,9 @@ public class World
 
 	private void submit()
 	{
-		for (int y = 0; y < HEIGHT; y++)
+		for(int y = 0; y < HEIGHT; y++)
 		{
-			for (int x = 0; x < WIDTH; x++)
+			for(int x = 0; x < WIDTH; x++)
 			{
 				Renderer.get().submit(new Vector2f((float)x, (float)y), -1.0f, m_blocks[getIndex(x, y)]);
 			}

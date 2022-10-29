@@ -1,6 +1,7 @@
 package org.szkubisznekk.renderer;
 
 import org.lwjgl.*;
+
 import static org.lwjgl.stb.STBImage.*;
 import static org.lwjgl.opengl.GL46C.*;
 
@@ -21,7 +22,7 @@ public class Texture
 
 	public static Texture load(Path path)
 	{
-		if (m_textures.containsKey(path))
+		if(m_textures.containsKey(path))
 		{
 			return m_textures.get(path);
 		}

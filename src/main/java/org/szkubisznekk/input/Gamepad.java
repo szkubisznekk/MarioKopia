@@ -3,6 +3,7 @@ package org.szkubisznekk.input;
 import org.szkubisznekk.core.*;
 
 import org.lwjgl.glfw.*;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class Gamepad extends InputDevice
 
 		glfwSetJoystickCallback((int id, int event) ->
 		{
-			switch (event)
+			switch(event)
 			{
 				case GLFW_CONNECTED ->
 				{
@@ -54,7 +55,7 @@ public class Gamepad extends InputDevice
 	public void update()
 	{
 		super.update();
-		if (!m_connected)
+		if(!m_connected)
 		{
 			return;
 		}
@@ -62,23 +63,23 @@ public class Gamepad extends InputDevice
 		m_lastState.set(m_state);
 		glfwGetGamepadState(GLFW_JOYSTICK_1, m_state);
 
-		for (int button = 0; button < GLFW_GAMEPAD_BUTTON_LAST; button++)
+		for(int button = 0; button < GLFW_GAMEPAD_BUTTON_LAST; button++)
 		{
 			int state = m_state.buttons(button);
-			if (state != m_lastState.buttons(button))
+			if(state != m_lastState.buttons(button))
 			{
-				switch (state)
+				switch(state)
 				{
 					case Input.Actions.Press ->
 					{
-						for (var callback : OnButtonPress)
+						for(var callback : OnButtonPress)
 						{
 							callback.accept(button);
 						}
 					}
 					case Input.Actions.Release ->
 					{
-						for (var callback : OnButtonRelease)
+						for(var callback : OnButtonRelease)
 						{
 							callback.accept(button);
 						}
@@ -87,12 +88,12 @@ public class Gamepad extends InputDevice
 			}
 		}
 
-		for (int axis = 0; axis < GLFW_GAMEPAD_AXIS_LAST; axis++)
+		for(int axis = 0; axis < GLFW_GAMEPAD_AXIS_LAST; axis++)
 		{
 			float state = m_state.axes(axis);
-			if (state != m_lastState.axes(axis))
+			if(state != m_lastState.axes(axis))
 			{
-				for (var callback : OnAxis)
+				for(var callback : OnAxis)
 				{
 					float value = m_state.axes(axis);
 					callback.accept(axis, (axis < Input.GamepadAxes.LeftTrigger) ? processStick(value) : processTrigger(value));
@@ -119,7 +120,7 @@ public class Gamepad extends InputDevice
 		float abs = Math.abs(value);
 		float sign = Math.signum(value);
 
-		if (abs < Deadzone)
+		if(abs < Deadzone)
 		{
 			return 0.0f;
 		}
@@ -137,7 +138,7 @@ public class Gamepad extends InputDevice
 		float maxValue = 1.0f / (1.0f - Deadzone);
 		float abs = Math.abs(value);
 
-		if (abs < Deadzone)
+		if(abs < Deadzone)
 		{
 			return 0.0f;
 		}

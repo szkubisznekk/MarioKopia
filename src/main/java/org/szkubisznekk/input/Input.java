@@ -203,7 +203,7 @@ public class Input
 	{
 		glfwPollEvents();
 
-		for (var inputDevice : s_inputDevices)
+		for(var inputDevice : s_inputDevices)
 		{
 			inputDevice.update();
 		}
@@ -217,15 +217,15 @@ public class Input
 			inputDevice.init(s_window);
 			s_inputDevices.add(inputDevice);
 		}
-		catch (Exception ignored) {}
+		catch(Exception ignored) {}
 	}
 
 	public static <T extends InputDevice> void RemoveInputDevice(Class<T> type)
 	{
 		int n = s_inputDevices.size();
 		int i = 0;
-		while (i < n && s_inputDevices.get(i).getClass() != type) {i++;}
-		if (i < n)
+		while(i < n && s_inputDevices.get(i).getClass() != type) {i++;}
+		if(i < n)
 		{
 			s_inputDevices.remove(i);
 		}

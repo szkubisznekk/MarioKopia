@@ -2,6 +2,7 @@ package org.szkubisznekk.renderer;
 
 import org.joml.*;
 import org.lwjgl.*;
+
 import static org.lwjgl.opengl.GL46C.*;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class Shader
 		m_handle = glCreateProgram();
 
 		ShaderDescription[] shaders = loadShaders(path);
-		for (var shader : shaders)
+		for(var shader : shaders)
 		{
 			shader.Handle = glCreateShader(shader.Type);
 			glShaderSource(shader.Handle, shader.Source);
@@ -27,7 +28,7 @@ public class Shader
 
 		glLinkProgram(m_handle);
 
-		for (var shader : shaders)
+		for(var shader : shaders)
 		{
 			glDeleteShader(shader.Handle);
 		}

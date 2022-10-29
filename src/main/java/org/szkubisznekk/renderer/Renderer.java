@@ -119,7 +119,7 @@ public class Renderer
 	public void endFrame()
 	{
 		float[] drawCommandData = new float[m_drawCommands.size() * 4];
-		for (int i = 0; i < m_drawCommands.size(); i++)
+		for(int i = 0; i < m_drawCommands.size(); i++)
 		{
 			int offset = i * 4;
 			DrawCommand drawCommand = m_drawCommands.get(i);
@@ -145,12 +145,12 @@ public class Renderer
 		Vector2f bottomLeft = new Vector2f(Camera.Position()).sub(halfWidth, halfHeight);
 		Vector2f topRight = new Vector2f(Camera.Position()).add(halfWidth, halfHeight);
 
-		if (position.x < bottomLeft.x ||position.x > topRight.x || position.y < bottomLeft.y ||position.y > topRight.y)
+		if(position.x < bottomLeft.x || position.x > topRight.x || position.y < bottomLeft.y || position.y > topRight.y)
 		{
 			return;
 		}
 
-		if (textureID == 0)
+		if(textureID == 0)
 		{
 			return;
 		}

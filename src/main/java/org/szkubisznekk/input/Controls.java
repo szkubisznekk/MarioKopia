@@ -16,7 +16,7 @@ public class Controls
 	{
 		Keyboard.get().OnKeyPress.add((Integer key) ->
 		{
-			switch (key)
+			switch(key)
 			{
 				case Input.Keys.A ->
 				{
@@ -45,7 +45,7 @@ public class Controls
 
 		Keyboard.get().OnKeyRelease.add((Integer key) ->
 		{
-			switch (key)
+			switch(key)
 			{
 				case Input.Keys.A ->
 				{
@@ -72,7 +72,7 @@ public class Controls
 
 		Gamepad.get().OnButtonPress.add((Integer button) ->
 		{
-			switch (button)
+			switch(button)
 			{
 				case Input.GamepadButtons.South -> onJump();
 				case Input.GamepadButtons.Start -> onMenu();
@@ -81,7 +81,7 @@ public class Controls
 
 		Gamepad.get().OnAxis.add((Integer axis, Float value) ->
 		{
-			if (axis == Input.GamepadAxes.LeftStickX)
+			if(axis == Input.GamepadAxes.LeftStickX)
 			{
 				m_moveGamepad = value;
 				onMove();
@@ -109,7 +109,7 @@ public class Controls
 
 	private static void onMove()
 	{
-		for (var callback : OnMove)
+		for(var callback : OnMove)
 		{
 			callback.accept(getMove());
 		}
@@ -117,7 +117,7 @@ public class Controls
 
 	private static void onJump()
 	{
-		for (var callback : OnJump)
+		for(var callback : OnJump)
 		{
 			callback.run();
 		}
@@ -125,7 +125,7 @@ public class Controls
 
 	private static void onMenu()
 	{
-		for (var callback : OnMenu)
+		for(var callback : OnMenu)
 		{
 			callback.run();
 		}

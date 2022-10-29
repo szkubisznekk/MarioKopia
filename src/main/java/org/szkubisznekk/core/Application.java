@@ -46,7 +46,7 @@ public class Application
 
 		World world = new World();
 		world.start();
-		while (m_running)
+		while(m_running)
 		{
 			Input.update();
 			Time.update();

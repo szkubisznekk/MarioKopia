@@ -33,7 +33,7 @@ public class PlayerSystem extends SystemBase
 
 			Controls.OnJump.add(() ->
 			{
-				if (playerComponent.IsGrounded)
+				if(playerComponent.IsGrounded)
 				{
 					playerComponent.Jump = true;
 				}
@@ -53,12 +53,12 @@ public class PlayerSystem extends SystemBase
 			entityVelocityData.Velocity.x = playerComponent.Move * playerComponent.Speed;
 
 			playerComponent.IsGrounded = positionComponent.Position.y <= 1.0f;
-			if (playerComponent.IsGrounded)
+			if(playerComponent.IsGrounded)
 			{
 				positionComponent.Position.y = (float)Math.ceil(positionComponent.Position.y);
 				entityVelocityData.Velocity.y = 0.0f;
 
-				if (playerComponent.Jump)
+				if(playerComponent.Jump)
 				{
 					entityVelocityData.Velocity.y = 10.0f;
 					playerComponent.Jump = false;
