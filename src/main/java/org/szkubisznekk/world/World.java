@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public class World
 {
-	public static final int HEIGHT = 16;
 	public static final int WIDTH = 256;
+	public static final int HEIGHT = 16;
 
-	private final byte[] m_blocks = new byte[WIDTH * HEIGHT];
+	private final Tilemap m_tilemap = new Tilemap(WIDTH, HEIGHT);
 	private final Dominion m_registry = Dominion.create();
 	private final ArrayList<SystemBase> m_systems = new ArrayList<>();
 
@@ -27,12 +27,12 @@ public class World
 		{
 			for(int x = 0; x < WIDTH; x++)
 			{
-				m_blocks[getIndex(x, y)] = (y == 0) ? TextureIDs.Brick : TextureIDs.Air;
+				m_tilemap.setTile(x, y, (y == 0 || y == 4 || x == 6) ? Tiles.Brick : Tiles.Air);
 			}
 		}
 
 		m_systems.add(new PlayerSystem(m_registry));
-		m_systems.add(new PhysicsSystem(m_registry));
+		m_systems.add(new PhysicsSystem(m_registry, m_tilemap));
 		m_systems.add(new CameraSystem(m_registry));
 		m_systems.add(new RendererSystem(m_registry));
 	}
@@ -69,13 +69,8 @@ public class World
 		{
 			for(int x = 0; x < WIDTH; x++)
 			{
-				Renderer.get().submit(new Vector2f((float)x, (float)y), -1.0f, m_blocks[getIndex(x, y)]);
+				Renderer.get().submit(new Vector2f((float)x, (float)y), -1.0f, m_tilemap.getTile(x, y));
 			}
 		}
-	}
-
-	private static int getIndex(int x, int y)
-	{
-		return y * WIDTH + x;
 	}
 }

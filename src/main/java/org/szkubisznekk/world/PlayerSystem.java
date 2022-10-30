@@ -17,14 +17,16 @@ public class PlayerSystem extends SystemBase
 	@Override
 	public void start()
 	{
-		m_registry.createEntity(new PlayerComponent(),
-			new PositionComponent(new Vector2f(0.0f, 5.0f)),
-			new VelocityComponent(new Vector2f(0.0f, 0.0f)),
+		m_registry.createEntity(
+			new PlayerComponent(),
+			new PositionComponent(new Vector2f(0.0f, 2.0f)),
+			new RigidbodyComponent(),
 			new SpriteComponent(0.0f, (byte)1));
 
-		m_registry.findEntitiesWith(PlayerComponent.class).stream().forEach(result ->
+		m_registry.findEntitiesWith(PlayerComponent.class, RigidbodyComponent.class).stream().forEach(result ->
 		{
-			PlayerComponent playerComponent = result.comp();
+			PlayerComponent playerComponent = result.comp1();
+			RigidbodyComponent rigidbodyComponent = result.comp2();
 
 			Controls.OnMove.add((Float value) ->
 			{
@@ -33,7 +35,7 @@ public class PlayerSystem extends SystemBase
 
 			Controls.OnJump.add(() ->
 			{
-				if(playerComponent.IsGrounded)
+				if(rigidbodyComponent.IsGrounded)
 				{
 					playerComponent.Jump = true;
 				}
@@ -44,29 +46,24 @@ public class PlayerSystem extends SystemBase
 	@Override
 	public void update()
 	{
-		m_registry.findEntitiesWith(PlayerComponent.class, VelocityComponent.class, PositionComponent.class).stream().forEach(result ->
+		m_registry.findEntitiesWith(PlayerComponent.class, RigidbodyComponent.class).stream().forEach(result ->
 		{
 			PlayerComponent playerComponent = result.comp1();
-			VelocityComponent entityVelocityData = result.comp2();
-			PositionComponent positionComponent = result.comp3();
+			RigidbodyComponent rigidbodyComponent = result.comp2();
 
-			entityVelocityData.Velocity.x = playerComponent.Move * playerComponent.Speed;
+			rigidbodyComponent.Velocity.x = playerComponent.Move * playerComponent.Speed;
 
-			playerComponent.IsGrounded = positionComponent.Position.y <= 1.0f;
-			if(playerComponent.IsGrounded)
+			if(rigidbodyComponent.IsGrounded)
 			{
-				positionComponent.Position.y = (float)Math.ceil(positionComponent.Position.y);
-				entityVelocityData.Velocity.y = 0.0f;
-
 				if(playerComponent.Jump)
 				{
-					entityVelocityData.Velocity.y = 10.0f;
+					rigidbodyComponent.Velocity.y = 10.0f;
 					playerComponent.Jump = false;
 				}
 			}
 			else
 			{
-				entityVelocityData.Velocity.y -= 20.0f * Time.getDeltaTime();
+				rigidbodyComponent.Velocity.y -= 20.0f * Time.getDeltaTime();
 			}
 		});
 	}
