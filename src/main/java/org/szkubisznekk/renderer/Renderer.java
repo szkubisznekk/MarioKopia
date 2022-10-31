@@ -63,7 +63,7 @@ public class Renderer
 		glfwMakeContextCurrent(m_window.getHandle());
 		createCapabilities();
 
-		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
+		glClearColor(0.36078431372f, 0.58039215686f, 0.98823529411f, 1.0f);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
@@ -139,6 +139,11 @@ public class Renderer
 
 	public void submit(Vector2f position, float depth, byte textureID)
 	{
+		if(textureID == 0)
+		{
+			return;
+		}
+
 		float halfHeight = Camera.Size() * 0.5f;
 		float halfWidth = halfHeight * m_aspectRatio + 1.0f;
 		halfHeight += 1.0f;
@@ -146,11 +151,6 @@ public class Renderer
 		Vector2f topRight = new Vector2f(Camera.Position()).add(halfWidth, halfHeight);
 
 		if(position.x < bottomLeft.x || position.x > topRight.x || position.y < bottomLeft.y || position.y > topRight.y)
-		{
-			return;
-		}
-
-		if(textureID == 0)
 		{
 			return;
 		}
