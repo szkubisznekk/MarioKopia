@@ -4,7 +4,7 @@ public class PlayerComponent
 {
 	public float Move = 0.0f;
 	public boolean Jump = false;
-	public float Speed = 5.0f;
+	public float Speed = 7.0f;
 
 	public PlayerComponent() {}
 

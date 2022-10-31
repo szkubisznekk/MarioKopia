@@ -3,10 +3,12 @@ package org.szkubisznekk.world;
 import dev.dominion.ecs.api.*;
 import org.szkubisznekk.core.*;
 
-import javax.lang.model.util.Elements;
-
 public class PhysicsSystem extends SystemBase
 {
+	private static final float Epsilon = 0.01f;
+	private static final float OnePlusEpsilon = 1.0f + Epsilon;
+	private static final float TwoEpsilon = 2.0f * Epsilon;
+
 	private final Tilemap m_tilemap;
 
 	public PhysicsSystem(Dominion registry, Tilemap tilemap)
@@ -24,9 +26,9 @@ public class PhysicsSystem extends SystemBase
 			PositionComponent positionComponent = result.comp2();
 
 			// Bottom
-			int b = (int)Math.ceil(positionComponent.Position.y - 1.01f);
-			int bl = (int)Math.floor(positionComponent.Position.x);
-			int br = (int)Math.ceil(positionComponent.Position.x);
+			int b = (int)Math.ceil(positionComponent.Position.y - OnePlusEpsilon);
+			int bl = (int)Math.floor(positionComponent.Position.x + TwoEpsilon);
+			int br = (int)Math.ceil(positionComponent.Position.x - TwoEpsilon);
 			boolean hasBottom = m_tilemap.getTile(bl, b) != 0 || m_tilemap.getTile(br, b) != 0;
 			rigidbodyComponent.IsGrounded = hasBottom;
 			if(hasBottom && rigidbodyComponent.Velocity.y < 0.0f)
@@ -35,7 +37,7 @@ public class PhysicsSystem extends SystemBase
 			}
 
 			// Top
-			int t = (int)Math.floor(positionComponent.Position.y + 1.01f);
+			int t = (int)Math.floor(positionComponent.Position.y + OnePlusEpsilon);
 			boolean hasTop = m_tilemap.getTile(bl, t) != 0 || m_tilemap.getTile(br, t) != 0;
 			if(hasTop && rigidbodyComponent.Velocity.y > 0.0f)
 			{
@@ -43,9 +45,9 @@ public class PhysicsSystem extends SystemBase
 			}
 
 			// Left
-			int l = (int)Math.ceil(positionComponent.Position.x - 1.01f);
-			int lb = (int)Math.floor(positionComponent.Position.y);
-			int lt = (int)Math.ceil(positionComponent.Position.y);
+			int l = (int)Math.ceil(positionComponent.Position.x - OnePlusEpsilon);
+			int lb = (int)Math.floor(positionComponent.Position.y + TwoEpsilon);
+			int lt = (int)Math.ceil(positionComponent.Position.y - TwoEpsilon);
 			boolean hasLeft = m_tilemap.getTile(l, lb) != 0 || m_tilemap.getTile(l, lt) != 0;
 			if(hasLeft && rigidbodyComponent.Velocity.x < 0.0f)
 			{
@@ -53,7 +55,7 @@ public class PhysicsSystem extends SystemBase
 			}
 
 			// Right
-			int r = (int)Math.floor(positionComponent.Position.x + 1.01f);
+			int r = (int)Math.floor(positionComponent.Position.x + OnePlusEpsilon);
 			boolean hasRight = m_tilemap.getTile(r, lb) != 0 || m_tilemap.getTile(r, lt) != 0;
 			if(hasRight && rigidbodyComponent.Velocity.x > 0.0f)
 			{

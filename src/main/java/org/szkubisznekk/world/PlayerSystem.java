@@ -5,8 +5,6 @@ import org.joml.*;
 import org.szkubisznekk.core.*;
 import org.szkubisznekk.input.*;
 
-import java.lang.Math;
-
 public class PlayerSystem extends SystemBase
 {
 	public PlayerSystem(Dominion registry)
@@ -19,7 +17,7 @@ public class PlayerSystem extends SystemBase
 	{
 		m_registry.createEntity(
 			new PlayerComponent(),
-			new PositionComponent(new Vector2f(0.0f, 2.0f)),
+			new PositionComponent(new Vector2f(0.0f, 4.0f)),
 			new RigidbodyComponent(),
 			new SpriteComponent(0.0f, (byte)1));
 
@@ -57,13 +55,13 @@ public class PlayerSystem extends SystemBase
 			{
 				if(playerComponent.Jump)
 				{
-					rigidbodyComponent.Velocity.y = 10.0f;
+					rigidbodyComponent.Velocity.y = 18.0f;
 					playerComponent.Jump = false;
 				}
 			}
 			else
 			{
-				rigidbodyComponent.Velocity.y -= 20.0f * Time.getDeltaTime();
+				rigidbodyComponent.Velocity.y -= 40.0f * Time.getDeltaTime();
 			}
 		});
 	}
