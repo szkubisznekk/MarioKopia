@@ -28,7 +28,7 @@ vec2 getUV(int textureID)
 {
     float size = 1.0 / 8.0;
     int x = OUT.TextureID % 8;
-    int y = OUT.TextureID / 8;
+    int y = 7 - (OUT.TextureID / 8);
     return (vec2(x, y) + a_uv) * size;
 }
 
