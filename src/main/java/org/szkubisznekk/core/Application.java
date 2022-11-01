@@ -3,8 +3,10 @@ package org.szkubisznekk.core;
 import org.szkubisznekk.input.*;
 import org.szkubisznekk.renderer.*;
 import org.szkubisznekk.world.*;
+import org.szkubisznekk.audio.*;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 public class Application
 {
@@ -32,10 +34,13 @@ public class Application
 		});
 
 		m_renderer = new Renderer(m_window);
+
+		Audio.init();
 	}
 
 	public void destruct()
 	{
+		Audio.destruct();
 		m_renderer.destruct();
 		m_window.destruct();
 	}
@@ -46,6 +51,11 @@ public class Application
 
 		World world = new World();
 		world.start();
+
+		AudioClip clip = new AudioClip(Path.of("res/audio/fade.ogg"));
+		Audio.setVolume(0.2f);
+		Audio.play(clip, true);
+
 		while(m_running)
 		{
 			Input.update();
@@ -58,6 +68,7 @@ public class Application
 			m_renderer.endFrame();
 		}
 
+		clip.destruct();
 		world.stop();
 	}
 }

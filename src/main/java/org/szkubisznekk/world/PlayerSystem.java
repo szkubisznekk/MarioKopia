@@ -17,7 +17,7 @@ public class PlayerSystem extends SystemBase
 	{
 		m_registry.createEntity(
 			new PlayerComponent(),
-			new PositionComponent(new Vector2f(0.0f, 4.0f)),
+			new PositionComponent(new Vector2f(0.0f, 16.0f)),
 			new RigidbodyComponent(),
 			new SpriteComponent(0.0f, (byte)1));
 
