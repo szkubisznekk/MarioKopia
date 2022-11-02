@@ -1,0 +1,435 @@
+@startuml MarioKopia
+
+enum GamepadButtons {}
+enum GamepadAxes {}
+enum Keys {}
+enum MouseButtons {}
+enum Actions {}
+
+class Input
+{
+	- s_window : static Window
+	- s_inputDevices : static ArrayList<InputDevice>
+	+ init(window : Window) : static void
+	+ update() : static void
+	+ addInputDevice<T extends InputDevice>(Class<T> type) : static void
+	+ removeInputDevice<T extends InputDevice>(Class<T> type) : static void
+}
+
+class InputDevice
+{
+	# m_window : Window
+	+ init(window : Window) : void
+	+ update() : void
+}
+
+class Gamepad
+{
+	- s_instance : static Gamepad
+	+ OnButtonPress : ArrayList<Consumer<Integer>>
+	+ OnButtonRelease : ArrayList<Consumer<Integer>>
+	+ OnAxis : ArrayList<BiConsumer<Integer, Float>>
+	+ Deadzone : float
+	- m_connected : boolean
+	- m_state : GLFWGamepadState
+	- m_lastState : GLFWGamepadState
+	+ get() : static Gamepad
+	+ init(window : Window) : @Override void
+	+ update() : @Override void
+	+ isButton(button : int, action : int) : boolean
+	+ getAxis(axis : int) : float
+	- processStick(value : float) : float 
+	- processTrigger(value : float) : float 
+}
+
+class Keyboard
+{
+	- s_instance : static Keyboard
+	+ OnKeyPress : ArrayList<Consumer<Integer>>
+	+ OnKeyRelease : ArrayList<Consumer<Integer>>
+	+ get() : static Keyboard
+	+ init(window : Window) : @Override void
+	+ update() : @Override void
+	+ isKey(key : int, action : int) : boolean
+}
+
+class Mouse
+{
+	- s_instance : static Mouse
+	+ OnButtonPress : ArrayList<Consumer<Integer>>
+	+ OnButtonRelease : ArrayList<Consumer<Integer>>
+	+ get() : static Mouse
+	+ init(window : Window) : @Override void
+	+ update() : @Override void
+	+ isButton(button : int, action : int) : boolean
+}
+
+class Controls
+{
+	+ OnMove : static ArrayList<Consumer<Float>>
+	+ OnJump : static ArrayList<Runnable>
+	+ OnMenu : static ArrayList<Runnable>
+	- s_moveAD : static float
+	- s_moveArrows : static float
+	- s_moveGamepad : static float
+	+ init() : static void
+	+ getMove() : static float
+	+ isJump() : static boolean
+	+ isMenu() : static boolean
+	- onMove() : static void
+	- onJump() : static void
+	- onMenu() : static void
+}
+
+class Renderer
+{
+	- s_instance : static Renderer
+	- s_spriteVertices : static float[]
+	- s_spriteIndices : static int[]
+	+ Camera : Camera
+	+ SpriteShader : Shader
+	+ TextureAtlas : Texture
+	- m_window : Window
+	- m_spriteMesh : VertexArray
+	- m_drawCommands : ArrayList<DrawCommand>
+	- m_instanceBuffer : Buffer
+	- m_aspectRatio : float
+	- m_viewMatrix : Matrix4f
+	- m_projectionMatrix : Matrix4f
+	- m_matrixData : float[]
+	- m_projectionBuffer : Buffer
+	+ Renderer(window : Window)
+	+ destruct() : void
+	+ get() : static Renderer
+	+ beginFrame() : void
+	+ endFrame() : void
+	+ submit(position : Vector2f, depth : float, textureID : byte)
+}
+
+class DrawCommand
+{
+	+ Position : Vector2f
+	+ Depth : float
+	+ TextureID : int
+}
+
+class Shader
+{
+	- m_handle : int
+	+ Shader(path : Path)
+	+ destruct() : void
+	+ getHandle() : int
+	+ setUniform(name : String, value : int) : void
+	+ setUniform(name : String, value : float) : void
+	+ setUniform(name : String, value : Vector2i) : void
+	+ setUniform(name : String, value : Vector2f) : void
+	+ setUniform(name : String, value : Vector3i) : void
+	+ setUniform(name : String, value : Vector3f) : void
+	+ setUniform(name : String, value : Vector4i) : void
+	+ setUniform(name : String, value : Vector4f) : void
+	+ setUniform(name : String, value : Matrix3f) : void
+	+ setUniform(name : String, value : Matrix4f) : void
+	+ bind() : void
+	+ unbind() : static void
+	- getShaderSource(path : Path, type : int) : static String
+	- loadShaders(path : Path) : static ShaderDescription[]
+}
+
+class ShaderDescription
+{
+	+ Type : int
+	+ Handle : int
+	+ Source : String
+	+ ShaderDescription(type : int, handle : int, source : String)
+}
+
+class Texture
+{
+	- s_textures : static HashMap<Path, Texture>
+	- m_handle : int
+	+ load(path : Path) : static Texture
+	- Texture(path : Path)
+	+ destruct() : void
+	+ getHandle() : int
+	+ bind(location : int) : void
+}
+
+enum Usage {}
+
+class Buffer
+{
+	- m_handle : int
+	+ Buffer()
+	+ Buffer(size : long, usage : int)
+	+ Buffer(data : short[], usage : int)
+	+ Buffer(data : int[], usage : int)
+	+ Buffer(data : long[], usage : int)
+	+ Buffer(data : float[], usage : int)
+	+ Buffer(data : double[], usage : int)
+	+ destruct() : void
+	+ getHandle() : int
+	+ setData(size : long, usage : int)
+	+ setData(data : short[], usage : int)
+	+ setData(data : int[], usage : int)
+	+ setData(data : long[], usage : int)
+	+ setData(data : float[], usage : int)
+	+ setData(data : double[], usage : int)
+	+ setSubData(offset : long, data : short[])
+	+ setSubData(offset : long, data : int[])
+	+ setSubData(offset : long, data : long[])
+	+ setSubData(offset : long, data : float[])
+	+ setSubData(offset : long, data : double[])
+}
+
+class VertexArray
+{
+	- m_handle : int
+	- m_indexCount : int
+	+ VertexArray()
+	+ VertexArray(vertexBuffer : Buffer, elementBuffer : Buffer, indexCount : int)
+	+ destruct() : void
+	+ getHandle() : int
+	+ getIndexCount() : int
+	+ assignVertexBuffer(vertexBuffer : Buffer) : void
+	+ assignElementBuffer(elementBuffer : Buffer, indexCount : int) : void
+	+ bind() : void
+	+ unbind() : static void
+}
+
+class Camera
+{
+	+ Position : Vector2f
+	+ Size : float
+}
+
+class Application
+{
+    - m_window : Window
+    - m_running : boolean
+    - m_renderer : Renderer
+    + Application()
+    + destruct() : void
+    + run() : void
+}
+
+class Time
+{ 
+    - s_start : static double
+    - s_last : static double
+    - s_current : static double
+    + init() : static void
+    + update() : static void
+    + getTime() : static float
+    + getDeltaTime() : static float
+}
+
+class Window
+{
+   - static s_windowCount : static int
+   + OnClose : ArrayList<Runnable>
+   + OnResize : ArrayList<Consumer<Size>>
+   - m_handle : long
+   - m_size : Size
+   + Window()
+   + destruct() : void
+   + getHandle() : long
+   + getSize() : Size
+}
+
+class Size
+{
+    + Width : int
+    + Height : int
+}
+
+class Audio
+{
+    - s_device : static long
+    - s_context : static long
+    - s_volume : static float
+    - s_source : static ArrayList<AudioSource>
+    + init() : void
+    + destruct() : void
+    + setVolume(volume float) : void
+    + play( clip : AudioClip, loop boolean) : void
+}
+
+class AudioSource
+{
+    + m_handle : int
+    + AudioSource(volume : float)
+    + destruct() : void
+    + setVolume(volume : float) : void
+    + play(clip : AudioClip, loop : boolean) : void
+    + isPlaying() : boolean
+}
+
+class AudioClip
+{
+	- m_buffer : int
+	+ AudioClip(path : Path)
+	+ destruct : void
+	+ getBuffer : int
+}
+
+class CameraSystem
+{
+    + CameraSystem(registry : Dominion)
+    + start() : @Override void
+    + update() : @Override void
+}
+
+class PhysicsSystem
+{
+    - Epsilon : static float
+    - OnePlusEpsilon : static float
+    - TwoEpsilon : static float
+    - m_tilemap : Tilemap
+    + PhysicsSystem(registry : Dominion, tilemap : Tilemap)
+    + update() : @Override void
+}
+
+class PlayerComponent
+{
+    + Move : float
+    + Jump : boolean
+    + Speed : float
+    + PlayerComponent()
+    + PlayerComponent(speed : float)
+}
+
+class PlayerSystem
+{
+    + PlayerSystem(registry : Dominion)
+    + start() : @Override void
+    + update() : @Override void
+}
+
+class PositionComponent
+{
+    + Position : Vector2f
+    + PositionComponent()
+    + PositionComponent(position : Vector2f)
+}
+
+class RendererSystem
+{
+    + RendererSystem(registry : Dominion)
+    + update : @Override void
+}
+
+class RigidbodyComponent
+{
+    + Velocity : Vector2f
+    + IsGrounded : boolean
+    + RigidbodyComponent()
+    + RigidbodyComponent(velocity : Vector2f, IsGrounded : boolean)
+}
+
+class SpriteComponent
+{
+    + Depth : float
+    + TextureID : byte
+    + SpriteComponent()
+    + SpriteComponent(depth : float, textureID : byte)
+}
+
+class SystemBase
+{
+    # m_registry : Dominion
+    # SystemBase(registry : Dominion)
+    + start() : void
+    + update() : void
+    + stop() : void
+}
+
+class Tilemap
+{
+    - m_width : int
+    - m_height : int
+    - m_tiles : byte[]
+    + Tilemap(width : int, height : int)
+    + Tilemap(width : int, height : int, tiles : byte[])
+    + getIndex(x : int, y : int)
+    + getTile(i : int)
+    + getTile(i : int, y : int)
+    + setTile(i : int, tile : byte)
+    + setTile(x : int, y : int, tile : byte)
+}
+
+class Tiles
+{
+    + Air : static byte
+    + Brick : static byte
+}
+
+class World
+{
+    + WIDTH : static int
+    + HEIGHT : static int
+    - m_tilemap : Tilemap
+    - m_registry : Dominion
+    - m_systems : ArrayList<SystemBase>
+    + World()
+    + start() : void
+    + update() : void
+    + stop() : void
+    - submit() : void
+    - parse(path : String) : static String
+    - decode(data : String) : static String 
+}
+
+Tiles -- World
+Tiles -- Tilemap
+CameraSystem -- PlayerComponent
+CameraSystem -- Camera
+PhysicsSystem -- PositionComponent
+PhysicsSystem -- RigidbodyComponent
+PlayerSystem -- RigidbodyComponent
+PlayerSystem -- PlayerComponent
+RendererSystem -- SpriteComponent
+RendererSystem -- PositionComponent
+Window -- Size
+Renderer -- Window
+
+Application *-l- Window
+Application *-d- Renderer
+Application *-l- Time
+Application *-r- Audio
+Application *-r- Input
+Application *-u- World
+
+Input -- GamepadButtons
+Input -- GamepadAxes
+Input -- Keys
+Input -- MouseButtons
+Input -- Actions
+Renderer -- DrawCommand
+Buffer -- Usage
+Shader -- ShaderDescription
+VertexArray -- Buffer
+
+Input *-- InputDevice
+Renderer *-- Camera
+Audio *-- AudioSource
+World *-- Tilemap
+
+Gamepad o-- Controls 
+Keyboard o-- Controls 
+Mouse o-- Controls
+Audio o-- AudioClip
+World o-- SystemBase
+
+InputDevice <|-- Gamepad
+InputDevice <|-- Keyboard
+InputDevice <|-- Mouse
+Renderer <|-- Shader
+Renderer <|-- Texture
+Renderer <|-- VertexArray
+Renderer <|-- Buffer
+SystemBase <|-- CameraSystem
+SystemBase <|-- PhysicsSystem
+SystemBase <|-- PlayerSystem
+SystemBase <|-- RendererSystem
+
+@enduml
