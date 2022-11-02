@@ -18,14 +18,12 @@ public class Renderer
 	private record DrawCommand(Vector2f Position, float Depth, int TextureID) {}
 
 	private static Renderer s_instance;
-
 	private static final float[] s_spriteVertices = {
 		-0.5f, -0.5f, 0.0f, 0.0f,
 		0.5f, -0.5f, 1.0f, 0.0f,
 		-0.5f, 0.5f, 0.0f, 1.0f,
 		0.5f, 0.5f, 1.0f, 1.0f
 	};
-
 	private static final int[] s_spriteIndices = {
 		0, 1, 2,
 		1, 3, 2
@@ -37,10 +35,8 @@ public class Renderer
 
 	private final Window m_window;
 	private final VertexArray m_spriteMesh;
-
 	private final ArrayList<DrawCommand> m_drawCommands = new ArrayList<>();
 	private final Buffer m_instanceBuffer;
-
 	private float m_aspectRatio;
 	private final Matrix4f m_viewMatrix = new Matrix4f();
 	private final Matrix4f m_projectionMatrix = new Matrix4f();

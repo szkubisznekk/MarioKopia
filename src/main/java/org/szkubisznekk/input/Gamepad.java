@@ -70,14 +70,14 @@ public class Gamepad extends InputDevice
 			{
 				switch(state)
 				{
-					case Input.Actions.Press ->
+					case InputDeviceManager.Actions.Press ->
 					{
 						for(var callback : OnButtonPress)
 						{
 							callback.accept(button);
 						}
 					}
-					case Input.Actions.Release ->
+					case InputDeviceManager.Actions.Release ->
 					{
 						for(var callback : OnButtonRelease)
 						{
@@ -96,7 +96,7 @@ public class Gamepad extends InputDevice
 				for(var callback : OnAxis)
 				{
 					float value = m_state.axes(axis);
-					callback.accept(axis, (axis < Input.GamepadAxes.LeftTrigger) ? processStick(value) : processTrigger(value));
+					callback.accept(axis, (axis < InputDeviceManager.GamepadAxes.LeftTrigger) ? processStick(value) : processTrigger(value));
 				}
 			}
 		}
@@ -111,7 +111,7 @@ public class Gamepad extends InputDevice
 	{
 		float value = m_state.axes(axis);
 		System.out.println(value);
-		return (axis < Input.GamepadAxes.LeftTrigger) ? processStick(value) : processTrigger(value);
+		return (axis < InputDeviceManager.GamepadAxes.LeftTrigger) ? processStick(value) : processTrigger(value);
 	}
 
 	private float processStick(float value)

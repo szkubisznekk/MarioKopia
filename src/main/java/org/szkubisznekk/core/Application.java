@@ -12,6 +12,8 @@ public class Application
 {
 	private boolean m_running = true;
 	private final Window m_window;
+	private final InputDeviceManager m_inputDeviceManager;
+	private final AudioManager m_audioManager;
 	private final Renderer m_renderer;
 
 	public Application() throws IOException
@@ -22,10 +24,10 @@ public class Application
 			m_running = false;
 		});
 
-		Input.init(m_window);
-		Input.AddInputDevice(Keyboard.class);
-		Input.AddInputDevice(Mouse.class);
-		Input.AddInputDevice(Gamepad.class);
+		m_inputDeviceManager = new InputDeviceManager(m_window);
+		m_inputDeviceManager.addInputDevice(Keyboard.class);
+		m_inputDeviceManager.addInputDevice(Mouse.class);
+		m_inputDeviceManager.addInputDevice(Gamepad.class);
 
 		Controls.init();
 		Controls.OnMenu.add(() ->
@@ -33,15 +35,15 @@ public class Application
 			m_running = false;
 		});
 
-		m_renderer = new Renderer(m_window);
+		m_audioManager = new AudioManager();
 
-		Audio.init();
+		m_renderer = new Renderer(m_window);
 	}
 
 	public void destruct()
 	{
-		Audio.destruct();
 		m_renderer.destruct();
+		m_audioManager.destruct();
 		m_window.destruct();
 	}
 
@@ -53,13 +55,13 @@ public class Application
 		world.start();
 
 		AudioClip clip = new AudioClip(Path.of("res/audio/fade.ogg"));
-		Audio.setVolume(0.2f);
-		Audio.play(clip, true);
+		m_audioManager.setVolume(0.2f);
+		m_audioManager.play(clip, true);
 
 		while(m_running)
 		{
-			Input.update();
 			Time.update();
+			m_inputDeviceManager.update();
 
 			m_renderer.beginFrame();
 
