@@ -10,7 +10,7 @@ import java.nio.file.Path;
 
 public class AudioClip
 {
-	private int m_buffer;
+	private final int m_buffer;
 
 	public AudioClip(Path path)
 	{

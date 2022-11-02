@@ -7,58 +7,67 @@ import java.util.ArrayList;
 import static org.lwjgl.openal.AL10.*;
 import static org.lwjgl.openal.ALC10.*;
 
-public class Audio
+public class AudioManager
 {
-	private static long s_device;
-	private static long s_context;
-	private static float s_volume = 1.0f;
-	private static ArrayList<AudioSource> s_sources = new ArrayList<>();
+	private static AudioManager s_instance;
 
-	public static void init()
+	private long m_device;
+	private long m_context;
+	private float m_volume = 1.0f;
+	private ArrayList<AudioSource> m_sources = new ArrayList<>();
+
+	public AudioManager()
 	{
-		s_device = alcOpenDevice((java.lang.CharSequence)null);
-		s_context = alcCreateContext(s_device, (int[])null);
-		alcMakeContextCurrent(s_context);
-		ALCCapabilities alcCapabilities = ALC.createCapabilities(s_device);
+		s_instance = this;
+
+		m_device = alcOpenDevice((java.lang.CharSequence)null);
+		m_context = alcCreateContext(m_device, (int[])null);
+		alcMakeContextCurrent(m_context);
+		ALCCapabilities alcCapabilities = ALC.createCapabilities(m_device);
 		ALCapabilities alCapabilities = AL.createCapabilities(alcCapabilities);
 
 		alListener3f(AL_POSITION, 0.0f, 0.0f, 0.0f);
 		alListener3f(AL_VELOCITY, 0.0f, 0.0f, 0.0f);
 	}
 
-	public static void destruct()
+	public void destruct()
 	{
-		for(AudioSource source : s_sources)
+		for(AudioSource source : m_sources)
 		{
 			source.destruct();
 		}
 	}
 
-	public static void setVolume(float volume)
+	public static AudioManager get()
 	{
-		s_volume = volume;
-		for(AudioSource source : s_sources)
+		return s_instance;
+	}
+
+	public void setVolume(float volume)
+	{
+		m_volume = volume;
+		for(AudioSource source : m_sources)
 		{
-			source.setVolume(s_volume);
+			source.setVolume(m_volume);
 		}
 	}
 
-	public static void play(AudioClip clip, boolean loop)
+	public void play(AudioClip clip, boolean loop)
 	{
 		int i = 0;
-		while(i < s_sources.size() && s_sources.get(i).isPlaying())
+		while(i < m_sources.size() && m_sources.get(i).isPlaying())
 		{
 			i++;
 		}
 
-		if(i < s_sources.size())
+		if(i < m_sources.size())
 		{
-			s_sources.get(i).play(clip, loop);
+			m_sources.get(i).play(clip, loop);
 		}
 		else
 		{
-			AudioSource newSource = new AudioSource(s_volume);
-			s_sources.add(newSource);
+			AudioSource newSource = new AudioSource(m_volume);
+			m_sources.add(newSource);
 			newSource.play(clip, loop);
 		}
 	}

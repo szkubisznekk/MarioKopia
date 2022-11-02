@@ -31,14 +31,14 @@ public class Mouse extends InputDevice
 		{
 			switch(action)
 			{
-				case Input.Actions.Press ->
+				case InputDeviceManager.Actions.Press ->
 				{
 					for(var callback : OnButtonPress)
 					{
 						callback.accept(button);
 					}
 				}
-				case Input.Actions.Release ->
+				case InputDeviceManager.Actions.Release ->
 				{
 					for(var callback : OnButtonRelease)
 					{

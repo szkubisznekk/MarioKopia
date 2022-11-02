@@ -6,7 +6,7 @@ import static org.lwjgl.glfw.GLFW.*;
 
 import java.util.ArrayList;
 
-public class Input
+public class InputDeviceManager
 {
 	public static class Keys
 	{
@@ -57,7 +57,7 @@ public class Input
 		public static final int LeftBracket = 91;
 		public static final int Backslash = 92;
 		public static final int RightBracket = 93;
-		public static final int GRAVEAccent = 96;
+		public static final int GraveAccent = 96;
 		public static final int World1 = 161;
 		public static final int World2 = 162;
 		public static final int Escape = 256;
@@ -189,45 +189,43 @@ public class Input
 		public static final int Repeat = 2;
 	}
 
-	private static Window s_window;
-	private static final ArrayList<InputDevice> s_inputDevices = new ArrayList<>();
+	private final Window m_window;
+	private final ArrayList<InputDevice> m_inputDevices = new ArrayList<>();
 
-	private Input() {}
-
-	public static void init(Window window)
+	public InputDeviceManager(Window window)
 	{
-		s_window = window;
+		m_window = window;
 	}
 
-	public static void update()
+	public void update()
 	{
 		glfwPollEvents();
 
-		for(var inputDevice : s_inputDevices)
+		for(var inputDevice : m_inputDevices)
 		{
 			inputDevice.update();
 		}
 	}
 
-	public static <T extends InputDevice> void AddInputDevice(Class<T> type)
+	public <T extends InputDevice> void addInputDevice(Class<T> type)
 	{
 		try
 		{
 			InputDevice inputDevice = type.getConstructor().newInstance();
-			inputDevice.init(s_window);
-			s_inputDevices.add(inputDevice);
+			inputDevice.init(m_window);
+			m_inputDevices.add(inputDevice);
 		}
 		catch(Exception ignored) {}
 	}
 
-	public static <T extends InputDevice> void RemoveInputDevice(Class<T> type)
+	public <T extends InputDevice> void removeInputDevice(Class<T> type)
 	{
-		int n = s_inputDevices.size();
+		int n = m_inputDevices.size();
 		int i = 0;
-		while(i < n && s_inputDevices.get(i).getClass() != type) {i++;}
+		while(i < n && m_inputDevices.get(i).getClass() != type) {i++;}
 		if(i < n)
 		{
-			s_inputDevices.remove(i);
+			m_inputDevices.remove(i);
 		}
 	}
 }
