@@ -19,7 +19,7 @@ public class PlayerSystem extends SystemBase
 			new PlayerComponent(),
 			new PositionComponent(new Vector2f(0.0f, 16.0f)),
 			new RigidbodyComponent(),
-			new SpriteComponent(0.0f, (byte)1));
+			new SpriteComponent(0.0f, (byte)57));
 
 		m_registry.findEntitiesWith(PlayerComponent.class, RigidbodyComponent.class).stream().forEach(result ->
 		{
