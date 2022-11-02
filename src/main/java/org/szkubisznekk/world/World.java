@@ -28,7 +28,7 @@ public class World
 
 	public World()
 	{
-		m_tilemap = decode(parse("res/maps/1.tmx"));
+		m_tilemap = decode(parse("res/maps/untitled.tmx"));
 
 		m_systems.add(new PlayerSystem(m_registry));
 		m_systems.add(new PhysicsSystem(m_registry, m_tilemap));
