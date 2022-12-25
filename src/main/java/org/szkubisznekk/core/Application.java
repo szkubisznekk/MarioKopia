@@ -67,9 +67,23 @@ public class Application
 			m_renderer.beginFrame();
 
 			world.update();
-			m_renderer.submitTextRelative(new Vector2f(0f, 0f), "ABCDEFGHIJKLM");
-			m_renderer.submitTextRelative(new Vector2f(50f, 100f), "NOPQRSTUVWXYZ");
-			m_renderer.submitTextAbsolute(new Vector2f(0f, -0.9f), "0123456789");
+			m_renderer.submitTextAbsolute(
+				new Vector2f(0.0f, -1.0f),
+				"Foxenin",
+				Renderer.HorizontalAlign.Center,
+				Renderer.VerticalAlign.Bottom);
+
+			m_renderer.submitTextAbsolute(
+				new Vector2f(1.0f, 1.0f),
+				"Foxenin",
+				Renderer.HorizontalAlign.Right,
+				Renderer.VerticalAlign.Top);
+
+			m_renderer.submitTextAbsolute(
+				new Vector2f(-1.0f, -1.0f),
+				"Foxenin",
+				Renderer.HorizontalAlign.Left,
+				Renderer.VerticalAlign.Bottom);
 
 			m_renderer.endFrame();
 		}
