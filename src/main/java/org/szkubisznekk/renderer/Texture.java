@@ -36,7 +36,7 @@ public class Texture
 	{
 		m_handle = glGenTextures();
 
-		glBindTexture(GL_TEXTURE_2D, m_handle);
+		bind(31);
 
 		IntBuffer width = BufferUtils.createIntBuffer(1);
 		IntBuffer height = BufferUtils.createIntBuffer(1);

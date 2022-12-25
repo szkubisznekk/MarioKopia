@@ -9,9 +9,9 @@ in Varyings
 
 layout (location = 0) out vec4 Color;
 
-layout (binding = 0) uniform sampler2D u_spriteAtlas;
+layout (binding = 1) uniform sampler2D u_textAtlas;
 
 void main()
 {
-    Color = texture(u_spriteAtlas, IN.UV);
+    Color = texture(u_textAtlas, IN.UV);
 }

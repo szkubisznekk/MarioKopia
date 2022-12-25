@@ -3,13 +3,7 @@
 layout (location = 0) in vec2 a_position;
 layout (location = 1) in vec2 a_uv;
 
-layout (std140, binding = 0) uniform ProjectionParamsUBO
-{
-    mat4 ViewMatrix;
-    mat4 ProjectionMatrix;
-} ProjectionParams;
-
-layout (std430, binding = 0) buffer InstanceTransformsSSBO
+layout (std430, binding = 1) buffer TextInstanceTransformsSSBO
 {
     vec4 Position[];
 } InstanceTransforms;
@@ -20,6 +14,8 @@ out Varyings
     vec2 UV;
     int TextureID;
 } OUT;
+
+uniform mat4 u_textProjectionMatrix;
 
 vec2 getUV(int textureID)
 {
@@ -34,5 +30,5 @@ void main()
     OUT.Position = a_position + InstanceTransforms.Position[gl_InstanceID].xy;
     OUT.TextureID = int(InstanceTransforms.Position[gl_InstanceID].w);
     OUT.UV = getUV(OUT.TextureID - 1);
-    gl_Position = ProjectionParams.ProjectionMatrix * ProjectionParams.ViewMatrix * vec4(OUT.Position, InstanceTransforms.Position[gl_InstanceID].z, 1.0);
+    gl_Position = u_textProjectionMatrix * vec4(OUT.Position, InstanceTransforms.Position[gl_InstanceID].z, 1.0);
 }
