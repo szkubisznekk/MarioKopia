@@ -38,7 +38,7 @@ public class Keyboard extends InputDevice
 	 * @param window The window used to handle inputs.
 	 */
 	@Override
-	public void init(Window window)
+	void init(Window window)
 	{
 		super.init(window);
 		s_instance = this;
@@ -69,7 +69,7 @@ public class Keyboard extends InputDevice
 	 * Does nothing.
 	 */
 	@Override
-	public void update()
+	void update()
 	{
 		super.update();
 	}
