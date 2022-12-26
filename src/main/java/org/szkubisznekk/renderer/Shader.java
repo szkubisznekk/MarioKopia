@@ -8,12 +8,27 @@ import static org.lwjgl.opengl.GL46C.*;
 import java.io.IOException;
 import java.nio.*;
 import java.nio.file.*;
+import java.util.HashMap;
 
 public class Shader
 {
+	private static final HashMap<String, Shader> s_shaders = new HashMap<>();
+
 	private final int m_handle;
 
-	public Shader(Path path) throws IOException
+	public static Shader get(String path)
+	{
+		if(s_shaders.containsKey(path))
+		{
+			return s_shaders.get(path);
+		}
+
+		Shader shader = new Shader(path);
+		s_shaders.put(path, shader);
+		return shader;
+	}
+
+	private Shader(String path)
 	{
 		m_handle = glCreateProgram();
 
@@ -130,12 +145,22 @@ public class Shader
 		glUseProgram(0);
 	}
 
-	private static String getShaderSource(Path path, int type) throws IOException
+	private static String getShaderSource(String path, int type)
 	{
-		return Files.readString(path.resolveSibling(path.getFileName() + ((type == GL_VERTEX_SHADER) ? ".vert" : ".frag")));
+		String actualPath = path + ((type == GL_VERTEX_SHADER) ? ".vert" : ".frag");
+		try
+		{
+			return Files.readString(Path.of(actualPath));
+		}
+		catch(IOException e)
+		{
+			System.err.printf("Failed to load shader: (%s)\n", actualPath);
+			return "";
+
+		}
 	}
 
-	private static ShaderDescription[] loadShaders(Path path) throws IOException
+	private static ShaderDescription[] loadShaders(String path)
 	{
 		return new ShaderDescription[]{
 			new ShaderDescription(GL_VERTEX_SHADER, -1, getShaderSource(path, GL_VERTEX_SHADER)),

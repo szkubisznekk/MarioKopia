@@ -9,8 +9,6 @@ import static org.lwjgl.opengl.GL.*;
 import static org.lwjgl.opengl.GL46C.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Renderer
@@ -122,7 +120,7 @@ public class Renderer
 	private final Matrix4f m_spriteProjectionMatrix = new Matrix4f();
 	private final Matrix4f m_textProjectionMatrix = new Matrix4f();
 
-	public Renderer(Window window) throws IOException
+	public Renderer(Window window)
 	{
 		s_instance = this;
 
@@ -143,18 +141,18 @@ public class Renderer
 			new Buffer(s_spriteVertices, Buffer.Usage.StaticDraw),
 			new Buffer(s_spriteIndices, Buffer.Usage.StaticDraw),
 			s_spriteIndices.length), 0);
-		SpriteShader = new Shader(Path.of("res/shaders/Sprite"));
+		SpriteShader = Shader.get("res/shaders/Sprite");
 
-		SpriteAtlas = Texture.load(Path.of("res/textures/sprites.png"));
+		SpriteAtlas = Texture.get("res/textures/sprites.png");
 		SpriteAtlas.bind(0);
 
 		m_textRenderer = new BatchRenderer(new VertexArray(
 			new Buffer(s_textVertices, Buffer.Usage.StaticDraw),
 			new Buffer(s_spriteIndices, Buffer.Usage.StaticDraw),
 			s_spriteIndices.length), 1);
-		TextShader = new Shader(Path.of("res/shaders/Text"));
+		TextShader = Shader.get("res/shaders/Text");
 
-		TextAtlas = Texture.load(Path.of("res/textures/font.png"));
+		TextAtlas = Texture.get("res/textures/font.png");
 		TextAtlas.bind(1);
 
 		// Handle Window Resize

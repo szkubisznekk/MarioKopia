@@ -6,7 +6,6 @@ import org.szkubisznekk.renderer.*;
 import org.szkubisznekk.world.*;
 import org.szkubisznekk.audio.*;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 public class Application
@@ -17,7 +16,7 @@ public class Application
 	private final AudioManager m_audioManager;
 	private final Renderer m_renderer;
 
-	public Application() throws IOException
+	public Application()
 	{
 		m_window = new Window();
 		m_window.OnClose.add(() ->
@@ -67,24 +66,7 @@ public class Application
 			m_renderer.beginFrame();
 
 			world.update();
-			m_renderer.submitTextAbsolute(
-				new Vector2f(0.0f, -1.0f),
-				"Foxenin",
-				Renderer.HorizontalAlign.Center,
-				Renderer.VerticalAlign.Bottom);
-
-			m_renderer.submitTextAbsolute(
-				new Vector2f(1.0f, 1.0f),
-				"Foxenin",
-				Renderer.HorizontalAlign.Right,
-				Renderer.VerticalAlign.Top);
-
-			m_renderer.submitTextAbsolute(
-				new Vector2f(-1.0f, -1.0f),
-				"Foxenin",
-				Renderer.HorizontalAlign.Left,
-				Renderer.VerticalAlign.Bottom);
-
+			
 			m_renderer.endFrame();
 		}
 
