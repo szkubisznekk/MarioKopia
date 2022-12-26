@@ -1,12 +1,9 @@
 package org.szkubisznekk.core;
 
-import org.joml.Vector2f;
 import org.szkubisznekk.input.*;
 import org.szkubisznekk.renderer.*;
 import org.szkubisznekk.world.*;
 import org.szkubisznekk.audio.*;
-
-import java.nio.file.Path;
 
 public class Application
 {
@@ -54,7 +51,7 @@ public class Application
 		World world = new World();
 		world.start();
 
-		AudioClip clip = new AudioClip(Path.of("res/audio/fade.ogg"));
+		AudioClip clip = new AudioClip("res/audio/fade.ogg");
 		m_audioManager.setVolume(0.2f);
 		m_audioManager.play(clip, true);
 
