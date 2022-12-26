@@ -6,6 +6,9 @@ import static org.lwjgl.glfw.GLFW.*;
 
 import java.util.ArrayList;
 
+/**
+ * Manages input devices.
+ */
 public class InputDeviceManager
 {
 	public static class Keys
@@ -192,11 +195,18 @@ public class InputDeviceManager
 	private final Window m_window;
 	private final ArrayList<InputDevice> m_inputDevices = new ArrayList<>();
 
+	/**
+	 * Assigns the window.
+	 * @param window The window used to handle inputs.
+	 */
 	public InputDeviceManager(Window window)
 	{
 		m_window = window;
 	}
 
+	/**
+	 * Updates all input devices.
+	 */
 	public void update()
 	{
 		glfwPollEvents();
@@ -207,6 +217,11 @@ public class InputDeviceManager
 		}
 	}
 
+	/**
+	 * Add a new input device.
+	 * @param type The type of the input device.
+	 * @param <T> The type of the input device.
+	 */
 	public <T extends InputDevice> void addInputDevice(Class<T> type)
 	{
 		try
@@ -218,6 +233,11 @@ public class InputDeviceManager
 		catch(Exception ignored) {}
 	}
 
+	/**
+	 * Remove an input device.
+	 * @param type The type of the input device.
+	 * @param <T> The type of the input device.
+	 */
 	public <T extends InputDevice> void removeInputDevice(Class<T> type)
 	{
 		int n = m_inputDevices.size();

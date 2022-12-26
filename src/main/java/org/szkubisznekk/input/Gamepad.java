@@ -10,24 +10,50 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.BiConsumer;
 
+/**
+ * Provides callbacks and functions for a gamepad.
+ */
 public class Gamepad extends InputDevice
 {
 	private static Gamepad s_instance;
 
+	/**
+	 * Called when any button is pressed.
+	 */
 	public ArrayList<Consumer<Integer>> OnButtonPress = new ArrayList<>();
+
+	/**
+	 * Called when any button is released.
+	 */
 	public ArrayList<Consumer<Integer>> OnButtonRelease = new ArrayList<>();
+
+	/**
+	 * Called when any axis' value is changed.
+	 */
 	public ArrayList<BiConsumer<Integer, Float>> OnAxis = new ArrayList<>();
+
+	/**
+	 * Analog values smaller than this value will be ignored.
+	 */
 	public float Deadzone = 0.05f;
 
 	private boolean m_connected;
 	private final GLFWGamepadState m_state = GLFWGamepadState.calloc();
 	private final GLFWGamepadState m_lastState = GLFWGamepadState.calloc();
 
+	/**
+	 * Returns the only instance of gamepad.
+	 * @return The only instance of gamepad.
+	 */
 	public static Gamepad get()
 	{
 		return s_instance;
 	}
 
+	/**
+	 * Sets up callbacks.
+	 * @param window The window used to handle inputs.
+	 */
 	@Override
 	public void init(Window window)
 	{
@@ -51,6 +77,9 @@ public class Gamepad extends InputDevice
 		});
 	}
 
+	/**
+	 * Checks whether any value has been changed since last time.
+	 */
 	@Override
 	public void update()
 	{
@@ -102,11 +131,22 @@ public class Gamepad extends InputDevice
 		}
 	}
 
+	/**
+	 * Returns whether a button is performing a specific action.
+	 * @param button The button.
+	 * @param action The action.
+	 * @return Whether a button is performing a specific action.
+	 */
 	public boolean isButton(int button, int action)
 	{
 		return m_state.buttons(button) == action;
 	}
 
+	/**
+	 * Returns an axis' current value.
+	 * @param axis The axis.
+	 * @return An axis' current value.
+	 */
 	public float getAxis(int axis)
 	{
 		float value = m_state.axes(axis);
@@ -114,6 +154,11 @@ public class Gamepad extends InputDevice
 		return (axis < InputDeviceManager.GamepadAxes.LeftTrigger) ? processStick(value) : processTrigger(value);
 	}
 
+	/**
+	 * Applies deadzone to an analog value.
+	 * @param value The analog value.
+	 * @return The modified value.
+	 */
 	private float processStick(float value)
 	{
 		float maxValue = 1.0f / (1.0f - Deadzone);
@@ -131,6 +176,11 @@ public class Gamepad extends InputDevice
 		return abs * maxValue * sign;
 	}
 
+	/**
+	 * Applies deadzone to an analog value and transform it from [-1.0, 1.0] to [0.0, 1.0].
+	 * @param value The analog value.
+	 * @return The modified value.
+	 */
 	private float processTrigger(float value)
 	{
 		value = (value + 1.0f) * 0.5f;
