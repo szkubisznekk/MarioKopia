@@ -21,6 +21,7 @@ public class Shader
 
 	/**
 	 * Returns a shader. If the shader hasn't been yet loaded, then loads it into the cache.
+	 *
 	 * @param path The path to the source of the shaders.
 	 * @return A shader.
 	 */
@@ -38,6 +39,7 @@ public class Shader
 
 	/**
 	 * Creates a program using a vertex and a fragment shader.
+	 *
 	 * @param path The path to the source of the shaders.
 	 */
 	private Shader(String path)
@@ -71,6 +73,7 @@ public class Shader
 
 	/**
 	 * Returns the handle of the OpenGL program.
+	 *
 	 * @return The handle of the OpenGL program.
 	 */
 	public int getHandle()
@@ -80,7 +83,8 @@ public class Shader
 
 	/**
 	 * Set a uniform in the shader.
-	 * @param name The name of the uniform.
+	 *
+	 * @param name  The name of the uniform.
 	 * @param value The new value of the uniform.
 	 */
 	public void setUniform(String name, int value)
@@ -91,7 +95,8 @@ public class Shader
 
 	/**
 	 * Set a uniform in the shader.
-	 * @param name The name of the uniform.
+	 *
+	 * @param name  The name of the uniform.
 	 * @param value The new value of the uniform.
 	 */
 	public void setUniform(String name, float value)
@@ -102,7 +107,8 @@ public class Shader
 
 	/**
 	 * Set a uniform in the shader.
-	 * @param name The name of the uniform.
+	 *
+	 * @param name  The name of the uniform.
 	 * @param value The new value of the uniform.
 	 */
 	public void setUniform(String name, Vector2i value)
@@ -115,7 +121,8 @@ public class Shader
 
 	/**
 	 * Set a uniform in the shader.
-	 * @param name The name of the uniform.
+	 *
+	 * @param name  The name of the uniform.
 	 * @param value The new value of the uniform.
 	 */
 	public void setUniform(String name, Vector2f value)
@@ -128,7 +135,8 @@ public class Shader
 
 	/**
 	 * Set a uniform in the shader.
-	 * @param name The name of the uniform.
+	 *
+	 * @param name  The name of the uniform.
 	 * @param value The new value of the uniform.
 	 */
 	public void setUniform(String name, Vector3i value)
@@ -141,7 +149,8 @@ public class Shader
 
 	/**
 	 * Set a uniform in the shader.
-	 * @param name The name of the uniform.
+	 *
+	 * @param name  The name of the uniform.
 	 * @param value The new value of the uniform.
 	 */
 	public void setUniform(String name, Vector3f value)
@@ -154,7 +163,8 @@ public class Shader
 
 	/**
 	 * Set a uniform in the shader.
-	 * @param name The name of the uniform.
+	 *
+	 * @param name  The name of the uniform.
 	 * @param value The new value of the uniform.
 	 */
 	public void setUniform(String name, Vector4i value)
@@ -167,7 +177,8 @@ public class Shader
 
 	/**
 	 * Set a uniform in the shader.
-	 * @param name The name of the uniform.
+	 *
+	 * @param name  The name of the uniform.
 	 * @param value The new value of the uniform.
 	 */
 	public void setUniform(String name, Vector4f value)
@@ -180,7 +191,8 @@ public class Shader
 
 	/**
 	 * Set a uniform in the shader.
-	 * @param name The name of the uniform.
+	 *
+	 * @param name  The name of the uniform.
 	 * @param value The new value of the uniform.
 	 */
 	public void setUniform(String name, Matrix3f value)
@@ -193,7 +205,8 @@ public class Shader
 
 	/**
 	 * Set a uniform in the shader.
-	 * @param name The name of the uniform.
+	 *
+	 * @param name  The name of the uniform.
 	 * @param value The new value of the uniform.
 	 */
 	public void setUniform(String name, Matrix4f value)
@@ -222,6 +235,7 @@ public class Shader
 
 	/**
 	 * Loads one shader source file.
+	 *
 	 * @param path The path to the file.
 	 * @param type The type of the shader.
 	 * @return The source of the shader.
@@ -243,6 +257,7 @@ public class Shader
 
 	/**
 	 * Loads the vertex and fragment shader from files.
+	 *
 	 * @param path The path to the source files.
 	 * @return The description of the vertex and fragment shader.
 	 */

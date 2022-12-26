@@ -24,6 +24,7 @@ public class Texture
 
 	/**
 	 * Returns a texture. If the texture hasn't been yet loaded, then loads it into the cache.
+	 *
 	 * @param path The path to the texture.
 	 * @return A texture.
 	 */
@@ -41,6 +42,7 @@ public class Texture
 
 	/**
 	 * Creates a texture and loads it from a file.
+	 *
 	 * @param path The path to the file.
 	 */
 	private Texture(String path)
@@ -80,6 +82,7 @@ public class Texture
 
 	/**
 	 * Returns the handle of the OpenGL texture.
+	 *
 	 * @return The handle of the OpenGL texture.
 	 */
 	public int getHandle()
@@ -89,6 +92,7 @@ public class Texture
 
 	/**
 	 * Binds the texture to a location.
+	 *
 	 * @param location The location.
 	 */
 	public void bind(int location)

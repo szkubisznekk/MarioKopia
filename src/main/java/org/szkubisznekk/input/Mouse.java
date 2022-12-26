@@ -26,6 +26,7 @@ public class Mouse extends InputDevice
 
 	/**
 	 * Returns the only instance of mouse.
+	 *
 	 * @return The only instance of mouse.
 	 */
 	public static Mouse get()
@@ -35,6 +36,7 @@ public class Mouse extends InputDevice
 
 	/**
 	 * Sets up callbacks.
+	 *
 	 * @param window The window used to handle inputs.
 	 */
 	@Override
@@ -49,20 +51,8 @@ public class Mouse extends InputDevice
 		{
 			switch(action)
 			{
-				case InputCodes.Actions.Press ->
-				{
-					for(var callback : OnButtonPress)
-					{
-						callback.accept(button);
-					}
-				}
-				case InputCodes.Actions.Release ->
-				{
-					for(var callback : OnButtonRelease)
-					{
-						callback.accept(button);
-					}
-				}
+				case InputCodes.Actions.Press -> Utility.callAction(OnButtonPress, button);
+				case InputCodes.Actions.Release -> Utility.callAction(OnButtonRelease, button);
 			}
 		});
 	}
@@ -78,6 +68,7 @@ public class Mouse extends InputDevice
 
 	/**
 	 * Returns whether a button is performing a specific action.
+	 *
 	 * @param button The button.
 	 * @param action The action.
 	 * @return Whether a button is performing a specific action.

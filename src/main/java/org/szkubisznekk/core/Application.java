@@ -66,7 +66,7 @@ public class Application
 			m_renderer.beginFrame();
 
 			world.update();
-			
+
 			m_renderer.endFrame();
 		}
 

@@ -33,9 +33,10 @@ public class VertexArray
 
 	/**
 	 * Creates a vertex array object and assigns buffers.
-	 * @param vertexBuffer The vertex buffer.
+	 *
+	 * @param vertexBuffer  The vertex buffer.
 	 * @param elementBuffer The element buffer.
-	 * @param indexCount The number of indices.
+	 * @param indexCount    The number of indices.
 	 */
 	public VertexArray(Buffer vertexBuffer, Buffer elementBuffer, int indexCount)
 	{
@@ -54,6 +55,7 @@ public class VertexArray
 
 	/**
 	 * Returns the handle of the OpenGL vertex array object.
+	 *
 	 * @return The handle of the OpenGL vertex array object.
 	 */
 	public int getHandle()
@@ -63,6 +65,7 @@ public class VertexArray
 
 	/**
 	 * Returns the number of indices.
+	 *
 	 * @return The number of indices.
 	 */
 	public int getIndexCount()
@@ -72,6 +75,7 @@ public class VertexArray
 
 	/**
 	 * Assigns a vertex buffer to the vertex array object.
+	 *
 	 * @param vertexBuffer The vertex buffer.
 	 */
 	public void assignVertexBuffer(Buffer vertexBuffer)
@@ -81,6 +85,7 @@ public class VertexArray
 
 	/**
 	 * Assigns an element buffer to the vertex array object.
+	 *
 	 * @param elementBuffer The element buffer.
 	 */
 	public void assignElementBuffer(Buffer elementBuffer, int indexCount)

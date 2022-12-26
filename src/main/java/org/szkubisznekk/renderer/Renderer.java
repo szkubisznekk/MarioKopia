@@ -38,8 +38,9 @@ public class Renderer
 
 	/**
 	 * Stores data used to render a quad.
-	 * @param Position The position of the quad.
-	 * @param Depth The z coordinate of the quad.
+	 *
+	 * @param Position  The position of the quad.
+	 * @param Depth     The z coordinate of the quad.
 	 * @param TextureID The id of the texture on the texture atlas.
 	 */
 	private record DrawCommand(Vector2f Position, float Depth, int TextureID) {}
@@ -55,7 +56,8 @@ public class Renderer
 
 		/**
 		 * Creates a shader storage buffer used to store instance data,
-		 * @param mesh The drawn mesh.
+		 *
+		 * @param mesh           The drawn mesh.
 		 * @param bufferLocation The location of the shader storage buffer. [0, 31]
 		 */
 		public BatchRenderer(VertexArray mesh, int bufferLocation)
@@ -85,8 +87,9 @@ public class Renderer
 
 		/**
 		 * Submits a quad to the batch renderer to be drawn using a shader and a texture.
-		 * @param position Thw world space position of the quad's origin.
-		 * @param depth The z coordinate of the quad.
+		 *
+		 * @param position  Thw world space position of the quad's origin.
+		 * @param depth     The z coordinate of the quad.
 		 * @param textureID The id of the texture on the texture atlas.
 		 */
 		public void submit(Vector2f position, float depth, int textureID)
@@ -96,6 +99,7 @@ public class Renderer
 
 		/**
 		 * Renders all queues quads using a shader.
+		 *
 		 * @param shader The used shader.
 		 */
 		public void render(Shader shader)
@@ -109,6 +113,7 @@ public class Renderer
 
 		/**
 		 * Creates an array containing the data for the instance buffer.
+		 *
 		 * @param drawCommands The list of draw commands.
 		 * @return An array containing the data for the instance buffer.
 		 */
@@ -185,6 +190,7 @@ public class Renderer
 
 	/**
 	 * Creates the OpenGL context and loads the base resources.
+	 *
 	 * @param window The window used to display the rendered image.
 	 */
 	public Renderer(Window window)
@@ -251,6 +257,7 @@ public class Renderer
 
 	/**
 	 * Returns the only instance of renderer.
+	 *
 	 * @return The only instance of renderer.
 	 */
 	public static Renderer get()
@@ -289,8 +296,9 @@ public class Renderer
 	/**
 	 * Submits a tile to the sprite batch renderer to be drawn using the sprite shader and sprite texture atlas.
 	 * Tiles will be submitted only if they are on the screen.
-	 * @param position Thw world space position of the tile's center.
-	 * @param depth The z coordinate of the tile.
+	 *
+	 * @param position  Thw world space position of the tile's center.
+	 * @param depth     The z coordinate of the tile.
 	 * @param textureID The id of the texture on the sprite texture atlas.
 	 */
 	public void submit(Vector2f position, float depth, byte textureID)
@@ -316,10 +324,11 @@ public class Renderer
 
 	/**
 	 * Submits a text to the text batch renderer to be drawn using the text shader and text texture atlas.
-	 * @param position The position of the text in screen space. Given in number of pixels from center.
-	 * @param string The text.
+	 *
+	 * @param position        The position of the text in screen space. Given in number of pixels from center.
+	 * @param string          The text.
 	 * @param horizontalAlign Aligns the anchor point to the given position relative to the text.
-	 * @param verticalAlign Aligns the anchor point to the given position relative to the text.
+	 * @param verticalAlign   Aligns the anchor point to the given position relative to the text.
 	 */
 	public void submitTextAbsolute(Vector2f position, String string, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign)
 	{
@@ -355,10 +364,11 @@ public class Renderer
 
 	/**
 	 * Submits a text to the text batch renderer to be drawn using the text shader and text texture atlas.
-	 * @param position The position of the text in screen space. Given in range of [-1.0, 1.0] from center.
-	 * @param string The text.
+	 *
+	 * @param position        The position of the text in screen space. Given in range of [-1.0, 1.0] from center.
+	 * @param string          The text.
 	 * @param horizontalAlign Aligns the anchor point to the given position relative to the text.
-	 * @param verticalAlign Aligns the anchor point to the given position relative to the text.
+	 * @param verticalAlign   Aligns the anchor point to the given position relative to the text.
 	 */
 	public void submitTextRelative(Vector2f position, String string, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign)
 	{
@@ -389,6 +399,7 @@ public class Renderer
 
 	/**
 	 * Recalculates the projection matrix used in the text rendering.
+	 *
 	 * @param windowSize The size of the window.
 	 */
 	private void recalculateTextMatrices(Window.Size windowSize)

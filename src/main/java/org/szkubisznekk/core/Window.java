@@ -33,21 +33,12 @@ public class Window
 
 		m_handle = glfwCreateWindow(800, 600, "Window", NULL, NULL);
 
-		glfwSetWindowCloseCallback(m_handle, (long handle) ->
-		{
-			for(var callback : OnClose)
-			{
-				callback.run();
-			}
-		});
+		glfwSetWindowCloseCallback(m_handle, (long handle) -> Utility.callAction(OnClose));
 
 		glfwSetFramebufferSizeCallback(m_handle, (long handle, int width, int height) ->
 		{
 			m_size = new Size(width, height);
-			for(var callback : OnResize)
-			{
-				callback.accept(new Size(width, height));
-			}
+			Utility.callAction(OnResize, m_size);
 		});
 	}
 

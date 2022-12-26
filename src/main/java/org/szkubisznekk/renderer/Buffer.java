@@ -47,7 +47,8 @@ public class Buffer
 
 	/**
 	 * Creates a buffer and initializes it.
-	 * @param size The size of the buffer in bytes.
+	 *
+	 * @param size  The size of the buffer in bytes.
 	 * @param usage The usage hint.
 	 */
 	public Buffer(long size, Usage usage)
@@ -58,8 +59,9 @@ public class Buffer
 
 	/**
 	 * Creates a buffer, initializes it and sets its data.
-	 * @param data The data.
-	 * @param usage  The usage hint.
+	 *
+	 * @param data  The data.
+	 * @param usage The usage hint.
 	 */
 	public Buffer(short[] data, Usage usage)
 	{
@@ -69,8 +71,9 @@ public class Buffer
 
 	/**
 	 * Creates a buffer, initializes it and sets its data.
-	 * @param data The data.
-	 * @param usage  The usage hint.
+	 *
+	 * @param data  The data.
+	 * @param usage The usage hint.
 	 */
 	public Buffer(int[] data, Usage usage)
 	{
@@ -80,8 +83,9 @@ public class Buffer
 
 	/**
 	 * Creates a buffer, initializes it and sets its data.
-	 * @param data The data.
-	 * @param usage  The usage hint.
+	 *
+	 * @param data  The data.
+	 * @param usage The usage hint.
 	 */
 	public Buffer(long[] data, Usage usage)
 	{
@@ -91,8 +95,9 @@ public class Buffer
 
 	/**
 	 * Creates a buffer, initializes it and sets its data.
-	 * @param data The data.
-	 * @param usage  The usage hint.
+	 *
+	 * @param data  The data.
+	 * @param usage The usage hint.
 	 */
 	public Buffer(float[] data, Usage usage)
 	{
@@ -102,8 +107,9 @@ public class Buffer
 
 	/**
 	 * Creates a buffer, initializes it and sets its data.
-	 * @param data The data.
-	 * @param usage  The usage hint.
+	 *
+	 * @param data  The data.
+	 * @param usage The usage hint.
 	 */
 	public Buffer(double[] data, Usage usage)
 	{
@@ -121,6 +127,7 @@ public class Buffer
 
 	/**
 	 * Returns the handle of the OpenGL buffer.
+	 *
 	 * @return The handle of the OpenGL buffer.
 	 */
 	public int getHandle()
@@ -130,7 +137,8 @@ public class Buffer
 
 	/**
 	 * Reinitialize the buffer.
-	 * @param size The new size of the buffer in bytes.
+	 *
+	 * @param size  The new size of the buffer in bytes.
 	 * @param usage The usage hint.
 	 */
 	public void setData(long size, Usage usage)
@@ -140,7 +148,8 @@ public class Buffer
 
 	/**
 	 * Reinitialize the buffer and set its data.
-	 * @param data The new data.
+	 *
+	 * @param data  The new data.
 	 * @param usage The usage hint.
 	 */
 	public void setData(short[] data, Usage usage)
@@ -150,7 +159,8 @@ public class Buffer
 
 	/**
 	 * Reinitialize the buffer and set its data.
-	 * @param data The new data.
+	 *
+	 * @param data  The new data.
 	 * @param usage The usage hint.
 	 */
 	public void setData(int[] data, Usage usage)
@@ -160,7 +170,8 @@ public class Buffer
 
 	/**
 	 * Reinitialize the buffer and set its data.
-	 * @param data The new data.
+	 *
+	 * @param data  The new data.
 	 * @param usage The usage hint.
 	 */
 	public void setData(long[] data, Usage usage)
@@ -170,7 +181,8 @@ public class Buffer
 
 	/**
 	 * Reinitialize the buffer and set its data.
-	 * @param data The new data.
+	 *
+	 * @param data  The new data.
 	 * @param usage The usage hint.
 	 */
 	public void setData(float[] data, Usage usage)
@@ -180,7 +192,8 @@ public class Buffer
 
 	/**
 	 * Reinitialize the buffer and set its data.
-	 * @param data The new data.
+	 *
+	 * @param data  The new data.
 	 * @param usage The usage hint.
 	 */
 	public void setData(double[] data, Usage usage)
@@ -190,8 +203,9 @@ public class Buffer
 
 	/**
 	 * Set a part of the buffer's data without reinitializing it.
+	 *
 	 * @param offset The offset of the data in bytes.
-	 * @param data The new data.
+	 * @param data   The new data.
 	 */
 	public void setSubData(long offset, short[] data)
 	{
@@ -200,8 +214,9 @@ public class Buffer
 
 	/**
 	 * Set a part of the buffer's data without reinitializing it.
+	 *
 	 * @param offset The offset of the data in bytes.
-	 * @param data The new data.
+	 * @param data   The new data.
 	 */
 	public void setSubData(long offset, int[] data)
 	{
@@ -210,8 +225,9 @@ public class Buffer
 
 	/**
 	 * Set a part of the buffer's data without reinitializing it.
+	 *
 	 * @param offset The offset of the data in bytes.
-	 * @param data The new data.
+	 * @param data   The new data.
 	 */
 	public void setSubData(long offset, long[] data)
 	{
@@ -220,8 +236,9 @@ public class Buffer
 
 	/**
 	 * Set a part of the buffer's data without reinitializing it.
+	 *
 	 * @param offset The offset of the data in bytes.
-	 * @param data The new data.
+	 * @param data   The new data.
 	 */
 	public void setSubData(long offset, float[] data)
 	{
@@ -230,8 +247,9 @@ public class Buffer
 
 	/**
 	 * Set a part of the buffer's data without reinitializing it.
+	 *
 	 * @param offset The offset of the data in bytes.
-	 * @param data The new data.
+	 * @param data   The new data.
 	 */
 	public void setSubData(long offset, double[] data)
 	{

@@ -26,6 +26,7 @@ public class Keyboard extends InputDevice
 
 	/**
 	 * Returns the only instance of keyboard.
+	 *
 	 * @return The only instance of keyboard.
 	 */
 	public static Keyboard get()
@@ -35,6 +36,7 @@ public class Keyboard extends InputDevice
 
 	/**
 	 * Sets up callbacks.
+	 *
 	 * @param window The window used to handle inputs.
 	 */
 	@Override
@@ -47,20 +49,8 @@ public class Keyboard extends InputDevice
 		{
 			switch(action)
 			{
-				case InputCodes.Actions.Press ->
-				{
-					for(var callback : OnKeyPress)
-					{
-						callback.accept(key);
-					}
-				}
-				case InputCodes.Actions.Release ->
-				{
-					for(var callback : OnKeyRelease)
-					{
-						callback.accept(key);
-					}
-				}
+				case InputCodes.Actions.Press -> Utility.callAction(OnKeyPress, key);
+				case InputCodes.Actions.Release -> Utility.callAction(OnKeyRelease, key);
 			}
 		});
 	}
@@ -76,7 +66,8 @@ public class Keyboard extends InputDevice
 
 	/**
 	 * Returns whether a key is performing a specific action.
-	 * @param key The key.
+	 *
+	 * @param key    The key.
 	 * @param action The action.
 	 * @return Whether a key is performing a specific action.
 	 */

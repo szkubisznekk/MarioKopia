@@ -1,5 +1,7 @@
 package org.szkubisznekk.input;
 
+import org.szkubisznekk.core.Utility;
+
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -39,25 +41,25 @@ public class Controls
 				case InputCodes.Keys.A ->
 				{
 					s_moveAD -= 1.0f;
-					onMove();
+					Utility.callAction(OnMove, getMove());
 				}
 				case InputCodes.Keys.D ->
 				{
 					s_moveAD += 1.0f;
-					onMove();
+					Utility.callAction(OnMove, getMove());
 				}
 				case InputCodes.Keys.Left ->
 				{
 					s_moveArrows -= 1.0f;
-					onMove();
+					Utility.callAction(OnMove, getMove());
 				}
 				case InputCodes.Keys.Right ->
 				{
 					s_moveArrows += 1.0f;
-					onMove();
+					Utility.callAction(OnMove, getMove());
 				}
-				case InputCodes.Keys.W, InputCodes.Keys.Up -> onJump();
-				case InputCodes.Keys.Escape -> onMenu();
+				case InputCodes.Keys.W, InputCodes.Keys.Up -> Utility.callAction(OnJump);
+				case InputCodes.Keys.Escape -> Utility.callAction(OnMenu);
 			}
 		});
 
@@ -68,22 +70,22 @@ public class Controls
 				case InputCodes.Keys.A ->
 				{
 					s_moveAD += 1.0f;
-					onMove();
+					Utility.callAction(OnMove, getMove());
 				}
 				case InputCodes.Keys.D ->
 				{
 					s_moveAD -= 1.0f;
-					onMove();
+					Utility.callAction(OnMove, getMove());
 				}
 				case InputCodes.Keys.Left ->
 				{
 					s_moveArrows += 1.0f;
-					onMove();
+					Utility.callAction(OnMove, getMove());
 				}
 				case InputCodes.Keys.Right ->
 				{
 					s_moveArrows -= 1.0f;
-					onMove();
+					Utility.callAction(OnMove, getMove());
 				}
 			}
 		});
@@ -92,8 +94,8 @@ public class Controls
 		{
 			switch(button)
 			{
-				case InputCodes.GamepadButtons.South -> onJump();
-				case InputCodes.GamepadButtons.Start -> onMenu();
+				case InputCodes.GamepadButtons.South -> Utility.callAction(OnJump);
+				case InputCodes.GamepadButtons.Start -> Utility.callAction(OnMenu);
 			}
 		});
 
@@ -102,13 +104,14 @@ public class Controls
 			if(axis == InputCodes.GamepadAxes.LeftStickX)
 			{
 				s_moveGamepad = value;
-				onMove();
+				Utility.callAction(OnMove, getMove());
 			}
 		});
 	}
 
 	/**
 	 * Returns the current value of the character move action.
+	 *
 	 * @return The current value of the character move action.
 	 */
 	public static float getMove()
@@ -119,6 +122,7 @@ public class Controls
 
 	/**
 	 * Returns whether the character jump button is pressed.
+	 *
 	 * @return Whether the character jump button is pressed.
 	 */
 	public static boolean isJump()
@@ -129,44 +133,12 @@ public class Controls
 
 	/**
 	 * Returns whether the menu button is pressed.
+	 *
 	 * @return Whether the menu button is pressed.
 	 */
 	public static boolean isMenu()
 	{
 		return Keyboard.get().isKey(InputCodes.Keys.Escape, InputCodes.Actions.Press)
 			|| Gamepad.get().isButton(InputCodes.GamepadButtons.Start, InputCodes.Actions.Press);
-	}
-
-	/**
-	 * Calls all callbacks when character move action is performed.
-	 */
-	private static void onMove()
-	{
-		for(var callback : OnMove)
-		{
-			callback.accept(getMove());
-		}
-	}
-
-	/**
-	 * Calls all callbacks when character jump button is pressed.
-	 */
-	private static void onJump()
-	{
-		for(var callback : OnJump)
-		{
-			callback.run();
-		}
-	}
-
-	/**
-	 * Calls all callbacks when the menu button is pressed.
-	 */
-	private static void onMenu()
-	{
-		for(var callback : OnMenu)
-		{
-			callback.run();
-		}
 	}
 }

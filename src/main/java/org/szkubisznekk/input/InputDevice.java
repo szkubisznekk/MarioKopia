@@ -15,6 +15,7 @@ class InputDevice
 	/**
 	 * Assigns the window.
 	 * Called when the input device is creates.
+	 *
 	 * @param window The window used to handle inputs.
 	 */
 	void init(Window window)

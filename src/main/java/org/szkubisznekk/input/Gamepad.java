@@ -43,6 +43,7 @@ public class Gamepad extends InputDevice
 
 	/**
 	 * Returns the only instance of gamepad.
+	 *
 	 * @return The only instance of gamepad.
 	 */
 	public static Gamepad get()
@@ -52,6 +53,7 @@ public class Gamepad extends InputDevice
 
 	/**
 	 * Sets up callbacks.
+	 *
 	 * @param window The window used to handle inputs.
 	 */
 	@Override
@@ -99,20 +101,8 @@ public class Gamepad extends InputDevice
 			{
 				switch(state)
 				{
-					case InputCodes.Actions.Press ->
-					{
-						for(var callback : OnButtonPress)
-						{
-							callback.accept(button);
-						}
-					}
-					case InputCodes.Actions.Release ->
-					{
-						for(var callback : OnButtonRelease)
-						{
-							callback.accept(button);
-						}
-					}
+					case InputCodes.Actions.Press -> Utility.callAction(OnButtonPress, button);
+					case InputCodes.Actions.Release -> Utility.callAction(OnButtonRelease, button);
 				}
 			}
 		}
@@ -122,17 +112,15 @@ public class Gamepad extends InputDevice
 			float state = m_state.axes(axis);
 			if(state != m_lastState.axes(axis))
 			{
-				for(var callback : OnAxis)
-				{
-					float value = m_state.axes(axis);
-					callback.accept(axis, (axis < InputCodes.GamepadAxes.LeftTrigger) ? processStick(value) : processTrigger(value));
-				}
+				float value = m_state.axes(axis);
+				Utility.callAction(OnAxis, axis, (axis < InputCodes.GamepadAxes.LeftTrigger) ? processStick(value) : processTrigger(value));
 			}
 		}
 	}
 
 	/**
 	 * Returns whether a button is performing a specific action.
+	 *
 	 * @param button The button.
 	 * @param action The action.
 	 * @return Whether a button is performing a specific action.
@@ -144,6 +132,7 @@ public class Gamepad extends InputDevice
 
 	/**
 	 * Returns an axis' current value.
+	 *
 	 * @param axis The axis.
 	 * @return An axis' current value.
 	 */
@@ -156,6 +145,7 @@ public class Gamepad extends InputDevice
 
 	/**
 	 * Applies deadzone to an analog value.
+	 *
 	 * @param value The analog value.
 	 * @return The modified value.
 	 */
@@ -178,6 +168,7 @@ public class Gamepad extends InputDevice
 
 	/**
 	 * Applies deadzone to an analog value and transform it from [-1.0, 1.0] to [0.0, 1.0].
+	 *
 	 * @param value The analog value.
 	 * @return The modified value.
 	 */
