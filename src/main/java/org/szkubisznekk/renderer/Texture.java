@@ -8,6 +8,9 @@ import static org.lwjgl.opengl.GL46C.*;
 import java.nio.*;
 import java.util.HashMap;
 
+/**
+ * Wrapping an OpenGL texture.
+ */
 public class Texture
 {
 	private static final HashMap<String, Texture> s_textures = new HashMap<>();
@@ -19,6 +22,11 @@ public class Texture
 		stbi_set_flip_vertically_on_load(true);
 	}
 
+	/**
+	 * Returns a texture. If the texture hasn't been yet loaded, then loads it into the cache.
+	 * @param path The path to the texture.
+	 * @return A texture.
+	 */
 	public static Texture get(String path)
 	{
 		if(s_textures.containsKey(path))
@@ -31,6 +39,10 @@ public class Texture
 		return texture;
 	}
 
+	/**
+	 * Creates a texture and loads it from a file.
+	 * @param path The path to the file.
+	 */
 	private Texture(String path)
 	{
 		m_handle = glGenTextures();
@@ -58,16 +70,27 @@ public class Texture
 		}
 	}
 
+	/**
+	 * Destructs the OpenGL texture.
+	 */
 	public void destruct()
 	{
 		glDeleteTextures(m_handle);
 	}
 
+	/**
+	 * Returns the handle of the OpenGL texture.
+	 * @return The handle of the OpenGL texture.
+	 */
 	public int getHandle()
 	{
 		return m_handle;
 	}
 
+	/**
+	 * Binds the texture to a location.
+	 * @param location The location.
+	 */
 	public void bind(int location)
 	{
 		glActiveTexture(GL_TEXTURE0 + location);

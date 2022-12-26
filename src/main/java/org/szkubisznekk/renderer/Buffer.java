@@ -2,124 +2,237 @@ package org.szkubisznekk.renderer;
 
 import static org.lwjgl.opengl.GL46C.*;
 
+/**
+ * Wrapping an OpenGL named buffer.
+ */
 public class Buffer
 {
-	public static class Usage
+	/**
+	 * Usage hint for a buffer's data.
+	 */
+	public enum Usage
 	{
-		public static final int StreamDraw = 35040;
-		public static final int StreamRead = 35041;
-		public static final int StreamCopy = 35042;
-		public static final int StaticDraw = 35044;
-		public static final int StaticRead = 35045;
-		public static final int StaticCopy = 35046;
-		public static final int DynamicDraw = 35048;
-		public static final int DynamicRead = 35049;
-		public static final int DynamicCopy = 35050;
+		StreamDraw(35040),
+		StreamRead(35041),
+		StreamCopy(35042),
+		StaticDraw(35044),
+		StaticRead(35045),
+		StaticCopy(35046),
+		DynamicDraw(35048),
+		DynamicRead(35049),
+		DynamicCopy(35050);
+
+		private final int m_value;
+
+		Usage(int value)
+		{
+			m_value = value;
+		}
+
+		public int getValue()
+		{
+			return m_value;
+		}
 	}
 
 	private final int m_handle;
 
+	/**
+	 * Creates a buffer.
+	 */
 	public Buffer()
 	{
 		m_handle = glCreateBuffers();
 	}
 
-	public Buffer(long size, int usage)
+	/**
+	 * Creates a buffer and initializes it.
+	 * @param size The size of the buffer in bytes.
+	 * @param usage The usage hint.
+	 */
+	public Buffer(long size, Usage usage)
 	{
 		this();
 		setData(size, usage);
 	}
 
-	public Buffer(short[] data, int usage)
+	/**
+	 * Creates a buffer, initializes it and sets its data.
+	 * @param data The data.
+	 * @param usage  The usage hint.
+	 */
+	public Buffer(short[] data, Usage usage)
 	{
 		this();
 		setData(data, usage);
 	}
 
-	public Buffer(int[] data, int usage)
+	/**
+	 * Creates a buffer, initializes it and sets its data.
+	 * @param data The data.
+	 * @param usage  The usage hint.
+	 */
+	public Buffer(int[] data, Usage usage)
 	{
 		this();
 		setData(data, usage);
 	}
 
-	public Buffer(long[] data, int usage)
+	/**
+	 * Creates a buffer, initializes it and sets its data.
+	 * @param data The data.
+	 * @param usage  The usage hint.
+	 */
+	public Buffer(long[] data, Usage usage)
 	{
 		this();
 		setData(data, usage);
 	}
 
-	public Buffer(float[] data, int usage)
+	/**
+	 * Creates a buffer, initializes it and sets its data.
+	 * @param data The data.
+	 * @param usage  The usage hint.
+	 */
+	public Buffer(float[] data, Usage usage)
 	{
 		this();
 		setData(data, usage);
 	}
 
-	public Buffer(double[] data, int usage)
+	/**
+	 * Creates a buffer, initializes it and sets its data.
+	 * @param data The data.
+	 * @param usage  The usage hint.
+	 */
+	public Buffer(double[] data, Usage usage)
 	{
 		this();
 		setData(data, usage);
 	}
 
+	/**
+	 * Destruct the OpenGL buffer.
+	 */
 	public void destruct()
 	{
 		glDeleteBuffers(m_handle);
 	}
 
+	/**
+	 * Returns the handle of the OpenGL buffer.
+	 * @return The handle of the OpenGL buffer.
+	 */
 	public int getHandle()
 	{
 		return m_handle;
 	}
 
-	public void setData(long size, int usage)
+	/**
+	 * Reinitialize the buffer.
+	 * @param size The new size of the buffer in bytes.
+	 * @param usage The usage hint.
+	 */
+	public void setData(long size, Usage usage)
 	{
-		glNamedBufferData(m_handle, size, usage);
+		glNamedBufferData(m_handle, size, usage.getValue());
 	}
 
-	public void setData(short[] data, int usage)
+	/**
+	 * Reinitialize the buffer and set its data.
+	 * @param data The new data.
+	 * @param usage The usage hint.
+	 */
+	public void setData(short[] data, Usage usage)
 	{
-		glNamedBufferData(m_handle, data, usage);
+		glNamedBufferData(m_handle, data, usage.getValue());
 	}
 
-	public void setData(int[] data, int usage)
+	/**
+	 * Reinitialize the buffer and set its data.
+	 * @param data The new data.
+	 * @param usage The usage hint.
+	 */
+	public void setData(int[] data, Usage usage)
 	{
-		glNamedBufferData(m_handle, data, usage);
+		glNamedBufferData(m_handle, data, usage.getValue());
 	}
 
-	public void setData(long[] data, int usage)
+	/**
+	 * Reinitialize the buffer and set its data.
+	 * @param data The new data.
+	 * @param usage The usage hint.
+	 */
+	public void setData(long[] data, Usage usage)
 	{
-		glNamedBufferData(m_handle, data, usage);
+		glNamedBufferData(m_handle, data, usage.getValue());
 	}
 
-	public void setData(float[] data, int usage)
+	/**
+	 * Reinitialize the buffer and set its data.
+	 * @param data The new data.
+	 * @param usage The usage hint.
+	 */
+	public void setData(float[] data, Usage usage)
 	{
-		glNamedBufferData(m_handle, data, usage);
+		glNamedBufferData(m_handle, data, usage.getValue());
 	}
 
-	public void setData(double[] data, int usage)
+	/**
+	 * Reinitialize the buffer and set its data.
+	 * @param data The new data.
+	 * @param usage The usage hint.
+	 */
+	public void setData(double[] data, Usage usage)
 	{
-		glNamedBufferData(m_handle, data, usage);
+		glNamedBufferData(m_handle, data, usage.getValue());
 	}
 
+	/**
+	 * Set a part of the buffer's data without reinitializing it.
+	 * @param offset The offset of the data in bytes.
+	 * @param data The new data.
+	 */
 	public void setSubData(long offset, short[] data)
 	{
 		glNamedBufferSubData(m_handle, offset, data);
 	}
 
+	/**
+	 * Set a part of the buffer's data without reinitializing it.
+	 * @param offset The offset of the data in bytes.
+	 * @param data The new data.
+	 */
 	public void setSubData(long offset, int[] data)
 	{
 		glNamedBufferSubData(m_handle, offset, data);
 	}
 
+	/**
+	 * Set a part of the buffer's data without reinitializing it.
+	 * @param offset The offset of the data in bytes.
+	 * @param data The new data.
+	 */
 	public void setSubData(long offset, long[] data)
 	{
 		glNamedBufferSubData(m_handle, offset, data);
 	}
 
+	/**
+	 * Set a part of the buffer's data without reinitializing it.
+	 * @param offset The offset of the data in bytes.
+	 * @param data The new data.
+	 */
 	public void setSubData(long offset, float[] data)
 	{
 		glNamedBufferSubData(m_handle, offset, data);
 	}
 
+	/**
+	 * Set a part of the buffer's data without reinitializing it.
+	 * @param offset The offset of the data in bytes.
+	 * @param data The new data.
+	 */
 	public void setSubData(long offset, double[] data)
 	{
 		glNamedBufferSubData(m_handle, offset, data);

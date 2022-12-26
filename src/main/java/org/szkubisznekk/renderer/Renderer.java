@@ -11,8 +11,14 @@ import static org.lwjgl.system.MemoryUtil.*;
 
 import java.util.ArrayList;
 
+/**
+ * Manages an OpenGL context and provides functions to draw on the screen.
+ */
 public class Renderer
 {
+	/**
+	 * Horizontal positioning of text relative to its anchor position.
+	 */
 	public enum HorizontalAlign
 	{
 		Left,
@@ -20,6 +26,9 @@ public class Renderer
 		Right
 	}
 
+	/**
+	 * Vertical positioning of text relative to its anchor position.
+	 */
 	public enum VerticalAlign
 	{
 		Bottom,
@@ -27,14 +36,28 @@ public class Renderer
 		Top
 	}
 
+	/**
+	 * Stores data used to render a quad.
+	 * @param Position The position of the quad.
+	 * @param Depth The z coordinate of the quad.
+	 * @param TextureID The id of the texture on the texture atlas.
+	 */
 	private record DrawCommand(Vector2f Position, float Depth, int TextureID) {}
 
+	/**
+	 * Used to render multiple quads using the same shader and texture.
+	 */
 	private static class BatchRenderer
 	{
 		private final VertexArray m_mesh;
 		private final ArrayList<DrawCommand> m_drawCommands = new ArrayList<>();
 		private final Buffer m_instanceBuffer;
 
+		/**
+		 * Creates a shader storage buffer used to store instance data,
+		 * @param mesh The drawn mesh.
+		 * @param bufferLocation The location of the shader storage buffer. [0, 31]
+		 */
 		public BatchRenderer(VertexArray mesh, int bufferLocation)
 		{
 			m_mesh = mesh;
@@ -43,22 +66,38 @@ public class Renderer
 			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, bufferLocation, m_instanceBuffer.getHandle());
 		}
 
+		/**
+		 * Destruct everything used.
+		 */
 		public void destruct()
 		{
 			m_mesh.destruct();
 			m_instanceBuffer.destruct();
 		}
 
+		/**
+		 * Clears the draw commands queue.
+		 */
 		public void clear()
 		{
 			m_drawCommands.clear();
 		}
 
+		/**
+		 * Submits a quad to the batch renderer to be drawn using a shader and a texture.
+		 * @param position Thw world space position of the quad's origin.
+		 * @param depth The z coordinate of the quad.
+		 * @param textureID The id of the texture on the texture atlas.
+		 */
 		public void submit(Vector2f position, float depth, int textureID)
 		{
 			m_drawCommands.add(new DrawCommand(position, depth, textureID));
 		}
 
+		/**
+		 * Renders all queues quads using a shader.
+		 * @param shader The used shader.
+		 */
 		public void render(Shader shader)
 		{
 			float[] drawCommandData = getDrawCommandData(m_drawCommands);
@@ -68,6 +107,11 @@ public class Renderer
 			glDrawElementsInstanced(GL_TRIANGLES, m_mesh.getIndexCount(), GL_UNSIGNED_INT, NULL, m_drawCommands.size());
 		}
 
+		/**
+		 * Creates an array containing the data for the instance buffer.
+		 * @param drawCommands The list of draw commands.
+		 * @return An array containing the data for the instance buffer.
+		 */
 		private static float[] getDrawCommandData(ArrayList<DrawCommand> drawCommands)
 		{
 			float[] drawCommandData = new float[drawCommands.size() * 4];
@@ -105,10 +149,29 @@ public class Renderer
 		1, 3, 2
 	};
 
+	/**
+	 * The camera used to render sprites.
+	 */
 	public Camera Camera;
+
+	/**
+	 * The shader used to render sprites.
+	 */
 	public Shader SpriteShader;
+
+	/**
+	 * The texture atlas used to render sprites.
+	 */
 	public Texture SpriteAtlas;
+
+	/**
+	 * The shader used to render text.
+	 */
 	public Shader TextShader;
+
+	/**
+	 * The texture atlas used to render text.
+	 */
 	public Texture TextAtlas;
 
 	private final Window m_window;
@@ -120,6 +183,10 @@ public class Renderer
 	private final Matrix4f m_spriteProjectionMatrix = new Matrix4f();
 	private final Matrix4f m_textProjectionMatrix = new Matrix4f();
 
+	/**
+	 * Creates the OpenGL context and loads the base resources.
+	 * @param window The window used to display the rendered image.
+	 */
 	public Renderer(Window window)
 	{
 		s_instance = this;
@@ -171,6 +238,9 @@ public class Renderer
 		recalculateTextMatrices(windowSize);
 	}
 
+	/**
+	 * Destruct everything used.
+	 */
 	public void destruct()
 	{
 		SpriteAtlas.destruct();
@@ -179,11 +249,18 @@ public class Renderer
 		m_textRenderer.destruct();
 	}
 
+	/**
+	 * Returns the only instance of renderer.
+	 * @return The only instance of renderer.
+	 */
 	public static Renderer get()
 	{
 		return s_instance;
 	}
 
+	/**
+	 * Clears the screen.
+	 */
 	public void beginFrame()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -193,6 +270,9 @@ public class Renderer
 		recalculateSpriteMatrices();
 	}
 
+	/**
+	 * Draws the image.
+	 */
 	public void endFrame()
 	{
 		m_spriteRenderer.render(SpriteShader);
@@ -206,6 +286,13 @@ public class Renderer
 		glfwSwapBuffers(m_window.getHandle());
 	}
 
+	/**
+	 * Submits a tile to the sprite batch renderer to be drawn using the sprite shader and sprite texture atlas.
+	 * Tiles will be submitted only if they are on the screen.
+	 * @param position Thw world space position of the tile's center.
+	 * @param depth The z coordinate of the tile.
+	 * @param textureID The id of the texture on the sprite texture atlas.
+	 */
 	public void submit(Vector2f position, float depth, byte textureID)
 	{
 		if(textureID == 0)
@@ -227,7 +314,14 @@ public class Renderer
 		m_spriteRenderer.submit(position, depth, textureID);
 	}
 
-	public void submitTextRelative(Vector2f position, String string, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign)
+	/**
+	 * Submits a text to the text batch renderer to be drawn using the text shader and text texture atlas.
+	 * @param position The position of the text in screen space. Given in number of pixels from center.
+	 * @param string The text.
+	 * @param horizontalAlign Aligns the anchor point to the given position relative to the text.
+	 * @param verticalAlign Aligns the anchor point to the given position relative to the text.
+	 */
+	public void submitTextAbsolute(Vector2f position, String string, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign)
 	{
 		Vector2f initialPos = new Vector2f(position);
 
@@ -259,16 +353,26 @@ public class Renderer
 		}
 	}
 
-	public void submitTextAbsolute(Vector2f position, String string, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign)
+	/**
+	 * Submits a text to the text batch renderer to be drawn using the text shader and text texture atlas.
+	 * @param position The position of the text in screen space. Given in range of [-1.0, 1.0] from center.
+	 * @param string The text.
+	 * @param horizontalAlign Aligns the anchor point to the given position relative to the text.
+	 * @param verticalAlign Aligns the anchor point to the given position relative to the text.
+	 */
+	public void submitTextRelative(Vector2f position, String string, HorizontalAlign horizontalAlign, VerticalAlign verticalAlign)
 	{
 		Window.Size windowSize = m_window.getSize();
 		float halfX = windowSize.Width() * 0.5f;
 		float halfY = windowSize.Height() * 0.5f;
 		Vector2f initialPos = new Vector2f(position.x * halfX, position.y * halfY);
 
-		submitTextRelative(initialPos, string, horizontalAlign, verticalAlign);
+		submitTextAbsolute(initialPos, string, horizontalAlign, verticalAlign);
 	}
 
+	/**
+	 * Recalculates the projection and view matrix used in the sprite rendering.
+	 */
 	private void recalculateSpriteMatrices()
 	{
 		m_viewMatrix.identity();
@@ -283,6 +387,10 @@ public class Renderer
 		SpriteShader.setUniform("u_viewMatrix", m_viewMatrix);
 	}
 
+	/**
+	 * Recalculates the projection matrix used in the text rendering.
+	 * @param windowSize The size of the window.
+	 */
 	private void recalculateTextMatrices(Window.Size windowSize)
 	{
 		m_textProjectionMatrix.identity();

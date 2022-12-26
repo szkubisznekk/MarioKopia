@@ -10,12 +10,20 @@ import java.nio.*;
 import java.nio.file.*;
 import java.util.HashMap;
 
+/**
+ * Wrapping an OpenGL program.
+ */
 public class Shader
 {
 	private static final HashMap<String, Shader> s_shaders = new HashMap<>();
 
 	private final int m_handle;
 
+	/**
+	 * Returns a shader. If the shader hasn't been yet loaded, then loads it into the cache.
+	 * @param path The path to the source of the shaders.
+	 * @return A shader.
+	 */
 	public static Shader get(String path)
 	{
 		if(s_shaders.containsKey(path))
@@ -28,6 +36,10 @@ public class Shader
 		return shader;
 	}
 
+	/**
+	 * Creates a program using a vertex and a fragment shader.
+	 * @param path The path to the source of the shaders.
+	 */
 	private Shader(String path)
 	{
 		m_handle = glCreateProgram();
@@ -49,28 +61,50 @@ public class Shader
 		}
 	}
 
+	/**
+	 * Destruct the OpenGL program.
+	 */
 	public void destruct()
 	{
 		glDeleteProgram(m_handle);
 	}
 
+	/**
+	 * Returns the handle of the OpenGL program.
+	 * @return The handle of the OpenGL program.
+	 */
 	public int getHandle()
 	{
 		return m_handle;
 	}
 
+	/**
+	 * Set a uniform in the shader.
+	 * @param name The name of the uniform.
+	 * @param value The new value of the uniform.
+	 */
 	public void setUniform(String name, int value)
 	{
 		bind();
 		glUniform1i(glGetUniformLocation(m_handle, name), value);
 	}
 
+	/**
+	 * Set a uniform in the shader.
+	 * @param name The name of the uniform.
+	 * @param value The new value of the uniform.
+	 */
 	public void setUniform(String name, float value)
 	{
 		bind();
 		glUniform1f(glGetUniformLocation(m_handle, name), value);
 	}
 
+	/**
+	 * Set a uniform in the shader.
+	 * @param name The name of the uniform.
+	 * @param value The new value of the uniform.
+	 */
 	public void setUniform(String name, Vector2i value)
 	{
 		bind();
@@ -79,6 +113,11 @@ public class Shader
 		glUniform2iv(glGetUniformLocation(m_handle, name), buffer);
 	}
 
+	/**
+	 * Set a uniform in the shader.
+	 * @param name The name of the uniform.
+	 * @param value The new value of the uniform.
+	 */
 	public void setUniform(String name, Vector2f value)
 	{
 		bind();
@@ -87,6 +126,11 @@ public class Shader
 		glUniform2fv(glGetUniformLocation(m_handle, name), buffer);
 	}
 
+	/**
+	 * Set a uniform in the shader.
+	 * @param name The name of the uniform.
+	 * @param value The new value of the uniform.
+	 */
 	public void setUniform(String name, Vector3i value)
 	{
 		bind();
@@ -95,6 +139,11 @@ public class Shader
 		glUniform3iv(glGetUniformLocation(m_handle, name), buffer);
 	}
 
+	/**
+	 * Set a uniform in the shader.
+	 * @param name The name of the uniform.
+	 * @param value The new value of the uniform.
+	 */
 	public void setUniform(String name, Vector3f value)
 	{
 		bind();
@@ -103,6 +152,11 @@ public class Shader
 		glUniform3fv(glGetUniformLocation(m_handle, name), buffer);
 	}
 
+	/**
+	 * Set a uniform in the shader.
+	 * @param name The name of the uniform.
+	 * @param value The new value of the uniform.
+	 */
 	public void setUniform(String name, Vector4i value)
 	{
 		bind();
@@ -111,6 +165,11 @@ public class Shader
 		glUniform4iv(glGetUniformLocation(m_handle, name), buffer);
 	}
 
+	/**
+	 * Set a uniform in the shader.
+	 * @param name The name of the uniform.
+	 * @param value The new value of the uniform.
+	 */
 	public void setUniform(String name, Vector4f value)
 	{
 		bind();
@@ -119,6 +178,11 @@ public class Shader
 		glUniform4fv(glGetUniformLocation(m_handle, name), buffer);
 	}
 
+	/**
+	 * Set a uniform in the shader.
+	 * @param name The name of the uniform.
+	 * @param value The new value of the uniform.
+	 */
 	public void setUniform(String name, Matrix3f value)
 	{
 		bind();
@@ -127,6 +191,11 @@ public class Shader
 		glUniformMatrix3fv(glGetUniformLocation(m_handle, name), false, buffer);
 	}
 
+	/**
+	 * Set a uniform in the shader.
+	 * @param name The name of the uniform.
+	 * @param value The new value of the uniform.
+	 */
 	public void setUniform(String name, Matrix4f value)
 	{
 		bind();
@@ -135,16 +204,28 @@ public class Shader
 		glUniformMatrix4fv(glGetUniformLocation(m_handle, name), false, buffer);
 	}
 
+	/**
+	 * Binds the program as current.
+	 */
 	public void bind()
 	{
 		glUseProgram(m_handle);
 	}
 
+	/**
+	 * Unbinds the currently bound program.
+	 */
 	public static void unbind()
 	{
 		glUseProgram(0);
 	}
 
+	/**
+	 * Loads one shader source file.
+	 * @param path The path to the file.
+	 * @param type The type of the shader.
+	 * @return The source of the shader.
+	 */
 	private static String getShaderSource(String path, int type)
 	{
 		String actualPath = path + ((type == GL_VERTEX_SHADER) ? ".vert" : ".frag");
@@ -160,6 +241,11 @@ public class Shader
 		}
 	}
 
+	/**
+	 * Loads the vertex and fragment shader from files.
+	 * @param path The path to the source files.
+	 * @return The description of the vertex and fragment shader.
+	 */
 	private static ShaderDescription[] loadShaders(String path)
 	{
 		return new ShaderDescription[]{
@@ -168,6 +254,9 @@ public class Shader
 		};
 	}
 
+	/**
+	 * Stores data related to a shader.
+	 */
 	private static class ShaderDescription
 	{
 		public int Type;
