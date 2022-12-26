@@ -36,28 +36,28 @@ public class Controls
 		{
 			switch(key)
 			{
-				case InputDeviceManager.Keys.A ->
+				case InputCodes.Keys.A ->
 				{
 					s_moveAD -= 1.0f;
 					onMove();
 				}
-				case InputDeviceManager.Keys.D ->
+				case InputCodes.Keys.D ->
 				{
 					s_moveAD += 1.0f;
 					onMove();
 				}
-				case InputDeviceManager.Keys.Left ->
+				case InputCodes.Keys.Left ->
 				{
 					s_moveArrows -= 1.0f;
 					onMove();
 				}
-				case InputDeviceManager.Keys.Right ->
+				case InputCodes.Keys.Right ->
 				{
 					s_moveArrows += 1.0f;
 					onMove();
 				}
-				case InputDeviceManager.Keys.W, InputDeviceManager.Keys.Up -> onJump();
-				case InputDeviceManager.Keys.Escape -> onMenu();
+				case InputCodes.Keys.W, InputCodes.Keys.Up -> onJump();
+				case InputCodes.Keys.Escape -> onMenu();
 			}
 		});
 
@@ -65,22 +65,22 @@ public class Controls
 		{
 			switch(key)
 			{
-				case InputDeviceManager.Keys.A ->
+				case InputCodes.Keys.A ->
 				{
 					s_moveAD += 1.0f;
 					onMove();
 				}
-				case InputDeviceManager.Keys.D ->
+				case InputCodes.Keys.D ->
 				{
 					s_moveAD -= 1.0f;
 					onMove();
 				}
-				case InputDeviceManager.Keys.Left ->
+				case InputCodes.Keys.Left ->
 				{
 					s_moveArrows += 1.0f;
 					onMove();
 				}
-				case InputDeviceManager.Keys.Right ->
+				case InputCodes.Keys.Right ->
 				{
 					s_moveArrows -= 1.0f;
 					onMove();
@@ -92,14 +92,14 @@ public class Controls
 		{
 			switch(button)
 			{
-				case InputDeviceManager.GamepadButtons.South -> onJump();
-				case InputDeviceManager.GamepadButtons.Start -> onMenu();
+				case InputCodes.GamepadButtons.South -> onJump();
+				case InputCodes.GamepadButtons.Start -> onMenu();
 			}
 		});
 
 		Gamepad.get().OnAxis.add((Integer axis, Float value) ->
 		{
-			if(axis == InputDeviceManager.GamepadAxes.LeftStickX)
+			if(axis == InputCodes.GamepadAxes.LeftStickX)
 			{
 				s_moveGamepad = value;
 				onMove();
@@ -123,8 +123,8 @@ public class Controls
 	 */
 	public static boolean isJump()
 	{
-		return Keyboard.get().isKey(InputDeviceManager.Keys.W, InputDeviceManager.Actions.Press) || Keyboard.get().isKey(InputDeviceManager.Keys.Up, InputDeviceManager.Actions.Press)
-			|| Gamepad.get().isButton(InputDeviceManager.GamepadButtons.South, InputDeviceManager.Actions.Press);
+		return Keyboard.get().isKey(InputCodes.Keys.W, InputCodes.Actions.Press) || Keyboard.get().isKey(InputCodes.Keys.Up, InputCodes.Actions.Press)
+			|| Gamepad.get().isButton(InputCodes.GamepadButtons.South, InputCodes.Actions.Press);
 	}
 
 	/**
@@ -133,8 +133,8 @@ public class Controls
 	 */
 	public static boolean isMenu()
 	{
-		return Keyboard.get().isKey(InputDeviceManager.Keys.Escape, InputDeviceManager.Actions.Press)
-			|| Gamepad.get().isButton(InputDeviceManager.GamepadButtons.Start, InputDeviceManager.Actions.Press);
+		return Keyboard.get().isKey(InputCodes.Keys.Escape, InputCodes.Actions.Press)
+			|| Gamepad.get().isButton(InputCodes.GamepadButtons.Start, InputCodes.Actions.Press);
 	}
 
 	/**

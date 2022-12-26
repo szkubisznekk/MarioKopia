@@ -49,14 +49,14 @@ public class Mouse extends InputDevice
 		{
 			switch(action)
 			{
-				case InputDeviceManager.Actions.Press ->
+				case InputCodes.Actions.Press ->
 				{
 					for(var callback : OnButtonPress)
 					{
 						callback.accept(button);
 					}
 				}
-				case InputDeviceManager.Actions.Release ->
+				case InputCodes.Actions.Release ->
 				{
 					for(var callback : OnButtonRelease)
 					{

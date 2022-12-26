@@ -47,14 +47,14 @@ public class Keyboard extends InputDevice
 		{
 			switch(action)
 			{
-				case InputDeviceManager.Actions.Press ->
+				case InputCodes.Actions.Press ->
 				{
 					for(var callback : OnKeyPress)
 					{
 						callback.accept(key);
 					}
 				}
-				case InputDeviceManager.Actions.Release ->
+				case InputCodes.Actions.Release ->
 				{
 					for(var callback : OnKeyRelease)
 					{
