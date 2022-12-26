@@ -29,6 +29,6 @@ void main()
 {
     OUT.Position = a_position + InstanceTransforms.Position[gl_InstanceID].xy;
     OUT.TextureID = int(InstanceTransforms.Position[gl_InstanceID].w);
-    OUT.UV = getUV(OUT.TextureID - 1);
+    OUT.UV = getUV(OUT.TextureID);
     gl_Position = u_textProjectionMatrix * vec4(OUT.Position, InstanceTransforms.Position[gl_InstanceID].z, 1.0);
 }

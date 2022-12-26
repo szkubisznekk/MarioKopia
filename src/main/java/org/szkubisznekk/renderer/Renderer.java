@@ -260,7 +260,7 @@ public class Renderer
 		for(int i = 0; i < string.length(); i++)
 		{
 			char c = string.charAt(i);
-			int characterValue = (int)c - 31;
+			int characterValue = (int)c - 32;
 
 			if(characterValue >= 64)
 			{
