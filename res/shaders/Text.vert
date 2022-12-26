@@ -15,7 +15,7 @@ out Varyings
     int TextureID;
 } OUT;
 
-uniform mat4 u_textProjectionMatrix;
+uniform mat4 u_projectionMatrix;
 
 vec2 getUV(int textureID)
 {
@@ -30,5 +30,5 @@ void main()
     OUT.Position = a_position + InstanceTransforms.Position[gl_InstanceID].xy;
     OUT.TextureID = int(InstanceTransforms.Position[gl_InstanceID].w);
     OUT.UV = getUV(OUT.TextureID);
-    gl_Position = u_textProjectionMatrix * vec4(OUT.Position, InstanceTransforms.Position[gl_InstanceID].z, 1.0);
+    gl_Position = u_projectionMatrix * vec4(OUT.Position, InstanceTransforms.Position[gl_InstanceID].z, 1.0);
 }

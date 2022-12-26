@@ -119,10 +119,8 @@ public class Renderer
 
 	private float m_aspectRatio;
 	private final Matrix4f m_viewMatrix = new Matrix4f();
-	private final Matrix4f m_projectionMatrix = new Matrix4f();
+	private final Matrix4f m_spriteProjectionMatrix = new Matrix4f();
 	private final Matrix4f m_textProjectionMatrix = new Matrix4f();
-	private final float[] m_pvMatrixData = new float[32];
-	private final Buffer m_pvBuffer;
 
 	public Renderer(Window window) throws IOException
 	{
@@ -147,7 +145,7 @@ public class Renderer
 			s_spriteIndices.length), 0);
 		SpriteShader = new Shader(Path.of("res/shaders/Sprite"));
 
-		SpriteAtlas = Texture.load(Path.of("res/textures/texture_atlas.png"));
+		SpriteAtlas = Texture.load(Path.of("res/textures/sprites.png"));
 		SpriteAtlas.bind(0);
 
 		m_textRenderer = new BatchRenderer(new VertexArray(
@@ -158,10 +156,6 @@ public class Renderer
 
 		TextAtlas = Texture.load(Path.of("res/textures/font.png"));
 		TextAtlas.bind(1);
-
-		// Initialize uniform buffer object
-		m_pvBuffer = new Buffer(32 * 4, Buffer.Usage.DynamicDraw);
-		glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_pvBuffer.getHandle());
 
 		// Handle Window Resize
 		m_window.OnResize.add((Window.Size size) ->
@@ -185,7 +179,6 @@ public class Renderer
 		TextAtlas.destruct();
 		m_spriteRenderer.destruct();
 		m_textRenderer.destruct();
-		m_pvBuffer.destruct();
 	}
 
 	public static Renderer get()
@@ -200,10 +193,6 @@ public class Renderer
 		m_textRenderer.clear();
 
 		recalculateSpriteMatrices();
-
-		m_viewMatrix.get(m_pvMatrixData);
-		m_projectionMatrix.get(m_pvMatrixData, 16);
-		m_pvBuffer.setSubData(0, m_pvMatrixData);
 	}
 
 	public void endFrame()
@@ -287,10 +276,13 @@ public class Renderer
 		m_viewMatrix.identity();
 		m_viewMatrix.translate(-Camera.Position().x(), -Camera.Position().y, -1.0f);
 
-		m_projectionMatrix.identity();
+		m_spriteProjectionMatrix.identity();
 		float halfHeight = Camera.Size() * 0.5f;
 		float halfWidth = halfHeight * m_aspectRatio;
-		m_projectionMatrix.ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, 0.1f, 10.0f);
+		m_spriteProjectionMatrix.ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, 0.1f, 10.0f);
+
+		SpriteShader.setUniform("u_projectionMatrix", m_spriteProjectionMatrix);
+		SpriteShader.setUniform("u_viewMatrix", m_viewMatrix);
 	}
 
 	private void recalculateTextMatrices(Window.Size windowSize)
@@ -299,6 +291,7 @@ public class Renderer
 		float halfWidth = windowSize.Width() * 0.5f;
 		float halfHeight = windowSize.Height() * 0.5f;
 		m_textProjectionMatrix.ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, -1.0f, 2.0f);
-		TextShader.setUniform("u_textProjectionMatrix", m_textProjectionMatrix);
+
+		TextShader.setUniform("u_projectionMatrix", m_textProjectionMatrix);
 	}
 }
