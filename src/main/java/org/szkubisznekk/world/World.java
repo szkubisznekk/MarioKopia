@@ -19,58 +19,25 @@ public class World
 
 	private final Tilemap m_tilemap;
 	private final Dominion m_registry = Dominion.create();
-	private final ArrayList<SystemBase> m_systems = new ArrayList<>();
 
 	static
 	{
 		System.setProperty("dominion.show-banner", "false");
 	}
 
-	public World()
+	public World(String path)
 	{
-		m_tilemap = decode(parse("res/maps/untitled.tmx"));
-
-		m_systems.add(new PlayerSystem(m_registry));
-		m_systems.add(new PhysicsSystem(m_registry, m_tilemap));
-		m_systems.add(new CameraSystem(m_registry));
-		m_systems.add(new RendererSystem(m_registry));
+		m_tilemap = decode(parse(path));
 	}
 
-	public void start()
+	Tilemap getTilemap()
 	{
-		for(var system : m_systems)
-		{
-			system.start();
-		}
+		return m_tilemap;
 	}
 
-	public void update()
+	Dominion getEntities()
 	{
-		for(var system : m_systems)
-		{
-			system.update();
-		}
-
-		submit();
-	}
-
-	public void stop()
-	{
-		for(var system : m_systems)
-		{
-			system.stop();
-		}
-	}
-
-	private void submit()
-	{
-		for(int y = 0; y < HEIGHT; y++)
-		{
-			for(int x = 0; x < WIDTH; x++)
-			{
-				Renderer.get().submit(new Vector2f((float)x, (float)y), -1.0f, m_tilemap.getTile(x, y));
-			}
-		}
+		return m_registry;
 	}
 
 	private static String parse(String path)

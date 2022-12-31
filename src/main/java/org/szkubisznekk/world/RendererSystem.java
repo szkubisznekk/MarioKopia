@@ -5,15 +5,10 @@ import org.szkubisznekk.renderer.*;
 
 public class RendererSystem extends SystemBase
 {
-	public RendererSystem(Dominion registry)
-	{
-		super(registry);
-	}
-
 	@Override
-	public void update()
+	public void update(World world)
 	{
-		m_registry.findEntitiesWith(PositionComponent.class, SpriteComponent.class).stream().forEach(result ->
+		world.getEntities().findEntitiesWith(PositionComponent.class, SpriteComponent.class).stream().forEach(result ->
 		{
 			PositionComponent positionComponent = result.comp1();
 			SpriteComponent spriteComponent = result.comp2();

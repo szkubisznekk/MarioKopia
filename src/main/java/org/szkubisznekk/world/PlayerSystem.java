@@ -7,21 +7,16 @@ import org.szkubisznekk.input.*;
 
 public class PlayerSystem extends SystemBase
 {
-	public PlayerSystem(Dominion registry)
-	{
-		super(registry);
-	}
-
 	@Override
-	public void start()
+	public void start(World world)
 	{
-		m_registry.createEntity(
+		world.getEntities().createEntity(
 			new PlayerComponent(),
 			new PositionComponent(new Vector2f(0.0f, 16.0f)),
 			new RigidbodyComponent(),
 			new SpriteComponent(0.0f, (byte)57));
 
-		m_registry.findEntitiesWith(PlayerComponent.class, RigidbodyComponent.class).stream().forEach(result ->
+		world.getEntities().findEntitiesWith(PlayerComponent.class, RigidbodyComponent.class).stream().forEach(result ->
 		{
 			PlayerComponent playerComponent = result.comp1();
 			RigidbodyComponent rigidbodyComponent = result.comp2();
@@ -42,9 +37,9 @@ public class PlayerSystem extends SystemBase
 	}
 
 	@Override
-	public void update()
+	public void update(World world)
 	{
-		m_registry.findEntitiesWith(PlayerComponent.class, RigidbodyComponent.class).stream().forEach(result ->
+		world.getEntities().findEntitiesWith(PlayerComponent.class, RigidbodyComponent.class).stream().forEach(result ->
 		{
 			PlayerComponent playerComponent = result.comp1();
 			RigidbodyComponent rigidbodyComponent = result.comp2();

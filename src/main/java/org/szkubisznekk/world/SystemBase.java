@@ -1,19 +1,10 @@
 package org.szkubisznekk.world;
 
-import dev.dominion.ecs.api.*;
-
 public class SystemBase
 {
-	protected Dominion m_registry;
+	public void start(World world) {}
 
-	protected SystemBase(Dominion registry)
-	{
-		m_registry = registry;
-	}
+	public void update(World world) {}
 
-	public void start() {}
-
-	public void update() {}
-
-	public void stop() {}
+	public void stop(World world) {}
 }
