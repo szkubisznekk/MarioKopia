@@ -6,6 +6,9 @@ import org.szkubisznekk.renderer.*;
 import org.szkubisznekk.world.*;
 import org.szkubisznekk.audio.*;
 
+/**
+ * Manages every system needed to run the application.
+ */
 public class Application
 {
 	private boolean m_running = true;
@@ -15,6 +18,9 @@ public class Application
 	private final AudioManager m_audioManager;
 	private final Renderer m_renderer;
 
+	/**
+	 * Creates all systems.
+	 */
 	public Application()
 	{
 		m_window = new Window();
@@ -45,6 +51,9 @@ public class Application
 		m_renderer = new Renderer(m_window);
 	}
 
+	/**
+	 * Destroys all systems.
+	 */
 	public void destruct()
 	{
 		m_renderer.destruct();
@@ -52,6 +61,9 @@ public class Application
 		m_window.destruct();
 	}
 
+	/**
+	 * Starts the application.
+	 */
 	public void run()
 	{
 		Time.init();
