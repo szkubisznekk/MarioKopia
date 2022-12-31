@@ -56,6 +56,7 @@ public class Application
 	public void destruct()
 	{
 		m_renderer.destruct();
+		m_worldManager.destruct();
 		m_audioManager.destruct();
 		m_window.destruct();
 	}
