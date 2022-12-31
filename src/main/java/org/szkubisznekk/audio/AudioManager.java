@@ -15,13 +15,95 @@ import java.util.HashMap;
 import static org.lwjgl.openal.AL10.*;
 import static org.lwjgl.openal.ALC10.*;
 
+/**
+ * Manages audio sources and clips.
+ */
 public class AudioManager
 {
+	/**
+	 * Wraps an OpenAl source.
+	 */
+	public static class AudioSource
+	{
+		private final int m_handle;
+
+		/**
+		 * Creates an OpenAL source.
+		 */
+		AudioSource()
+		{
+			m_handle = alGenSources();
+			alSourcef(m_handle, AL_PITCH, 1.0f);
+			alSource3f(m_handle, AL_POSITION, 0.0f, 0.0f, 0.0f);
+			setVolume(1.0f);
+		}
+
+		/**
+		 * Destructs the OpenAL source.
+		 */
+		void destruct()
+		{
+			alDeleteSources(m_handle);
+		}
+
+		/**
+		 * Sets the volume of this source.
+		 *
+		 * @param volume The volume.
+		 */
+		public void setVolume(float volume)
+		{
+			alSourcef(m_handle, AL_GAIN, volume);
+		}
+
+		/**
+		 * Plays an audio clip.
+		 *
+		 * @param clip The clip.
+		 * @param loop Should the clip loop.
+		 */
+		public void play(AudioClip clip, boolean loop)
+		{
+			if(loop)
+			{
+				alSourcei(m_handle, AL_LOOPING, AL_TRUE);
+			}
+			alSourcei(m_handle, AL_BUFFER, clip.getBuffer());
+			alSourcePlay(m_handle);
+		}
+
+		/**
+		 * Stops thw currently playing clip.
+		 */
+		public void stop()
+		{
+			alSourceStop(m_handle);
+		}
+
+		/**
+		 * Returns whether the last played clip is still playing.
+		 *
+		 * @return Whether the last played clip is still playing.
+		 */
+		public boolean isPlaying()
+		{
+			return alGetSourcei(m_handle, AL_SOURCE_STATE) == AL_PLAYING;
+		}
+	}
+
+	/**
+	 * Holds an audio clip file data. Wraps an OpenAL buffer.
+	 */
 	private static class AudioClip
 	{
 		private final int m_buffer;
 
-		AudioClip(String path)
+		/**
+		 * Loads an audio clip from file.
+		 *
+		 * @param path The path to the file.
+		 */
+		public AudioClip(String path)
 		{
 			m_buffer = alGenBuffers();
 
@@ -39,57 +121,22 @@ public class AudioManager
 			}
 		}
 
-		void destruct()
+		/**
+		 * Destructs the audio clip's buffer.
+		 */
+		public void destruct()
 		{
 			alDeleteBuffers(m_buffer);
 		}
 
-		int getBuffer()
+		/**
+		 * Returns the handle to the audio clip's OpenAL buffer.
+		 *
+		 * @return The handle to the audio clip's OpenAL buffer.
+		 */
+		public int getBuffer()
 		{
 			return m_buffer;
-		}
-	}
-
-	public static class AudioSource
-	{
-		private final int m_handle;
-
-		AudioSource()
-		{
-			m_handle = alGenSources();
-			alSourcef(m_handle, AL_PITCH, 1.0f);
-			alSource3f(m_handle, AL_POSITION, 0.0f, 0.0f, 0.0f);
-			setVolume(1.0f);
-		}
-
-		void destruct()
-		{
-			alDeleteSources(m_handle);
-		}
-
-		public void setVolume(float volume)
-		{
-			alSourcef(m_handle, AL_GAIN, volume);
-		}
-
-		public void play(AudioClip clip, boolean loop)
-		{
-			if(loop)
-			{
-				alSourcei(m_handle, AL_LOOPING, AL_TRUE);
-			}
-			alSourcei(m_handle, AL_BUFFER, clip.getBuffer());
-			alSourcePlay(m_handle);
-		}
-
-		public void stop()
-		{
-			alSourceStop(m_handle);
-		}
-
-		public boolean isPlaying()
-		{
-			return alGetSourcei(m_handle, AL_SOURCE_STATE) == AL_PLAYING;
 		}
 	}
 
@@ -100,6 +147,9 @@ public class AudioManager
 	private final HashMap<String, AudioClip> m_clips = new HashMap<>();
 	private final ArrayList<AudioSource> m_sources = new ArrayList<>();
 
+	/**
+	 * Creates an OpenAL context.
+	 */
 	public AudioManager()
 	{
 		s_instance = this;
@@ -115,6 +165,9 @@ public class AudioManager
 		setVolume(1.0f);
 	}
 
+	/**
+	 * Destruct all sources and clips.
+	 */
 	public void destruct()
 	{
 		for(var source : m_sources)
@@ -128,19 +181,36 @@ public class AudioManager
 		}
 	}
 
+	/**
+	 * Returns the only instance of audio manager.
+	 *
+	 * @return The only instance of audio manager.
+	 */
 	public static AudioManager get()
 	{
 		return s_instance;
 	}
 
+	/**
+	 * Set global volume.
+	 *
+	 * @param volume The global volume.
+	 */
 	public void setVolume(float volume)
 	{
 		alListenerf(AL_GAIN, volume);
 	}
 
+	/**
+	 * Plays an audio clip and returns the audio source used to play it.
+	 *
+	 * @param path   The path to the audio clip.
+	 * @param volume The volume.
+	 * @param loop   Should the clip loop.
+	 * @return The audio source used to play it.
+	 */
 	public AudioSource play(String path, float volume, boolean loop)
 	{
-
 		AudioClip clip;
 		if(m_clips.containsKey(path))
 		{

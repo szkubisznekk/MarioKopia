@@ -1,6 +1,5 @@
 package org.szkubisznekk.core;
 
-import org.joml.Vector2f;
 import org.szkubisznekk.input.*;
 import org.szkubisznekk.renderer.*;
 import org.szkubisznekk.world.*;
@@ -76,10 +75,9 @@ public class Application
 		{
 			Time.update();
 			m_inputDeviceManager.update();
+			m_worldManager.updateCurrent();
 
 			m_renderer.beginFrame();
-
-			m_worldManager.updateCurrent();
 			m_worldManager.submitCurrent();
 
 			m_renderer.endFrame();
