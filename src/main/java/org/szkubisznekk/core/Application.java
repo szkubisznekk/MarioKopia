@@ -68,9 +68,8 @@ public class Application
 	{
 		Time.init();
 
-		AudioClip clip = new AudioClip("res/audio/fade.ogg");
-		m_audioManager.setVolume(0.2f);
-		m_audioManager.play(clip, true);
+		m_audioManager.setVolume(0.5f);
+		m_audioManager.play("res/audio/szkubisznekk.ogg", 1.0f, true);
 
 		m_worldManager.load("res/maps/untitled.tmx");
 		while(m_running)
@@ -86,7 +85,6 @@ public class Application
 			m_renderer.endFrame();
 		}
 
-		clip.destruct();
 		m_worldManager.destruct();
 	}
 }
