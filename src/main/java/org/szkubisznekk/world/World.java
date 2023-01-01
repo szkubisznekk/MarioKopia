@@ -23,7 +23,7 @@ public class World
 	public static final int HEIGHT = 16;
 
 	private final Tilemap m_tilemap;
-	private final Dominion m_registry = Dominion.create();
+	private Dominion m_registry = Dominion.create();
 
 	static
 	{
@@ -67,6 +67,11 @@ public class World
 	Dominion getEntities()
 	{
 		return m_registry;
+	}
+
+	public void reset()
+	{
+		m_registry = Dominion.create();
 	}
 
 	/**

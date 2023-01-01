@@ -67,6 +67,7 @@ public class WorldManager
 
 		m_current = m_worlds.get(Path.of(path));
 
+		m_current.reset();
 		for(var system : m_systems)
 		{
 			system.start(m_current);

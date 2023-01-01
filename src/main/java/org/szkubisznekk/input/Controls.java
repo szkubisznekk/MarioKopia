@@ -23,7 +23,12 @@ public class Controls
 	/**
 	 * Called when the menu button is pressed.
 	 */
-	public static ArrayList<Runnable> OnMenu = new ArrayList<>();
+	public static ArrayList<Runnable> OnMenuToggle = new ArrayList<>();
+	public static ArrayList<Runnable> OnMenuInteract = new ArrayList<>();
+	public static ArrayList<Runnable> OnMenuUp = new ArrayList<>();
+	public static ArrayList<Runnable> OnMenuDown = new ArrayList<>();
+	public static ArrayList<Runnable> OnMenuRight = new ArrayList<>();
+	public static ArrayList<Runnable> OnMenuLeft = new ArrayList<>();
 
 	private static float s_moveAD = 0.0f;
 	private static float s_moveArrows = 0.0f;
@@ -34,6 +39,7 @@ public class Controls
 	 */
 	public static void init()
 	{
+		// Movement
 		Keyboard.get().OnKeyPress.add((Integer key) ->
 		{
 			switch(key)
@@ -59,7 +65,6 @@ public class Controls
 					Utility.callAction(OnMove, getMove());
 				}
 				case InputCodes.Keys.W, InputCodes.Keys.Up -> Utility.callAction(OnJump);
-				case InputCodes.Keys.Escape -> Utility.callAction(OnMenu);
 			}
 		});
 
@@ -95,7 +100,7 @@ public class Controls
 			switch(button)
 			{
 				case InputCodes.GamepadButtons.South -> Utility.callAction(OnJump);
-				case InputCodes.GamepadButtons.Start -> Utility.callAction(OnMenu);
+				case InputCodes.GamepadButtons.Start -> Utility.callAction(OnMenuToggle);
 			}
 		});
 
@@ -105,6 +110,33 @@ public class Controls
 			{
 				s_moveGamepad = value;
 				Utility.callAction(OnMove, getMove());
+			}
+		});
+
+		// Menu
+		Keyboard.get().OnKeyPress.add((Integer key) ->
+		{
+			switch(key)
+			{
+				case InputCodes.Keys.Escape -> Utility.callAction(OnMenuToggle);
+				case InputCodes.Keys.Enter -> Utility.callAction(OnMenuInteract);
+				case InputCodes.Keys.W, InputCodes.Keys.Up -> Utility.callAction(OnMenuUp);
+				case InputCodes.Keys.S, InputCodes.Keys.Down -> Utility.callAction(OnMenuDown);
+				case InputCodes.Keys.D, InputCodes.Keys.Right -> Utility.callAction(OnMenuRight);
+				case InputCodes.Keys.A, InputCodes.Keys.Left -> Utility.callAction(OnMenuLeft);
+			}
+		});
+
+		Gamepad.get().OnButtonPress.add((Integer button) ->
+		{
+			switch(button)
+			{
+				case InputCodes.GamepadButtons.Start -> Utility.callAction(OnMenuToggle);
+				case InputCodes.GamepadButtons.South -> Utility.callAction(OnMenuInteract);
+				case InputCodes.GamepadButtons.DPadUp -> Utility.callAction(OnMenuUp);
+				case InputCodes.GamepadButtons.DPadDown -> Utility.callAction(OnMenuDown);
+				case InputCodes.GamepadButtons.DPadRight -> Utility.callAction(OnMenuRight);
+				case InputCodes.GamepadButtons.DPadLeft -> Utility.callAction(OnMenuLeft);
 			}
 		});
 	}

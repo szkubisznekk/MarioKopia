@@ -1,6 +1,7 @@
 package org.szkubisznekk.renderer;
 
 import org.szkubisznekk.core.*;
+import org.szkubisznekk.menu.*;
 
 import org.joml.*;
 
@@ -149,7 +150,15 @@ public class Renderer
 		0f, 14f, 0.0f, 1.0f,
 		10f, 14f, 1.0f, 1.0f
 	};
-	private static final int[] s_spriteIndices = {
+
+	private static final float[] s_buttonVertices = {
+		-128f, -32f, 0.0f, 0.75f,
+		128f, -32f, 1.0f, 0.75f,
+		-128f, 32f, 0.0f, 1.0f,
+		128f, 32f, 1.0f, 1.0f
+	};
+
+	private static final int[] s_quadIndices = {
 		0, 1, 2,
 		1, 3, 2
 	};
@@ -179,14 +188,25 @@ public class Renderer
 	 */
 	public Texture TextAtlas;
 
+	/**
+	 * The shader used to render menu.
+	 */
+	public Shader MenuShader;
+
+	/**
+	 * The texture atlas used to render menu.
+	 */
+	public Texture MenuAtlas;
+
 	private final Window m_window;
 	private final BatchRenderer m_spriteRenderer;
 	private final BatchRenderer m_textRenderer;
+	private final BatchRenderer m_menuRenderer;
 
 	private float m_aspectRatio;
 	private final Matrix4f m_viewMatrix = new Matrix4f();
 	private final Matrix4f m_spriteProjectionMatrix = new Matrix4f();
-	private final Matrix4f m_textProjectionMatrix = new Matrix4f();
+	private final Matrix4f m_uiProjectionMatrix = new Matrix4f();
 
 	/**
 	 * Creates the OpenGL context and loads the base resources.
@@ -212,8 +232,8 @@ public class Renderer
 		// Create batch renderers.
 		m_spriteRenderer = new BatchRenderer(new VertexArray(
 			new Buffer(s_spriteVertices, Buffer.Usage.StaticDraw),
-			new Buffer(s_spriteIndices, Buffer.Usage.StaticDraw),
-			s_spriteIndices.length), 0);
+			new Buffer(s_quadIndices, Buffer.Usage.StaticDraw),
+			s_quadIndices.length), 0);
 		SpriteShader = Shader.get("res/shaders/Sprite");
 
 		SpriteAtlas = Texture.get("res/textures/sprites.png");
@@ -221,17 +241,28 @@ public class Renderer
 
 		m_textRenderer = new BatchRenderer(new VertexArray(
 			new Buffer(s_textVertices, Buffer.Usage.StaticDraw),
-			new Buffer(s_spriteIndices, Buffer.Usage.StaticDraw),
-			s_spriteIndices.length), 1);
+			new Buffer(s_quadIndices, Buffer.Usage.StaticDraw),
+			s_quadIndices.length), 1);
 		TextShader = Shader.get("res/shaders/Text");
 
 		TextAtlas = Texture.get("res/textures/font.png");
 		TextAtlas.bind(1);
 
+		m_menuRenderer = new BatchRenderer(new VertexArray(
+			new Buffer(s_buttonVertices, Buffer.Usage.StaticDraw),
+			new Buffer(s_quadIndices, Buffer.Usage.StaticDraw),
+			s_quadIndices.length), 2);
+		MenuShader = Shader.get("res/shaders/Menu");
+
+		MenuAtlas = Texture.get("res/textures/menu.png");
+		MenuAtlas.bind(2);
+
+		Camera = new Camera(new Vector2f(0.0f, 7.5f), 16.0f);
+
 		// Handle Window Resize
 		m_window.OnResize.add((Window.Size size) ->
 		{
-			recalculateTextMatrices(size);
+			recalculateUIMatrices(size);
 
 			m_aspectRatio = (float)size.Width() / size.Height();
 
@@ -241,7 +272,7 @@ public class Renderer
 
 		m_aspectRatio = (float)windowSize.Width() / windowSize.Height();
 
-		recalculateTextMatrices(windowSize);
+		recalculateUIMatrices(windowSize);
 	}
 
 	/**
@@ -250,8 +281,10 @@ public class Renderer
 	public void destruct()
 	{
 		SpriteAtlas.destruct();
+		MenuAtlas.destruct();
 		TextAtlas.destruct();
 		m_spriteRenderer.destruct();
+		m_menuRenderer.destruct();
 		m_textRenderer.destruct();
 	}
 
@@ -272,6 +305,7 @@ public class Renderer
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		m_spriteRenderer.clear();
+		m_menuRenderer.clear();
 		m_textRenderer.clear();
 
 		recalculateSpriteMatrices();
@@ -286,6 +320,7 @@ public class Renderer
 
 		glDisable(GL_DEPTH_TEST);
 
+		m_menuRenderer.render(MenuShader);
 		m_textRenderer.render(TextShader);
 
 		glEnable(GL_DEPTH_TEST);
@@ -320,6 +355,26 @@ public class Renderer
 		}
 
 		m_spriteRenderer.submit(position, depth, textureID);
+	}
+
+	public void submitMenu(Menu menu)
+	{
+		int startPosition = (menu.getNumberOfOptions() - 1) * 34;
+		for(int i = 0; i < menu.getNumberOfOptions(); i++)
+		{
+			Pair<MenuOption, Boolean> menuOption = menu.getOption(i);
+			MenuOption option = menuOption.getFirst();
+			Boolean isSelected = menuOption.getSecond();
+
+			float offset = ((isSelected) ? 0.5f : 0.0f) + option.getTextureOffset();
+			m_menuRenderer.submit(new Vector2f((float)startPosition, offset), 0f, 1);
+			submitTextAbsolute(
+				new Vector2f(0.0f, (float)startPosition),
+				option.getText(),
+				Renderer.HorizontalAlign.Center,
+				Renderer.VerticalAlign.Center);
+			startPosition -= 68;
+		}
 	}
 
 	/**
@@ -402,13 +457,14 @@ public class Renderer
 	 *
 	 * @param windowSize The size of the window.
 	 */
-	private void recalculateTextMatrices(Window.Size windowSize)
+	private void recalculateUIMatrices(Window.Size windowSize)
 	{
-		m_textProjectionMatrix.identity();
+		m_uiProjectionMatrix.identity();
 		float halfWidth = windowSize.Width() * 0.5f;
 		float halfHeight = windowSize.Height() * 0.5f;
-		m_textProjectionMatrix.ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, -1.0f, 2.0f);
+		m_uiProjectionMatrix.ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, -1.0f, 2.0f);
 
-		TextShader.setUniform("u_projectionMatrix", m_textProjectionMatrix);
+		TextShader.setUniform("u_projectionMatrix", m_uiProjectionMatrix);
+		MenuShader.setUniform("u_projectionMatrix", m_uiProjectionMatrix);
 	}
 }
