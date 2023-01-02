@@ -39,7 +39,7 @@ public class Window
 	 */
 	public Window()
 	{
-		m_size = new Size(800, 600);
+		m_size = new Size(1366, 768);
 
 		if(s_windowCount++ == 0)
 		{
@@ -50,7 +50,7 @@ public class Window
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-		m_handle = glfwCreateWindow(800, 600, "Window", NULL, NULL);
+		m_handle = glfwCreateWindow(1366, 768, "Window", NULL, NULL);
 
 		glfwSetWindowCloseCallback(m_handle, (long handle) -> Utility.callAction(OnClose));
 

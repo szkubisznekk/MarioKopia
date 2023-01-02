@@ -92,7 +92,6 @@ public class Application
 		{
 			Time.update();
 			m_inputDeviceManager.update();
-
 			m_renderer.beginFrame();
 
 			if(Menu.isShown())
