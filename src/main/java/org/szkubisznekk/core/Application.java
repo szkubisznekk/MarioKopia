@@ -54,7 +54,7 @@ public class Application
 		Button exitButton = new Button("Exit");
 		startButton.OnInteract.add(() ->
 		{
-			m_worldManager.load("res/maps/untitled.tmx");
+			m_worldManager.loadNext();
 			m_mainMenu.setShown(false);
 		});
 		volumeSlider.OnInteract.add(() ->

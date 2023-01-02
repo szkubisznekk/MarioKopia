@@ -4,17 +4,15 @@ import org.joml.Vector2f;
 import org.szkubisznekk.renderer.Renderer;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Manages all worlds and systems run on the worlds.
  */
 public class WorldManager
 {
-	private World m_current = null;
-	private final HashMap<Path, World> m_worlds = new HashMap<>();
+	private int m_current = -1;
+	private final ArrayList<World> m_worlds = new ArrayList<>();
 	private final ArrayList<SystemBase> m_systems = new ArrayList<>();
 
 	/**
@@ -31,7 +29,7 @@ public class WorldManager
 		{
 			for(var map : maps)
 			{
-				m_worlds.put(Path.of(map.getPath()), new World(map.getPath()));
+				m_worlds.add(new World(map.getPath()));
 			}
 		}
 	}
@@ -41,36 +39,55 @@ public class WorldManager
 	 */
 	public void destruct()
 	{
-		if(m_current != null)
+		World world = m_worlds.get(m_current);
+		if(m_current != -1)
 		{
 			for(var system : m_systems)
 			{
-				system.stop(m_current);
+				system.stop(world);
 			}
 		}
 	}
 
 	/**
-	 * Runs stop on all systems with the current world, then sets a new world as current and runs start on all systems with the new current world.
-	 *
-	 * @param path The path to the new world.
+	 * Runs stop on all systems with the current world, then sets the next world as current and runs start on all systems with that.
+	 * Worlds are ordered by filename.
 	 */
-	public void load(String path)
+	public void loadNext()
 	{
-		if(m_current != null)
+		World world = m_worlds.get(++m_current);
+		world.reset();
+
+		if(m_current != -1)
 		{
 			for(var system : m_systems)
 			{
-				system.stop(m_current);
+				system.stop(world);
 			}
 		}
 
-		m_current = m_worlds.get(Path.of(path));
-
-		m_current.reset();
 		for(var system : m_systems)
 		{
-			system.start(m_current);
+			system.start(world);
+		}
+	}
+
+	/**
+	 * Reloads the current world. Runs stop on all systems, then start on all systems.
+	 */
+	public void reloadCurrent()
+	{
+		World world = m_worlds.get(m_current);
+		world.reset();
+
+		for(var system : m_systems)
+		{
+			system.stop(world);
+		}
+
+		for(var system : m_systems)
+		{
+			system.start(world);
 		}
 	}
 
@@ -79,9 +96,10 @@ public class WorldManager
 	 */
 	public void updateCurrent()
 	{
+		World world = m_worlds.get(m_current);
 		for(var system : m_systems)
 		{
-			system.update(m_current);
+			system.update(world);
 		}
 	}
 
@@ -90,11 +108,12 @@ public class WorldManager
 	 */
 	public void submitCurrent()
 	{
+		World world = m_worlds.get(m_current);
 		for(int y = 0; y < World.HEIGHT; y++)
 		{
 			for(int x = 0; x < World.WIDTH; x++)
 			{
-				Renderer.get().submit(new Vector2f((float)x, (float)y), -1.0f, m_current.getTilemap().getTile(x, y));
+				Renderer.get().submit(new Vector2f((float)x, (float)y), -1.0f, world.getTilemap().getTile(x, y));
 			}
 		}
 	}
