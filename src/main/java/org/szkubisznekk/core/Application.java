@@ -37,9 +37,10 @@ public class Application
 		m_inputDeviceManager.addInputDevice(Gamepad.class);
 		Controls.init();
 
-		m_worldManager = new WorldManager("res/maps");
+		m_worldManager = new WorldManager("res/maps", 0);
 		m_worldManager.addSystem(PlayerSystem.class);
 		m_worldManager.addSystem(PhysicsSystem.class);
+		m_worldManager.addSystem(FinishSystem.class);
 		m_worldManager.addSystem(CameraSystem.class);
 		m_worldManager.addSystem(RendererSystem.class);
 

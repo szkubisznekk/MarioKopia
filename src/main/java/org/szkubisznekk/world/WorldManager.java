@@ -20,16 +20,22 @@ public class WorldManager
 	 *
 	 * @param path The path to the folder.
 	 */
-	public WorldManager(String path)
+	public WorldManager(String path, int firstWorld)
 	{
+		m_current = firstWorld;
 		File folder = new File(path);
 		File[] maps = folder.listFiles();
 
 		if(maps != null)
 		{
-			for(var map : maps)
+			for(int i = 0; i < maps.length; i++)
 			{
-				m_worlds.add(new World(map.getPath()));
+				World world = new World(maps[i].getPath());
+				if(i < maps.length - 1)
+				{
+					world.OnFinish.add(this::loadNext);
+				}
+				m_worlds.add(world);
 			}
 		}
 	}

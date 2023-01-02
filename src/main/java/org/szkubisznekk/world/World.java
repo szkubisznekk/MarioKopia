@@ -5,6 +5,7 @@ import org.w3c.dom.*;
 
 import javax.xml.parsers.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Base64;
 
 /**
@@ -21,6 +22,8 @@ public class World
 	 * The height of a world in number of tiles.
 	 */
 	public static final int HEIGHT = 16;
+
+	public ArrayList<Runnable> OnFinish = new ArrayList<>();
 
 	private final Tilemap m_tilemap;
 	private Dominion m_registry = Dominion.create();
