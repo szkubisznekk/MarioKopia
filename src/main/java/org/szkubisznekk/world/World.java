@@ -1,6 +1,7 @@
 package org.szkubisznekk.world;
 
 import dev.dominion.ecs.api.*;
+import org.joml.*;
 import org.w3c.dom.*;
 
 import javax.xml.parsers.*;
@@ -13,6 +14,8 @@ import java.util.Base64;
  */
 public class World
 {
+	public record WorldObject(Vector2f Position, byte ID) {}
+
 	/**
 	 * The width of a world in number of tiles.
 	 */
@@ -26,6 +29,7 @@ public class World
 	public ArrayList<Runnable> OnFinish = new ArrayList<>();
 
 	private final Tilemap m_tilemap;
+	private final ArrayList<WorldObject> m_worldObjects;
 	private Dominion m_registry = Dominion.create();
 
 	static
@@ -44,11 +48,13 @@ public class World
 		if(file != null)
 		{
 			m_tilemap = parseTilemap(file);
+			m_worldObjects = parseObjects(file);
 		}
 		else
 		{
 			System.err.printf("Failed to load world: (%s)\n", path);
 			m_tilemap = null;
+			m_worldObjects = null;
 		}
 	}
 
@@ -60,6 +66,11 @@ public class World
 	Tilemap getTilemap()
 	{
 		return m_tilemap;
+	}
+
+	public ArrayList<WorldObject> getWorldObjects()
+	{
+		return m_worldObjects;
 	}
 
 	/**
@@ -129,5 +140,25 @@ public class World
 		}
 
 		return tilemap;
+	}
+
+	private static ArrayList<WorldObject> parseObjects(Document document)
+	{
+		ArrayList<WorldObject> worldObjects = new ArrayList<>();
+
+		NodeList objects = document.getElementsByTagName("object");
+		for(int i = 0; i < objects.getLength(); i++)
+		{
+			Node object = objects.item(i);
+			NamedNodeMap attributes = object.getAttributes();
+
+			float x = Float.parseFloat(attributes.getNamedItem("x").getNodeValue()) / 16f;
+			float y = 16f - Float.parseFloat(attributes.getNamedItem("y").getNodeValue()) / 16f;
+			byte id = Byte.parseByte(attributes.getNamedItem("gid").getNodeValue());
+
+			worldObjects.add(new WorldObject(new Vector2f(x, y), id));
+		}
+
+		return worldObjects;
 	}
 }

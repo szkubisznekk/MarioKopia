@@ -39,8 +39,8 @@ public class Application
 
 		m_worldManager = new WorldManager("res/maps", 0);
 		m_worldManager.addSystem(PlayerSystem.class);
+		m_worldManager.addSystem(ObjectSystem.class);
 		m_worldManager.addSystem(PhysicsSystem.class);
-		m_worldManager.addSystem(FinishSystem.class);
 		m_worldManager.addSystem(CameraSystem.class);
 		m_worldManager.addSystem(RendererSystem.class);
 
@@ -49,22 +49,19 @@ public class Application
 		m_renderer = new Renderer(m_window);
 
 		Button startButton = new Button("Start");
-		Slider volumeSlider = new Slider("Volume", 0.5f);
-		Button exitButton = new Button("Exit");
 		startButton.OnInteract.add(() ->
 		{
 			m_worldManager.reloadCurrent();
 			Menu.setShown(false);
 		});
-		volumeSlider.OnInteract.add(() ->
-		{
-			m_audioManager.setVolume(volumeSlider.getValue());
-		});
-		exitButton.OnInteract.add(() ->
-		{
-			m_running = false;
-		});
+
+		Slider volumeSlider = new Slider("Volume", 0.5f);
+		volumeSlider.OnInteract.add(() -> m_audioManager.setVolume(volumeSlider.getValue()));
+
+		Button exitButton = new Button("Exit");
+		exitButton.OnInteract.add(() -> m_running = false);
 		Menu.init();
+
 		Menu.addOption(startButton);
 		Menu.addOption(volumeSlider);
 		Menu.addOption(exitButton);
