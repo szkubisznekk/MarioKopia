@@ -8,54 +8,56 @@ import java.util.ArrayList;
 
 public class Menu
 {
-	private final ArrayList<MenuOption> m_options = new ArrayList<>();
-	private int m_selectedIndex = 0;
-	private boolean m_isShown = true;
+	private static final ArrayList<MenuOption> s_options = new ArrayList<>();
+	private static int s_selectedIndex = 0;
+	private static boolean s_isShown = true;
 
-	public Menu()
+	private Menu() {}
+
+	public static void init()
 	{
 		Controls.OnMenuToggle.add(() ->
 		{
-			if(!m_isShown)
+			if(!s_isShown)
 			{
-				m_selectedIndex = 0;
+				s_selectedIndex = 0;
 			}
-			m_isShown = !m_isShown;
+			s_isShown = !s_isShown;
 		});
 		Controls.OnMenuUp.add(() ->
 		{
-			if(!m_isShown)
+			if(!s_isShown)
 			{
 				return;
 			}
 
-			m_selectedIndex--;
-			if(m_selectedIndex < 0)
+			s_selectedIndex--;
+			if(s_selectedIndex < 0)
 			{
-				m_selectedIndex += m_options.size();
+				s_selectedIndex += s_options.size();
 			}
 		});
 		Controls.OnMenuDown.add(() ->
 		{
-			if(!m_isShown)
+			if(!s_isShown)
 			{
 				return;
 			}
 
-			m_selectedIndex++;
-			if(m_selectedIndex >= m_options.size())
+			s_selectedIndex++;
+			if(s_selectedIndex >= s_options.size())
 			{
-				m_selectedIndex -= m_options.size();
+				s_selectedIndex -= s_options.size();
 			}
 		});
 		Controls.OnMenuRight.add(() ->
 		{
-			if(!m_isShown)
+			if(!s_isShown)
 			{
 				return;
 			}
 
-			MenuOption current = m_options.get(m_selectedIndex);
+			MenuOption current = s_options.get(s_selectedIndex);
 			if(current.getClass() == Slider.class)
 			{
 				Slider slider = (Slider)current;
@@ -65,12 +67,12 @@ public class Menu
 		});
 		Controls.OnMenuLeft.add(() ->
 		{
-			if(!m_isShown)
+			if(!s_isShown)
 			{
 				return;
 			}
 
-			MenuOption current = m_options.get(m_selectedIndex);
+			MenuOption current = s_options.get(s_selectedIndex);
 			if(current.getClass() == Slider.class)
 			{
 				Slider slider = (Slider)current;
@@ -80,38 +82,38 @@ public class Menu
 		});
 		Controls.OnMenuInteract.add(() ->
 		{
-			if(!m_isShown)
+			if(!s_isShown)
 			{
 				return;
 			}
 
-			MenuOption current = m_options.get(m_selectedIndex);
+			MenuOption current = s_options.get(s_selectedIndex);
 			Utility.callAction(current.OnInteract);
 		});
 	}
 
-	public int getNumberOfOptions()
+	public static int getNumberOfOptions()
 	{
-		return m_options.size();
+		return s_options.size();
 	}
 
-	public Pair<MenuOption, Boolean> getOption(int index)
+	public static Pair<MenuOption, Boolean> getOption(int index)
 	{
-		return new Pair<>(m_options.get(index), index == m_selectedIndex);
+		return new Pair<>(s_options.get(index), index == s_selectedIndex);
 	}
 
-	public boolean isShown()
+	public static boolean isShown()
 	{
-		return m_isShown;
+		return s_isShown;
 	}
 
-	public void setShown(boolean isShown)
+	public static void setShown(boolean isShown)
 	{
-		m_isShown = isShown;
+		s_isShown = isShown;
 	}
 
-	public void addOption(MenuOption option)
+	public static void addOption(MenuOption option)
 	{
-		m_options.add(option);
+		s_options.add(option);
 	}
 }

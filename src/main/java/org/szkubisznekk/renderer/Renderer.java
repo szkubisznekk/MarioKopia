@@ -357,12 +357,12 @@ public class Renderer
 		m_spriteRenderer.submit(position, depth, textureID);
 	}
 
-	public void submitMenu(Menu menu)
+	public void submitMenu()
 	{
-		int startPosition = (menu.getNumberOfOptions() - 1) * 34;
-		for(int i = 0; i < menu.getNumberOfOptions(); i++)
+		int startPosition = (Menu.getNumberOfOptions() - 1) * 34;
+		for(int i = 0; i < Menu.getNumberOfOptions(); i++)
 		{
-			Pair<MenuOption, Boolean> menuOption = menu.getOption(i);
+			Pair<MenuOption, Boolean> menuOption = Menu.getOption(i);
 			MenuOption option = menuOption.getFirst();
 			Boolean isSelected = menuOption.getSecond();
 

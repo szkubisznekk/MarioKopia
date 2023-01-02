@@ -19,7 +19,6 @@ public class Application
 	private final WorldManager m_worldManager;
 	private final AudioManager m_audioManager;
 	private final Renderer m_renderer;
-	private final Menu m_mainMenu;
 
 	/**
 	 * Creates all systems.
@@ -48,14 +47,13 @@ public class Application
 
 		m_renderer = new Renderer(m_window);
 
-		m_mainMenu = new Menu();
 		Button startButton = new Button("Start");
 		Slider volumeSlider = new Slider("Volume", 0.5f);
 		Button exitButton = new Button("Exit");
 		startButton.OnInteract.add(() ->
 		{
 			m_worldManager.loadNext();
-			m_mainMenu.setShown(false);
+			Menu.setShown(false);
 		});
 		volumeSlider.OnInteract.add(() ->
 		{
@@ -65,9 +63,10 @@ public class Application
 		{
 			m_running = false;
 		});
-		m_mainMenu.addOption(startButton);
-		m_mainMenu.addOption(volumeSlider);
-		m_mainMenu.addOption(exitButton);
+		Menu.init();
+		Menu.addOption(startButton);
+		Menu.addOption(volumeSlider);
+		Menu.addOption(exitButton);
 	}
 
 	/**
@@ -98,9 +97,9 @@ public class Application
 
 			m_renderer.beginFrame();
 
-			if(m_mainMenu.isShown())
+			if(Menu.isShown())
 			{
-				m_renderer.submitMenu(m_mainMenu);
+				m_renderer.submitMenu();
 			}
 			else
 			{

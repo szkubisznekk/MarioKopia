@@ -34,6 +34,8 @@ public class Controls
 	private static float s_moveArrows = 0.0f;
 	private static float s_moveGamepad = 0.0f;
 
+	private Controls() {}
+
 	/**
 	 * Sets callback.
 	 */
