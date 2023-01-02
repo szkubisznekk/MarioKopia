@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class WorldManager
 {
-	private int m_current = -1;
+	private int m_current = 0;
 	private final ArrayList<World> m_worlds = new ArrayList<>();
 	private final ArrayList<SystemBase> m_systems = new ArrayList<>();
 
@@ -55,16 +55,14 @@ public class WorldManager
 	 */
 	public void loadNext()
 	{
-		World world = m_worlds.get(++m_current);
-		world.reset();
+		World world = m_worlds.get(m_current);
 
-		if(m_current != -1)
+		for(var system : m_systems)
 		{
-			for(var system : m_systems)
-			{
-				system.stop(world);
-			}
+			system.stop(world);
 		}
+
+		world = m_worlds.get(++m_current);
 
 		for(var system : m_systems)
 		{

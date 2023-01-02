@@ -52,7 +52,7 @@ public class Application
 		Button exitButton = new Button("Exit");
 		startButton.OnInteract.add(() ->
 		{
-			m_worldManager.loadNext();
+			m_worldManager.reloadCurrent();
 			Menu.setShown(false);
 		});
 		volumeSlider.OnInteract.add(() ->
