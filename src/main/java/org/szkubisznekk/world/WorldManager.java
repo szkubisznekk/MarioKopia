@@ -40,6 +40,14 @@ public class WorldManager
 				{
 					world.OnFinish.add(this::loadNext);
 				}
+				else {
+					world.OnFinish.add(() -> {
+						m_current = 0;
+						GameState.Forints = 0;
+						GameState.LastFinishedMap = 0;
+						reloadCurrent();
+					});
+				}
 				m_worlds.add(world);
 			}
 		}
