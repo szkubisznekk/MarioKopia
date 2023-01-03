@@ -43,7 +43,7 @@ public class PhysicsSystem extends SystemBase
 			int lb = (int)Math.floor(positionComponent.Position.y + TwoEpsilon);
 			int lt = (int)Math.ceil(positionComponent.Position.y - TwoEpsilon);
 			boolean hasLeft = tilemap.getTile(l, lb) != 0 || tilemap.getTile(l, lt) != 0;
-			if(hasLeft && rigidbodyComponent.Velocity.x < 0.0f)
+			if((positionComponent.Position.x < 0.0f || hasLeft) && rigidbodyComponent.Velocity.x < 0.0f)
 			{
 				rigidbodyComponent.Velocity.x = 0.0f;
 			}
