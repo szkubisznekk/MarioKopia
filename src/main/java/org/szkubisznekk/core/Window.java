@@ -52,12 +52,12 @@ public class Window
 
 		m_handle = glfwCreateWindow(1366, 768, "Window", NULL, NULL);
 
-		glfwSetWindowCloseCallback(m_handle, (long handle) -> Utility.callAction(OnClose));
+		glfwSetWindowCloseCallback(m_handle, (long handle) -> Action.callAction(OnClose));
 
 		glfwSetFramebufferSizeCallback(m_handle, (long handle, int width, int height) ->
 		{
 			m_size = new Size(width, height);
-			Utility.callAction(OnResize, m_size);
+			Action.callAction(OnResize, m_size);
 		});
 	}
 

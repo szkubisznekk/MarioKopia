@@ -1,8 +1,10 @@
 package org.szkubisznekk.world;
 
-import dev.dominion.ecs.api.*;
 import org.szkubisznekk.renderer.*;
 
+/**
+ * Moves the camera to the player.
+ */
 public class CameraSystem extends SystemBase
 {
 	@Override

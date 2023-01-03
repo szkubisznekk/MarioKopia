@@ -49,8 +49,8 @@ public class Keyboard extends InputDevice
 		{
 			switch(action)
 			{
-				case InputCodes.Actions.Press -> Utility.callAction(OnKeyPress, key);
-				case InputCodes.Actions.Release -> Utility.callAction(OnKeyRelease, key);
+				case InputCodes.Actions.Press -> Action.callAction(OnKeyPress, key);
+				case InputCodes.Actions.Release -> Action.callAction(OnKeyRelease, key);
 			}
 		});
 	}

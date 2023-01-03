@@ -14,6 +14,12 @@ import java.util.Base64;
  */
 public class World
 {
+	/**
+	 * Holds data of a world object.
+	 *
+	 * @param Position The position of the world object.
+	 * @param ID       The texture id.
+	 */
 	public record WorldObject(Vector2f Position, byte ID) {}
 
 	/**
@@ -26,6 +32,9 @@ public class World
 	 */
 	public static final int HEIGHT = 16;
 
+	/**
+	 * Called when the player reaches the finish line.
+	 */
 	public ArrayList<Runnable> OnFinish = new ArrayList<>();
 
 	private final Tilemap m_tilemap;
@@ -68,6 +77,11 @@ public class World
 		return m_tilemap;
 	}
 
+	/**
+	 * Returns the list of world objects.
+	 *
+	 * @return The list of world objects.
+	 */
 	public ArrayList<WorldObject> getWorldObjects()
 	{
 		return m_worldObjects;
@@ -83,6 +97,9 @@ public class World
 		return m_registry;
 	}
 
+	/**
+	 * Deletes all entities.
+	 */
 	public void reset()
 	{
 		m_registry = Dominion.create();
@@ -113,7 +130,7 @@ public class World
 	}
 
 	/**
-	 * Build a tilemap out of a world file's XML DOM.
+	 * Builds a tilemap out of a world file's XML DOM.
 	 *
 	 * @param document The world file's XML DOM.
 	 * @return A tilemap built out of the world file's data.
@@ -142,6 +159,12 @@ public class World
 		return tilemap;
 	}
 
+	/**
+	 * Loads all object from the world file's XML DOM.
+	 *
+	 * @param document The world file's XML DOM.
+	 * @return A list of thw world objects.
+	 */
 	private static ArrayList<WorldObject> parseObjects(Document document)
 	{
 		ArrayList<WorldObject> worldObjects = new ArrayList<>();

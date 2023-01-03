@@ -5,9 +5,9 @@ import java.util.function.Consumer;
 import java.util.function.BiConsumer;
 
 /**
- * Utility functions.
+ * Action utility functions.
  */
-public class Utility
+public class Action
 {
 	/**
 	 * Calls every callback in an action.

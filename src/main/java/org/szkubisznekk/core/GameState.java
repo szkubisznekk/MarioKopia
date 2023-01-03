@@ -1,15 +1,31 @@
 package org.szkubisznekk.core;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.Properties;
 
+/**
+ * Stores global game states.
+ */
 public class GameState
 {
+	/**
+	 * Number of forints collected through-out the game,
+	 */
 	public static int Forints = 0;
+
+	/**
+	 * Index of the last finished map.
+	 */
 	public static int LastFinishedMap = 0;
+
+	/**
+	 * Player skin index.
+	 */
 	public static byte PlayerSkin = 0;
 
+	/**
+	 * Loads game state from file.
+	 */
 	public static void load()
 	{
 		try
@@ -27,6 +43,9 @@ public class GameState
 		catch(Exception ignored) {}
 	}
 
+	/**
+	 * Saves the state to file.
+	 */
 	public static void save()
 	{
 		try

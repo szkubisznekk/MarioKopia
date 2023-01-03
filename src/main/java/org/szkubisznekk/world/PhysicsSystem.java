@@ -1,8 +1,10 @@
 package org.szkubisznekk.world;
 
-import dev.dominion.ecs.api.*;
 import org.szkubisznekk.core.*;
 
+/**
+ * Manages collisions between the tilemap and the player.
+ */
 public class PhysicsSystem extends SystemBase
 {
 	private static final float Epsilon = 0.01f;

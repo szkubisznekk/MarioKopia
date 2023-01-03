@@ -51,8 +51,8 @@ public class Mouse extends InputDevice
 		{
 			switch(action)
 			{
-				case InputCodes.Actions.Press -> Utility.callAction(OnButtonPress, button);
-				case InputCodes.Actions.Release -> Utility.callAction(OnButtonRelease, button);
+				case InputCodes.Actions.Press -> Action.callAction(OnButtonPress, button);
+				case InputCodes.Actions.Release -> Action.callAction(OnButtonRelease, button);
 			}
 		});
 	}

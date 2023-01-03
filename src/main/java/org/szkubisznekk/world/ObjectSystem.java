@@ -1,13 +1,16 @@
 package org.szkubisznekk.world;
 
+import org.szkubisznekk.audio.*;
+import org.szkubisznekk.core.*;
+import org.szkubisznekk.renderer.*;
+
 import org.joml.Vector2f;
-import org.szkubisznekk.audio.AudioManager;
-import org.szkubisznekk.core.GameState;
-import org.szkubisznekk.core.Utility;
-import org.szkubisznekk.renderer.Renderer;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * Manages collection of objects.
+ */
 public class ObjectSystem extends SystemBase
 {
 	private int m_forintsCollectedOnCurrentMap = 0;
@@ -70,7 +73,7 @@ public class ObjectSystem extends SystemBase
 
 		if(shouldFinish.get())
 		{
-			Utility.callAction(world.OnFinish);
+			Action.callAction(world.OnFinish);
 		}
 
 		Renderer.get().submitTextRelative(

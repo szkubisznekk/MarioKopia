@@ -2,16 +2,28 @@ package org.szkubisznekk.world;
 
 import org.joml.*;
 
+/**
+ * Physics component of an object.
+ */
 public class RigidbodyComponent
 {
-	public Vector2f Velocity = new Vector2f(0.0f);
+	/**
+	 * The velocity of the object.
+	 */
+	public Vector2f Velocity;
+
+	/**
+	 * The current state of the object based if it is standing on something or not.
+	 */
 	public boolean IsGrounded = false;
 
-	public RigidbodyComponent() {}
-
-	public RigidbodyComponent(Vector2f velocity, boolean isGrounded)
+	/**
+	 * Sets the initial velocity.
+	 *
+	 * @param velocity The initial velocity.
+	 */
+	public RigidbodyComponent(Vector2f velocity)
 	{
 		Velocity = velocity;
-		IsGrounded = isGrounded;
 	}
 }

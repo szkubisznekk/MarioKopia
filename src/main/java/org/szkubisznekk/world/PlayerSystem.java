@@ -1,12 +1,13 @@
 package org.szkubisznekk.world;
 
-import dev.dominion.ecs.api.*;
 import org.joml.*;
-import org.szkubisznekk.audio.AudioManager;
+import org.szkubisznekk.audio.*;
 import org.szkubisznekk.core.*;
 import org.szkubisznekk.input.*;
-import org.szkubisznekk.renderer.Renderer;
 
+/**
+ * Manages player input and player movement.
+ */
 public class PlayerSystem extends SystemBase
 {
 	@Override

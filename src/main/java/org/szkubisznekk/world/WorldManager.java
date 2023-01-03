@@ -60,6 +60,11 @@ public class WorldManager
 		}
 	}
 
+	/**
+	 * Returns the only instance of world manager.
+	 *
+	 * @return The only instance of world manager.
+	 */
 	public static WorldManager get()
 	{
 		return s_instance;

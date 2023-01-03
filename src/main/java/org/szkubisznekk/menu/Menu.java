@@ -1,11 +1,14 @@
 package org.szkubisznekk.menu;
 
 import org.szkubisznekk.core.Pair;
-import org.szkubisznekk.core.Utility;
+import org.szkubisznekk.core.Action;
 import org.szkubisznekk.input.Controls;
 
 import java.util.ArrayList;
 
+/**
+ * The main menu.
+ */
 public class Menu
 {
 	private static final ArrayList<MenuOption> s_options = new ArrayList<>();
@@ -14,6 +17,9 @@ public class Menu
 
 	private Menu() {}
 
+	/**
+	 * Sets callbacks.
+	 */
 	public static void init()
 	{
 		Controls.OnMenuToggle.add(() ->
@@ -62,7 +68,7 @@ public class Menu
 			{
 				Slider slider = (Slider)current;
 				slider.increment();
-				Utility.callAction(slider.OnInteract);
+				Action.callAction(slider.OnInteract);
 			}
 		});
 		Controls.OnMenuLeft.add(() ->
@@ -77,7 +83,7 @@ public class Menu
 			{
 				Slider slider = (Slider)current;
 				slider.decrement();
-				Utility.callAction(slider.OnInteract);
+				Action.callAction(slider.OnInteract);
 			}
 		});
 		Controls.OnMenuInteract.add(() ->
@@ -88,30 +94,56 @@ public class Menu
 			}
 
 			MenuOption current = s_options.get(s_selectedIndex);
-			Utility.callAction(current.OnInteract);
+			Action.callAction(current.OnInteract);
 		});
 	}
 
+	/**
+	 * Returns the number of menu options.
+	 *
+	 * @return The number of menu options.
+	 */
 	public static int getNumberOfOptions()
 	{
 		return s_options.size();
 	}
 
+	/**
+	 * Returns a menu option with the given index.
+	 *
+	 * @param index The index.
+	 * @return A menu option.
+	 */
 	public static Pair<MenuOption, Boolean> getOption(int index)
 	{
 		return new Pair<>(s_options.get(index), index == s_selectedIndex);
 	}
 
+	/**
+	 * Returns whether the menu is shown.
+	 *
+	 * @return Whether the menu is shown.
+	 */
 	public static boolean isShown()
 	{
 		return s_isShown;
 	}
 
+	/**
+	 * Shows/hides the menu.
+	 *
+	 * @param isShown The new visibility of the menu.
+	 */
 	public static void setShown(boolean isShown)
 	{
 		s_isShown = isShown;
 	}
 
+	/**
+	 * Adds a new menu option.
+	 *
+	 * @param option The new menu option.
+	 */
 	public static void addOption(MenuOption option)
 	{
 		s_options.add(option);

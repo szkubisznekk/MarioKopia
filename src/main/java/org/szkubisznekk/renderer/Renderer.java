@@ -357,6 +357,9 @@ public class Renderer
 		m_spriteRenderer.submit(position, depth, textureID);
 	}
 
+	/**
+	 * Submits the main menu to the menu renderer to be drawn using the menu shader and menu texture atlas.
+	 */
 	public void submitMenu()
 	{
 		int startPosition = (Menu.getNumberOfOptions() - 1) * 34;

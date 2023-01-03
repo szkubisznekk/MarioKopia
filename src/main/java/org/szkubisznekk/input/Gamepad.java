@@ -101,8 +101,8 @@ public class Gamepad extends InputDevice
 			{
 				switch(state)
 				{
-					case InputCodes.Actions.Press -> Utility.callAction(OnButtonPress, button);
-					case InputCodes.Actions.Release -> Utility.callAction(OnButtonRelease, button);
+					case InputCodes.Actions.Press -> Action.callAction(OnButtonPress, button);
+					case InputCodes.Actions.Release -> Action.callAction(OnButtonRelease, button);
 				}
 			}
 		}
@@ -113,7 +113,7 @@ public class Gamepad extends InputDevice
 			if(state != m_lastState.axes(axis))
 			{
 				float value = m_state.axes(axis);
-				Utility.callAction(OnAxis, axis, (axis < InputCodes.GamepadAxes.LeftTrigger) ? processStick(value) : processTrigger(value));
+				Action.callAction(OnAxis, axis, (axis < InputCodes.GamepadAxes.LeftTrigger) ? processStick(value) : processTrigger(value));
 			}
 		}
 	}

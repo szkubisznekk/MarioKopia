@@ -1,6 +1,6 @@
 package org.szkubisznekk.input;
 
-import org.szkubisznekk.core.Utility;
+import org.szkubisznekk.core.Action;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -24,10 +24,30 @@ public class Controls
 	 * Called when the menu button is pressed.
 	 */
 	public static ArrayList<Runnable> OnMenuToggle = new ArrayList<>();
+
+	/**
+	 * Called when the interact button is pressed on the menu.
+	 */
 	public static ArrayList<Runnable> OnMenuInteract = new ArrayList<>();
+
+	/**
+	 * Called when the up button is pressed on the menu.
+	 */
 	public static ArrayList<Runnable> OnMenuUp = new ArrayList<>();
+
+	/**
+	 * Called when the down button is pressed on the menu.
+	 */
 	public static ArrayList<Runnable> OnMenuDown = new ArrayList<>();
+
+	/**
+	 * Called when the right button is pressed on the menu.
+	 */
 	public static ArrayList<Runnable> OnMenuRight = new ArrayList<>();
+
+	/**
+	 * Called when the left button is pressed on the menu.
+	 */
 	public static ArrayList<Runnable> OnMenuLeft = new ArrayList<>();
 
 	private static float s_moveAD = 0.0f;
@@ -49,24 +69,24 @@ public class Controls
 				case InputCodes.Keys.A ->
 				{
 					s_moveAD -= 1.0f;
-					Utility.callAction(OnMove, getMove());
+					Action.callAction(OnMove, getMove());
 				}
 				case InputCodes.Keys.D ->
 				{
 					s_moveAD += 1.0f;
-					Utility.callAction(OnMove, getMove());
+					Action.callAction(OnMove, getMove());
 				}
 				case InputCodes.Keys.Left ->
 				{
 					s_moveArrows -= 1.0f;
-					Utility.callAction(OnMove, getMove());
+					Action.callAction(OnMove, getMove());
 				}
 				case InputCodes.Keys.Right ->
 				{
 					s_moveArrows += 1.0f;
-					Utility.callAction(OnMove, getMove());
+					Action.callAction(OnMove, getMove());
 				}
-				case InputCodes.Keys.W, InputCodes.Keys.Up -> Utility.callAction(OnJump);
+				case InputCodes.Keys.W, InputCodes.Keys.Up -> Action.callAction(OnJump);
 			}
 		});
 
@@ -77,22 +97,22 @@ public class Controls
 				case InputCodes.Keys.A ->
 				{
 					s_moveAD += 1.0f;
-					Utility.callAction(OnMove, getMove());
+					Action.callAction(OnMove, getMove());
 				}
 				case InputCodes.Keys.D ->
 				{
 					s_moveAD -= 1.0f;
-					Utility.callAction(OnMove, getMove());
+					Action.callAction(OnMove, getMove());
 				}
 				case InputCodes.Keys.Left ->
 				{
 					s_moveArrows += 1.0f;
-					Utility.callAction(OnMove, getMove());
+					Action.callAction(OnMove, getMove());
 				}
 				case InputCodes.Keys.Right ->
 				{
 					s_moveArrows -= 1.0f;
-					Utility.callAction(OnMove, getMove());
+					Action.callAction(OnMove, getMove());
 				}
 			}
 		});
@@ -101,8 +121,8 @@ public class Controls
 		{
 			switch(button)
 			{
-				case InputCodes.GamepadButtons.South -> Utility.callAction(OnJump);
-				case InputCodes.GamepadButtons.Start -> Utility.callAction(OnMenuToggle);
+				case InputCodes.GamepadButtons.South -> Action.callAction(OnJump);
+				case InputCodes.GamepadButtons.Start -> Action.callAction(OnMenuToggle);
 			}
 		});
 
@@ -111,7 +131,7 @@ public class Controls
 			if(axis == InputCodes.GamepadAxes.LeftStickX)
 			{
 				s_moveGamepad = value;
-				Utility.callAction(OnMove, getMove());
+				Action.callAction(OnMove, getMove());
 			}
 		});
 
@@ -120,12 +140,12 @@ public class Controls
 		{
 			switch(key)
 			{
-				case InputCodes.Keys.Escape -> Utility.callAction(OnMenuToggle);
-				case InputCodes.Keys.Enter -> Utility.callAction(OnMenuInteract);
-				case InputCodes.Keys.W, InputCodes.Keys.Up -> Utility.callAction(OnMenuUp);
-				case InputCodes.Keys.S, InputCodes.Keys.Down -> Utility.callAction(OnMenuDown);
-				case InputCodes.Keys.D, InputCodes.Keys.Right -> Utility.callAction(OnMenuRight);
-				case InputCodes.Keys.A, InputCodes.Keys.Left -> Utility.callAction(OnMenuLeft);
+				case InputCodes.Keys.Escape -> Action.callAction(OnMenuToggle);
+				case InputCodes.Keys.Enter -> Action.callAction(OnMenuInteract);
+				case InputCodes.Keys.W, InputCodes.Keys.Up -> Action.callAction(OnMenuUp);
+				case InputCodes.Keys.S, InputCodes.Keys.Down -> Action.callAction(OnMenuDown);
+				case InputCodes.Keys.D, InputCodes.Keys.Right -> Action.callAction(OnMenuRight);
+				case InputCodes.Keys.A, InputCodes.Keys.Left -> Action.callAction(OnMenuLeft);
 			}
 		});
 
@@ -133,12 +153,12 @@ public class Controls
 		{
 			switch(button)
 			{
-				case InputCodes.GamepadButtons.Start -> Utility.callAction(OnMenuToggle);
-				case InputCodes.GamepadButtons.South -> Utility.callAction(OnMenuInteract);
-				case InputCodes.GamepadButtons.DPadUp -> Utility.callAction(OnMenuUp);
-				case InputCodes.GamepadButtons.DPadDown -> Utility.callAction(OnMenuDown);
-				case InputCodes.GamepadButtons.DPadRight -> Utility.callAction(OnMenuRight);
-				case InputCodes.GamepadButtons.DPadLeft -> Utility.callAction(OnMenuLeft);
+				case InputCodes.GamepadButtons.Start -> Action.callAction(OnMenuToggle);
+				case InputCodes.GamepadButtons.South -> Action.callAction(OnMenuInteract);
+				case InputCodes.GamepadButtons.DPadUp -> Action.callAction(OnMenuUp);
+				case InputCodes.GamepadButtons.DPadDown -> Action.callAction(OnMenuDown);
+				case InputCodes.GamepadButtons.DPadRight -> Action.callAction(OnMenuRight);
+				case InputCodes.GamepadButtons.DPadLeft -> Action.callAction(OnMenuLeft);
 			}
 		});
 	}

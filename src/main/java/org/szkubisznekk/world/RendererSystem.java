@@ -1,8 +1,10 @@
 package org.szkubisznekk.world;
 
-import dev.dominion.ecs.api.*;
 import org.szkubisznekk.renderer.*;
 
+/**
+ * Submits all objects ot the renderer.
+ */
 public class RendererSystem extends SystemBase
 {
 	@Override

@@ -6,8 +6,6 @@ import org.szkubisznekk.renderer.*;
 import org.szkubisznekk.world.*;
 import org.szkubisznekk.audio.*;
 
-import java.util.ArrayList;
-
 /**
  * Manages every system needed to run the application.
  */
