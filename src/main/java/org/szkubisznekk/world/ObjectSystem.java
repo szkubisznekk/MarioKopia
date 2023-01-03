@@ -1,16 +1,27 @@
 package org.szkubisznekk.world;
 
 import org.joml.Vector2f;
+import org.szkubisznekk.audio.AudioManager;
 import org.szkubisznekk.core.GameState;
 import org.szkubisznekk.core.Utility;
+import org.szkubisznekk.renderer.Renderer;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ObjectSystem extends SystemBase
 {
+	private int m_forintsCollectedOnCurrentMap = 0;
+	private World m_lastWorld = null;
+
 	@Override
 	public void start(World world)
 	{
+		if(m_lastWorld != world)
+		{
+			GameState.Forints += m_forintsCollectedOnCurrentMap;
+			m_lastWorld = world;
+		}
+		m_forintsCollectedOnCurrentMap = 0;
 		for(var worldObject : world.getWorldObjects())
 		{
 			world.getEntities().createEntity(
@@ -41,7 +52,8 @@ public class ObjectSystem extends SystemBase
 					{
 						case Coin ->
 						{
-							GameState.Forints += 5;
+							m_forintsCollectedOnCurrentMap += 5;
+							AudioManager.get().play("res/audio/coin_collect.ogg", 1.0f, false);
 							world.getEntities().deleteEntity(object.entity());
 						}
 						case FinishLine ->
@@ -60,5 +72,11 @@ public class ObjectSystem extends SystemBase
 		{
 			Utility.callAction(world.OnFinish);
 		}
+
+		Renderer.get().submitTextRelative(
+			new Vector2f(-0.95f, 0.95f),
+			"FORINTS: " + (GameState.Forints + m_forintsCollectedOnCurrentMap),
+			Renderer.HorizontalAlign.Left,
+			Renderer.VerticalAlign.Top);
 	}
 }

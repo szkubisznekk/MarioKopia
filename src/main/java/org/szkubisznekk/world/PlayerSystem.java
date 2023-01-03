@@ -16,7 +16,7 @@ public class PlayerSystem extends SystemBase
 			new PlayerComponent(),
 			new PositionComponent(new Vector2f(0.0f, 16.0f)),
 			new RigidbodyComponent(),
-			new SpriteComponent(0.0f, (byte)57));
+			new SpriteComponent(0.0f, (byte)(57 + GameState.PlayerSkin)));
 
 		world.getEntities().findEntitiesWith(PlayerComponent.class, RigidbodyComponent.class).stream().forEach(result ->
 		{
@@ -50,7 +50,7 @@ public class PlayerSystem extends SystemBase
 			if(positionComponent.Position.y < 0f)
 			{
 				WorldManager.get().reloadCurrent();
-				AudioManager.get().play("res/audio/coin_collect.ogg", 1.0f, false);
+				AudioManager.get().play("res/audio/death.ogg", 1.0f, false);
 			}
 
 			rigidbodyComponent.Velocity.x = playerComponent.Move * playerComponent.Speed;
@@ -68,11 +68,5 @@ public class PlayerSystem extends SystemBase
 				rigidbodyComponent.Velocity.y -= 40.0f * Time.getDeltaTime();
 			}
 		});
-
-		Renderer.get().submitTextRelative(
-			new Vector2f(-0.95f, 0.95f),
-			"FORINTS: " + GameState.Forints,
-			Renderer.HorizontalAlign.Left,
-			Renderer.VerticalAlign.Top);
 	}
 }

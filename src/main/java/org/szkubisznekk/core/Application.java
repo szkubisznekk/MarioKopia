@@ -55,14 +55,18 @@ public class Application
 			Menu.setShown(false);
 		});
 
-		Slider volumeSlider = new Slider("Volume", 0.5f);
+		Slider skinSlider = new Slider("Skin", 0f, 2);
+		skinSlider.OnInteract.add(() -> GameState.PlayerSkin = (byte)skinSlider.getValue());
+
+		Slider volumeSlider = new Slider("Volume", 0.5f, 10);
 		volumeSlider.OnInteract.add(() -> m_audioManager.setVolume(volumeSlider.getValue()));
 
 		Button exitButton = new Button("Exit");
 		exitButton.OnInteract.add(() -> m_running = false);
-		Menu.init();
 
+		Menu.init();
 		Menu.addOption(startButton);
+		Menu.addOption(skinSlider);
 		Menu.addOption(volumeSlider);
 		Menu.addOption(exitButton);
 	}
