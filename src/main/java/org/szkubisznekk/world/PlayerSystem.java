@@ -14,9 +14,9 @@ public class PlayerSystem extends SystemBase
 	public void start(World world)
 	{
 		world.getEntities().createEntity(
-			new PlayerComponent(),
+			new PlayerComponent(7.0f),
 			new PositionComponent(new Vector2f(0.0f, 16.0f)),
-			new RigidbodyComponent(),
+			new RigidbodyComponent(new Vector2f(0.0f, 0.0f)),
 			new SpriteComponent(0.0f, (byte)(57 + GameState.PlayerSkin)));
 
 		world.getEntities().findEntitiesWith(PlayerComponent.class, RigidbodyComponent.class).stream().forEach(result ->
