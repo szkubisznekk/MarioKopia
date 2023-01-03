@@ -68,11 +68,5 @@ public class PlayerSystem extends SystemBase
 				rigidbodyComponent.Velocity.y -= 40.0f * Time.getDeltaTime();
 			}
 		});
-
-		Renderer.get().submitTextRelative(
-			new Vector2f(-0.95f, 0.95f),
-			"FORINTS: " + GameState.Forints,
-			Renderer.HorizontalAlign.Left,
-			Renderer.VerticalAlign.Top);
 	}
 }
