@@ -25,6 +25,8 @@ public class Application
 	 */
 	public Application()
 	{
+		GameState.load();
+
 		m_window = new Window();
 		m_window.OnClose.add(() ->
 		{
@@ -37,7 +39,7 @@ public class Application
 		m_inputDeviceManager.addInputDevice(Gamepad.class);
 		Controls.init();
 
-		m_worldManager = new WorldManager("res/maps", 0);
+		m_worldManager = new WorldManager("res/maps", GameState.LastFinishedMap);
 		m_worldManager.addSystem(PlayerSystem.class);
 		m_worldManager.addSystem(ObjectSystem.class);
 		m_worldManager.addSystem(PhysicsSystem.class);
@@ -76,6 +78,7 @@ public class Application
 	 */
 	public void destruct()
 	{
+		GameState.save();
 		m_renderer.destruct();
 		m_worldManager.destruct();
 		m_audioManager.destruct();

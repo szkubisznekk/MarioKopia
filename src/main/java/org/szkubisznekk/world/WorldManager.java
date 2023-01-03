@@ -1,6 +1,7 @@
 package org.szkubisznekk.world;
 
 import org.joml.Vector2f;
+import org.szkubisznekk.core.GameState;
 import org.szkubisznekk.renderer.Renderer;
 
 import java.io.File;
@@ -70,6 +71,7 @@ public class WorldManager
 	 */
 	public void loadNext()
 	{
+		GameState.LastFinishedMap++;
 		World world = m_worlds.get(m_current);
 
 		for(var system : m_systems)
