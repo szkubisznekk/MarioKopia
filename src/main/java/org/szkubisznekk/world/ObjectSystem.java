@@ -1,6 +1,7 @@
 package org.szkubisznekk.world;
 
 import org.joml.Vector2f;
+import org.szkubisznekk.core.GameState;
 import org.szkubisznekk.core.Utility;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -26,22 +27,33 @@ public class ObjectSystem extends SystemBase
 		AtomicBoolean shouldFinish = new AtomicBoolean(false);
 		world.getEntities().findEntitiesWith(ObjectComponent.class, PositionComponent.class).stream().forEach(object ->
 		{
-			if(object.comp1().getType() == ObjectComponent.Type.FinishLine && !shouldFinish.get())
+			world.getEntities().findEntitiesWith(PlayerComponent.class, PositionComponent.class).stream().forEach(player ->
 			{
-				world.getEntities().findEntitiesWith(PlayerComponent.class, PositionComponent.class).stream().forEach(player ->
+				Vector2f objectPos = object.comp2().Position;
+				Vector2f playerPos = player.comp2().Position;
+
+				float xDelta = Math.abs(objectPos.x - playerPos.x);
+				float yDelta = Math.abs(objectPos.y - playerPos.y);
+
+				if(xDelta < 0.5f && yDelta < 0.5f)
 				{
-					Vector2f objectPos = object.comp2().Position;
-					Vector2f playerPos = player.comp2().Position;
-
-					float xDelta = Math.abs(objectPos.x - playerPos.x);
-					float yDelta = Math.abs(objectPos.y - playerPos.y);
-
-					if(xDelta < 0.5f && yDelta < 0.5f)
+					switch(object.comp1().getType())
 					{
-						shouldFinish.set(true);
+						case Coin ->
+						{
+							GameState.Forints += 5;
+							world.getEntities().deleteEntity(object.entity());
+						}
+						case FinishLine ->
+						{
+							if(!shouldFinish.get())
+							{
+								shouldFinish.set(true);
+							}
+						}
 					}
-				});
-			}
+				}
+			});
 		});
 
 		if(shouldFinish.get())
