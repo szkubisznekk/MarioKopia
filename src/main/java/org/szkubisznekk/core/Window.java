@@ -50,7 +50,7 @@ public class Window
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-		m_handle = glfwCreateWindow(1366, 768, "Window", NULL, NULL);
+		m_handle = glfwCreateWindow(1366, 768, "MarioKopia", NULL, NULL);
 
 		glfwSetWindowCloseCallback(m_handle, (long handle) -> Action.callAction(OnClose));
 
