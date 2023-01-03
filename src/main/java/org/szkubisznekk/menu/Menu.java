@@ -61,7 +61,7 @@ public class Menu
 			if(current.getClass() == Slider.class)
 			{
 				Slider slider = (Slider)current;
-				slider.setValue(slider.getValue() + 0.1f);
+				slider.increment();
 				Utility.callAction(slider.OnInteract);
 			}
 		});
@@ -76,7 +76,7 @@ public class Menu
 			if(current.getClass() == Slider.class)
 			{
 				Slider slider = (Slider)current;
-				slider.setValue(slider.getValue() - 0.1f);
+				slider.decrement();
 				Utility.callAction(slider.OnInteract);
 			}
 		});
