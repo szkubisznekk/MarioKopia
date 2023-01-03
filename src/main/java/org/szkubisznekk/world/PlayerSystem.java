@@ -50,7 +50,7 @@ public class PlayerSystem extends SystemBase
 			if(positionComponent.Position.y < 0f)
 			{
 				WorldManager.get().reloadCurrent();
-				AudioManager.get().play("res/audio/coin_collect.ogg", 1.0f, false);
+				AudioManager.get().play("res/audio/death.ogg", 1.0f, false);
 			}
 
 			rigidbodyComponent.Velocity.x = playerComponent.Move * playerComponent.Speed;

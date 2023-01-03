@@ -1,6 +1,7 @@
 package org.szkubisznekk.world;
 
 import org.joml.Vector2f;
+import org.szkubisznekk.audio.AudioManager;
 import org.szkubisznekk.core.GameState;
 import org.szkubisznekk.core.Utility;
 import org.szkubisznekk.renderer.Renderer;
@@ -52,6 +53,7 @@ public class ObjectSystem extends SystemBase
 						case Coin ->
 						{
 							m_forintsCollectedOnCurrentMap += 5;
+							AudioManager.get().play("res/audio/coin_collect.ogg", 1.0f, false);
 							world.getEntities().deleteEntity(object.entity());
 						}
 						case FinishLine ->
