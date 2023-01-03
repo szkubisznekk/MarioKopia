@@ -11,6 +11,8 @@ import java.util.ArrayList;
  */
 public class WorldManager
 {
+	private static WorldManager s_instance;
+
 	private int m_current = 0;
 	private final ArrayList<World> m_worlds = new ArrayList<>();
 	private final ArrayList<SystemBase> m_systems = new ArrayList<>();
@@ -22,6 +24,8 @@ public class WorldManager
 	 */
 	public WorldManager(String path, int firstWorld)
 	{
+		s_instance = this;
+
 		m_current = firstWorld;
 		File folder = new File(path);
 		File[] maps = folder.listFiles();
@@ -53,6 +57,11 @@ public class WorldManager
 				system.stop(world);
 			}
 		}
+	}
+
+	public static WorldManager get()
+	{
+		return s_instance;
 	}
 
 	/**

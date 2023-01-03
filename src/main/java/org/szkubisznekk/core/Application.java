@@ -86,7 +86,7 @@ public class Application
 		Time.init();
 
 		m_audioManager.setVolume(0.1f);
-		m_audioManager.play("res/audio/omfg_hello.ogg", 1.0f, true);
+		m_audioManager.play("res/audio/omfg_hello.ogg", 0.2f, true);
 
 		while(m_running)
 		{

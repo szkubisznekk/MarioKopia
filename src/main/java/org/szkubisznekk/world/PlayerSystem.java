@@ -2,6 +2,7 @@ package org.szkubisznekk.world;
 
 import dev.dominion.ecs.api.*;
 import org.joml.*;
+import org.szkubisznekk.audio.AudioManager;
 import org.szkubisznekk.core.*;
 import org.szkubisznekk.input.*;
 
@@ -39,10 +40,17 @@ public class PlayerSystem extends SystemBase
 	@Override
 	public void update(World world)
 	{
-		world.getEntities().findEntitiesWith(PlayerComponent.class, RigidbodyComponent.class).stream().forEach(result ->
+		world.getEntities().findEntitiesWith(PlayerComponent.class, RigidbodyComponent.class, PositionComponent.class).stream().forEach(result ->
 		{
 			PlayerComponent playerComponent = result.comp1();
 			RigidbodyComponent rigidbodyComponent = result.comp2();
+			PositionComponent positionComponent = result.comp3();
+
+			if(positionComponent.Position.y < 0f)
+			{
+				WorldManager.get().reloadCurrent();
+				AudioManager.get().play("res/audio/coin_collect.ogg", 1.0f, false);
+			}
 
 			rigidbodyComponent.Velocity.x = playerComponent.Move * playerComponent.Speed;
 
